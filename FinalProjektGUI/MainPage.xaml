@@ -151,22 +151,22 @@
                     <Label Grid.Row="0" Grid.Column="0" Text="LED Control" FontAttributes="Bold" Grid.ColumnSpan="4" HorizontalOptions="Center"/>
 
                     <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="5">
-                        <Label Text="LED1" HorizontalOptions="Center"/>
+                        <Label Text="Blue LED" HorizontalOptions="Center" TextColor="Blue" FontAttributes="Bold"/>
                         <Switch x:Name="Led1Switch" Toggled="OnLedToggled" HorizontalOptions="Center"/>
                     </VerticalStackLayout>
 
                     <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="5">
-                        <Label Text="LED2" HorizontalOptions="Center"/>
+                        <Label Text="Yellow LED" HorizontalOptions="Center" TextColor="Orange" FontAttributes="Bold"/>
                         <Switch x:Name="Led2Switch" Toggled="OnLedToggled" HorizontalOptions="Center"/>
                     </VerticalStackLayout>
 
                     <VerticalStackLayout Grid.Row="1" Grid.Column="2" Spacing="5">
-                        <Label Text="LED3" HorizontalOptions="Center"/>
+                        <Label Text="Red LED" HorizontalOptions="Center" TextColor="Red" FontAttributes="Bold"/>
                         <Switch x:Name="Led3Switch" Toggled="OnLedToggled" HorizontalOptions="Center"/>
                     </VerticalStackLayout>
 
                     <VerticalStackLayout Grid.Row="1" Grid.Column="3" Spacing="5">
-                        <Label Text="LED4" HorizontalOptions="Center"/>
+                        <Label Text="Green LED" HorizontalOptions="Center" TextColor="Green" FontAttributes="Bold"/>
                         <Switch x:Name="Led4Switch" Toggled="OnLedToggled" HorizontalOptions="Center"/>
                     </VerticalStackLayout>
                 </Grid>
@@ -180,8 +180,22 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <Label Grid.Row="0" Text="Raw Data Log" FontAttributes="Bold"/>
-                    <ScrollView Grid.Row="1">
+                    <Grid Grid.Row="0" ColumnSpacing="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <Label Grid.Column="0" Text="Raw Data Log" FontAttributes="Bold" VerticalOptions="Center"/>
+                        <HorizontalStackLayout Grid.Column="1" Spacing="5">
+                            <Label Text="Auto-scroll:" VerticalOptions="Center"/>
+                            <Switch x:Name="AutoScrollSwitch" IsToggled="True" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+                        <Button Grid.Column="2" Text="Clear" Clicked="OnClearLogClicked" WidthRequest="80"/>
+                    </Grid>
+                    
+                    <ScrollView Grid.Row="1" x:Name="LogScrollView">
                         <Label x:Name="RawDataLog" FontFamily="Courier New" FontSize="12" LineBreakMode="WordWrap"/>
                     </ScrollView>
                 </Grid>

@@ -145,7 +145,7 @@ public partial class MainPage : ContentPage
 		{
 			try
 			{
-				AddToLog(packet.Trim());
+				AddToLog($"<< IN: {packet.Trim()}");
 
 				// Validate packet format and length
 				// Expected format: ###NNNaaaabbbbccccddddeeeeffffggggCCC\r\n
@@ -234,7 +234,7 @@ public partial class MainPage : ContentPage
 
 	private void AddToLog(string message)
 	{
-		MainThread.BeginInvokeOnMainThread(() =>
+		MainThread.BeginInvokeOnMainThread(async () =>
 		{
 			string timestamp = DateTime.Now.ToString("HH:mm:ss.fff");
 			_logLines.Add($"[{timestamp}] {message}");
@@ -246,6 +246,12 @@ public partial class MainPage : ContentPage
 			}
 
 			RawDataLog.Text = string.Join("\n", _logLines);
+
+			// Auto-scroll to bottom if enabled
+			if (AutoScrollSwitch.IsToggled)
+			{
+				await LogScrollView.ScrollToAsync(0, RawDataLog.Height, false);
+			}
 		});
 	}
 
@@ -283,12 +289,18 @@ public partial class MainPage : ContentPage
 
 			// Send packet
 			_serialPort.Write(packet);
-			AddToLog($"SENT: {packet.Trim()}");
+			AddToLog($">> OUT: {packet.Trim()}");
 		}
 		catch (Exception ex)
 		{
 			AddToLog($"ERROR sending packet: {ex.Message}");
 		}
+	}
+
+	private void OnClearLogClicked(object? sender, EventArgs e)
+	{
+		_logLines.Clear();
+		RawDataLog.Text = string.Empty;
 	}
 
 	protected override void OnDisappearing()
