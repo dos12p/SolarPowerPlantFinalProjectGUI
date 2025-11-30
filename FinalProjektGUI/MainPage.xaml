@@ -9,11 +9,17 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
         <!-- Serial Port Connection Panel -->
-        <Frame Grid.Row="0" BorderColor="Gray" CornerRadius="5" Padding="10">
+        <Frame Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" BorderColor="Gray" CornerRadius="5" Padding="10">
             <Grid ColumnSpacing="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -29,8 +35,49 @@
             </Grid>
         </Frame>
 
+        <!-- Solar Output Panel -->
+        <Frame Grid.Row="1" Grid.Column="0" BorderColor="Gray" CornerRadius="5" Padding="10">
+            <Grid RowSpacing="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                
+                <Label Grid.Row="0" Text="Solar Output" FontAttributes="Bold" FontSize="16" HorizontalOptions="Center"/>
+                <Label Grid.Row="1" x:Name="SolarOutputLabel" Text="0.000 V" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center"/>
+            </Grid>
+        </Frame>
+
+        <!-- Battery Status Panel -->
+        <Frame Grid.Row="1" Grid.Column="1" BorderColor="Gray" CornerRadius="5" Padding="10">
+            <Grid RowSpacing="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                
+                <Label Grid.Row="0" Text="Battery Status" FontAttributes="Bold" FontSize="16" HorizontalOptions="Center"/>
+                <Label Grid.Row="1" x:Name="BatteryStatusLabel" Text="--- at 0 mA" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center"/>
+            </Grid>
+        </Frame>
+
+        <!-- Circuit Status Panel -->
+        <Frame Grid.Row="1" Grid.Column="2" BorderColor="Gray" CornerRadius="5" Padding="10">
+            <Grid RowSpacing="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                
+                <Label Grid.Row="0" Text="Circuit Status" FontAttributes="Bold" FontSize="16" HorizontalOptions="Center"/>
+                <Label Grid.Row="1" x:Name="CircuitStatusLabel" Text="ON" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center" TextColor="Green"/>
+                <Button Grid.Row="2" x:Name="ResetButton" Text="Reset Breaker" Clicked="OnResetBreakerClicked" HorizontalOptions="Center" WidthRequest="120"/>
+            </Grid>
+        </Frame>
+
         <!-- Parsed Data Display Panel -->
-        <Frame Grid.Row="1" BorderColor="Gray" CornerRadius="5" Padding="10">
+        <Frame Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" BorderColor="Gray" CornerRadius="5" Padding="10">
             <Grid RowSpacing="5" ColumnSpacing="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -46,7 +93,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Row="0" Grid.Column="0" Text="Received Data" FontAttributes="Bold" FontSize="16" Grid.ColumnSpan="4"/>
+                <Label Grid.Row="0" Grid.Column="0" Text="Raw ADC Data" FontAttributes="Bold" FontSize="16" Grid.ColumnSpan="4"/>
 
                 <!-- Packet Number -->
                 <Label Grid.Row="1" Grid.Column="0" Text="Packet #:"/>
@@ -71,7 +118,7 @@
         </Frame>
 
         <!-- Digital Inputs and Checksum -->
-        <Grid Grid.Row="2" ColumnSpacing="10">
+        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" ColumnSpacing="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -127,16 +174,20 @@
             </Frame>
         </Grid>
 
-        <!-- Main Content Area with Tabs -->
-        <Grid Grid.Row="3" RowSpacing="10">
+        <!-- Main Content Area -->
+        <Grid Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" RowSpacing="10" ColumnSpacing="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
 
             <!-- LED Control Panel -->
-            <Frame Grid.Row="0" BorderColor="Gray" CornerRadius="5" Padding="10">
-                <Grid ColumnSpacing="10">
+            <Frame Grid.Row="0" Grid.Column="0" BorderColor="Gray" CornerRadius="5" Padding="10">
+                <Grid ColumnSpacing="15">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
@@ -145,35 +196,45 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Label Grid.Row="0" Grid.Column="0" Text="LED Control" FontAttributes="Bold" Grid.ColumnSpan="4" HorizontalOptions="Center"/>
+                    <Label Grid.Row="0" Grid.Column="0" Text="LED Control" FontAttributes="Bold" Grid.ColumnSpan="3" HorizontalOptions="Center" FontSize="16"/>
 
                     <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="5">
-                        <Label Text="Blue LED" HorizontalOptions="Center" TextColor="Blue" FontAttributes="Bold"/>
-                        <Switch x:Name="Led1Switch" Toggled="OnLedToggled" HorizontalOptions="Center"/>
+                        <Label Text="Yellow LED" HorizontalOptions="Center" TextColor="Orange" FontAttributes="Bold"/>
+                        <Switch x:Name="Led2Switch" Toggled="OnLedToggled" HorizontalOptions="Center"/>
+                        <Label x:Name="YellowCurrentLabel" Text="0 mA" HorizontalOptions="Center" FontSize="12"/>
                     </VerticalStackLayout>
 
                     <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="5">
-                        <Label Text="Yellow LED" HorizontalOptions="Center" TextColor="Orange" FontAttributes="Bold"/>
-                        <Switch x:Name="Led2Switch" Toggled="OnLedToggled" HorizontalOptions="Center"/>
+                        <Label Text="Red LED" HorizontalOptions="Center" TextColor="Red" FontAttributes="Bold"/>
+                        <Switch x:Name="Led3Switch" Toggled="OnLedToggled" HorizontalOptions="Center"/>
+                        <Label x:Name="RedCurrentLabel" Text="0 mA" HorizontalOptions="Center" FontSize="12"/>
                     </VerticalStackLayout>
 
                     <VerticalStackLayout Grid.Row="1" Grid.Column="2" Spacing="5">
-                        <Label Text="Red LED" HorizontalOptions="Center" TextColor="Red" FontAttributes="Bold"/>
-                        <Switch x:Name="Led3Switch" Toggled="OnLedToggled" HorizontalOptions="Center"/>
-                    </VerticalStackLayout>
-
-                    <VerticalStackLayout Grid.Row="1" Grid.Column="3" Spacing="5">
                         <Label Text="Green LED" HorizontalOptions="Center" TextColor="Green" FontAttributes="Bold"/>
                         <Switch x:Name="Led4Switch" Toggled="OnLedToggled" HorizontalOptions="Center"/>
+                        <Label x:Name="GreenCurrentLabel" Text="0 mA" HorizontalOptions="Center" FontSize="12"/>
                     </VerticalStackLayout>
                 </Grid>
             </Frame>
 
+            <!-- Total Load Current Panel -->
+            <Frame Grid.Row="0" Grid.Column="1" BorderColor="Gray" CornerRadius="5" Padding="10">
+                <Grid RowSpacing="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    
+                    <Label Grid.Row="0" Text="Total Load Current" FontAttributes="Bold" FontSize="16" HorizontalOptions="Center"/>
+                    <Label Grid.Row="1" x:Name="TotalLoadCurrentLabel" Text="0 mA" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center"/>
+                </Grid>
+            </Frame>
+
             <!-- Scrolling Log -->
-            <Frame Grid.Row="1" BorderColor="Gray" CornerRadius="5" Padding="10">
+            <Frame Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" BorderColor="Gray" CornerRadius="5" Padding="10">
                 <Grid RowSpacing="5">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>

@@ -10,10 +10,24 @@ public partial class MainPage : ContentPage
 	private const int MaxLogLines = 100;
 	private List<string> _logLines = new List<string>();
 
+	// ADC Rolling Average (last 3 values)
+	private Queue<int>[] _adcHistory = new Queue<int>[6];
+	private const int AverageWindow = 3;
+
+	// Circuit Protection
+	private bool _isTripped = false;
+	private const double TripThreshold = 4.0; // mA
+
 	public MainPage()
 	{
 		InitializeComponent();
 		LoadAvailablePorts();
+		
+		// Initialize ADC history queues
+		for (int i = 0; i < 6; i++)
+		{
+			_adcHistory[i] = new Queue<int>();
+		}
 	}
 
 	private void LoadAvailablePorts()
@@ -193,43 +207,102 @@ public partial class MainPage : ContentPage
 				}
 				calculatedChecksum %= 1000;
 
-				// Update UI
-				PacketNumberLabel.Text = packetNumber;
-				Adc0Label.Text = $"{adc0} mV";
-				Adc1Label.Text = $"{adc1} mV";
-				Adc2Label.Text = $"{adc2} mV";
-				Adc3Label.Text = $"{adc3} mV";
-				Adc4Label.Text = $"{adc4} mV";
-				Adc5Label.Text = $"{adc5} mV";
+			// Update UI
+			PacketNumberLabel.Text = packetNumber;
+			Adc0Label.Text = $"{adc0} mV";
+			Adc1Label.Text = $"{adc1} mV";
+			Adc2Label.Text = $"{adc2} mV";
+			Adc3Label.Text = $"{adc3} mV";
+			Adc4Label.Text = $"{adc4} mV";
+			Adc5Label.Text = $"{adc5} mV";
 
-				Di0Label.Text = digitalInputs[0].ToString();
-				Di1Label.Text = digitalInputs[1].ToString();
-				Di2Label.Text = digitalInputs[2].ToString();
-				Di3Label.Text = digitalInputs[3].ToString();
+			Di0Label.Text = digitalInputs[0].ToString();
+			Di1Label.Text = digitalInputs[1].ToString();
+			Di2Label.Text = digitalInputs[2].ToString();
+			Di3Label.Text = digitalInputs[3].ToString();
 
-				ReceivedChecksumLabel.Text = receivedChecksum;
-				CalculatedChecksumLabel.Text = calculatedChecksum.ToString("D3");
+			ReceivedChecksumLabel.Text = receivedChecksum;
+			CalculatedChecksumLabel.Text = calculatedChecksum.ToString("D3");
 
-				// Validate checksum
-				if (receivedChecksum != calculatedChecksum.ToString("D3"))
+			// Validate checksum
+			if (receivedChecksum != calculatedChecksum.ToString("D3"))
+			{
+				CalculatedChecksumLabel.TextColor = Colors.Red;
+				ReceivedChecksumLabel.TextColor = Colors.Red;
+			}
+			else
+			{
+				CalculatedChecksumLabel.TextColor = Colors.Green;
+				ReceivedChecksumLabel.TextColor = Colors.Green;
+			}
+
+			// Calculate derived values
+			if (int.TryParse(adc0, out int adc0Val) &&
+			    int.TryParse(adc1, out int adc1Val) &&
+			    int.TryParse(adc2, out int adc2Val) &&
+			    int.TryParse(adc3, out int adc3Val) &&
+			    int.TryParse(adc4, out int adc4Val) &&
+			    int.TryParse(adc5, out int adc5Val))
+			{
+				// Update ADC history and calculate averages
+				int[] currentValues = { adc0Val, adc1Val, adc2Val, adc3Val, adc4Val, adc5Val };
+				double[] avgValues = new double[6];
+
+				for (int i = 0; i < 6; i++)
 				{
-					CalculatedChecksumLabel.TextColor = Colors.Red;
-					ReceivedChecksumLabel.TextColor = Colors.Red;
+					_adcHistory[i].Enqueue(currentValues[i]);
+					if (_adcHistory[i].Count > AverageWindow)
+					{
+						_adcHistory[i].Dequeue();
+					}
+					avgValues[i] = _adcHistory[i].Average();
+				}
+
+				// Solar Output (ADC0 in volts)
+				double solarVoltage = avgValues[0] / 1000.0;
+				SolarOutputLabel.Text = $"{solarVoltage:F3} V";
+
+				// Battery Status (ADC5 - ADC4) / 100
+				double batteryCurrent = (avgValues[5] - avgValues[4]) / 100.0;
+				if (batteryCurrent >= 0)
+				{
+					BatteryStatusLabel.Text = $"CHARGING at {Math.Abs(batteryCurrent):F1} mA";
+					BatteryStatusLabel.TextColor = Colors.Green;
 				}
 				else
 				{
-					CalculatedChecksumLabel.TextColor = Colors.Green;
-					ReceivedChecksumLabel.TextColor = Colors.Green;
+					BatteryStatusLabel.Text = $"DISCHARGING at {Math.Abs(batteryCurrent):F1} mA";
+					BatteryStatusLabel.TextColor = Colors.OrangeRed;
+				}
+
+				// LED Currents (ADC5 - LED_ADC) / 220
+				double yellowCurrent = (avgValues[5] - avgValues[1]) / 220.0;
+				double redCurrent = (avgValues[5] - avgValues[2]) / 220.0;
+				double greenCurrent = (avgValues[5] - avgValues[3]) / 220.0;
+
+				YellowCurrentLabel.Text = $"{yellowCurrent:F1} mA";
+				RedCurrentLabel.Text = $"{redCurrent:F1} mA";
+				GreenCurrentLabel.Text = $"{greenCurrent:F1} mA";
+
+				// Total Load Current
+				double totalLoad = yellowCurrent + redCurrent + greenCurrent;
+				TotalLoadCurrentLabel.Text = $"{totalLoad:F1} mA";
+
+				// Check for overcurrent trip condition (latching)
+				if (!_isTripped && totalLoad > TripThreshold)
+				{
+					_isTripped = true;
+					TripCircuit();
+					AddToLog($"TRIP: Overcurrent detected ({totalLoad:F1} mA > {TripThreshold} mA)");
 				}
 			}
-			catch (Exception ex)
-			{
-				AddToLog($"ERROR parsing packet: {ex.Message}");
-			}
+		}
+		catch (Exception ex)
+		{
+			AddToLog($"ERROR parsing packet: {ex.Message}");
+		}
 		});
-	}
-
-	private void AddToLog(string message)
+	}	private void AddToLog(string message)
 	{
 		MainThread.BeginInvokeOnMainThread(async () =>
 		{
@@ -266,11 +339,13 @@ public partial class MainPage : ContentPage
 				return;
 			}
 
-			// Build LED state string (4 binary digits) - Active Low
-			string led1 = Led1Switch.IsToggled ? "0" : "1";
-			string led2 = Led2Switch.IsToggled ? "0" : "1";
-			string led3 = Led3Switch.IsToggled ? "0" : "1";
-			string led4 = Led4Switch.IsToggled ? "0" : "1";
+			// Build LED state string (4 binary digits) - Active Low for LEDs, Active High for Blue LED
+			// First digit: Blue LED (1 = ON when tripped, 0 = OFF normally)
+			// Remaining digits: Yellow, Red, Green LEDs (0 = ON, 1 = OFF)
+			string led1 = _isTripped ? "1" : "0"; // Blue LED - Active High
+			string led2 = (!_isTripped && Led2Switch.IsToggled) ? "0" : "1"; // Yellow - Active Low
+			string led3 = (!_isTripped && Led3Switch.IsToggled) ? "0" : "1"; // Red - Active Low
+			string led4 = (!_isTripped && Led4Switch.IsToggled) ? "0" : "1"; // Green - Active Low
 			string ledStates = led1 + led2 + led3 + led4;
 
 			// Calculate checksum (sum of ASCII values of all numeric characters % 1000)
@@ -298,6 +373,48 @@ public partial class MainPage : ContentPage
 	{
 		_logLines.Clear();
 		RawDataLog.Text = string.Empty;
+	}
+
+	private void TripCircuit()
+	{
+		MainThread.BeginInvokeOnMainThread(() =>
+		{
+			// Turn off all LED switches
+			Led2Switch.IsToggled = false;
+			Led3Switch.IsToggled = false;
+			Led4Switch.IsToggled = false;
+
+			// Disable LED switches
+			Led2Switch.IsEnabled = false;
+			Led3Switch.IsEnabled = false;
+			Led4Switch.IsEnabled = false;
+
+			// Update circuit status display
+			CircuitStatusLabel.Text = "TRIP";
+			CircuitStatusLabel.TextColor = Colors.Red;
+
+			// Send packet to turn on Blue LED and turn off all others
+			SendLedPacket();
+		});
+	}
+
+	private void OnResetBreakerClicked(object? sender, EventArgs e)
+	{
+		_isTripped = false;
+
+		// Re-enable LED switches
+		Led2Switch.IsEnabled = true;
+		Led3Switch.IsEnabled = true;
+		Led4Switch.IsEnabled = true;
+
+		// Update circuit status display
+		CircuitStatusLabel.Text = "ON";
+		CircuitStatusLabel.TextColor = Colors.Green;
+
+		// Send packet to update LED states
+		SendLedPacket();
+
+		AddToLog("Circuit breaker RESET");
 	}
 
 	protected override void OnDisappearing()
