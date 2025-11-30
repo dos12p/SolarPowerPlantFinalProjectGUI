@@ -269,11 +269,11 @@ public partial class MainPage : ContentPage
 				return;
 			}
 
-			// Build LED state string (4 binary digits)
-			string led1 = Led1Switch.IsToggled ? "1" : "0";
-			string led2 = Led2Switch.IsToggled ? "1" : "0";
-			string led3 = Led3Switch.IsToggled ? "1" : "0";
-			string led4 = Led4Switch.IsToggled ? "1" : "0";
+			// Build LED state string (4 binary digits) - Active Low
+			string led1 = Led1Switch.IsToggled ? "0" : "1";
+			string led2 = Led2Switch.IsToggled ? "0" : "1";
+			string led3 = Led3Switch.IsToggled ? "0" : "1";
+			string led4 = Led4Switch.IsToggled ? "0" : "1";
 			string ledStates = led1 + led2 + led3 + led4;
 
 			// Calculate checksum (sum of ASCII values of all numeric characters % 1000)
