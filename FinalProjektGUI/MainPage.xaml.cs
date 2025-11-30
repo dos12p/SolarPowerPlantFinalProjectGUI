@@ -148,51 +148,48 @@ public partial class MainPage : ContentPage
 				AddToLog($"<< IN: {packet.Trim()}");
 
 				// Validate packet format and length
-				// Expected format: ###NNNaaaabbbbccccddddeeeeffffggggCCC\r\n
-				// Length: 3 + 3 + (6*4) + 4 + 3 + 2 = 39 characters
-				if (packet.Length < 37) // Minimum without \r\n
+				// Expected format: ###NNN AAAA BBBB CCCC DDDD EEEE FFFF GGGG CCC\r\n
+				// where spaces are included between values
+				if (packet.Length < 45) // Minimum without \r\n (3 + 3 + 1 + 4 + 1 + 4 + 1 + 4 + 1 + 4 + 1 + 4 + 1 + 4 + 1 + 4 + 1 + 3 = 45)
 				{
 					AddToLog("ERROR: Packet too short");
 					return;
 				}
 
-				// Parse packet components
+				// Parse packet components with spaces
 				int index = 3; // Skip "###"
 
 				string packetNumber = packet.Substring(index, 3);
-				index += 3;
+				index += 4; // 3 digits + 1 space
 
 				string adc0 = packet.Substring(index, 4);
-				index += 4;
+				index += 5; // 4 digits + 1 space
 
 				string adc1 = packet.Substring(index, 4);
-				index += 4;
+				index += 5; // 4 digits + 1 space
 
 				string adc2 = packet.Substring(index, 4);
-				index += 4;
+				index += 5; // 4 digits + 1 space
 
 				string adc3 = packet.Substring(index, 4);
-				index += 4;
+				index += 5; // 4 digits + 1 space
 
 				string adc4 = packet.Substring(index, 4);
-				index += 4;
+				index += 5; // 4 digits + 1 space
 
 				string adc5 = packet.Substring(index, 4);
-				index += 4;
+				index += 5; // 4 digits + 1 space
 
 				string digitalInputs = packet.Substring(index, 4);
-				index += 4;
+				index += 5; // 4 digits + 1 space
 
 				string receivedChecksum = packet.Substring(index, 3);
 
-				// Calculate checksum (sum of all numeric ASCII characters % 1000)
+				// Calculate checksum (sum of all ASCII characters from after ### up to but not including checksum)
 				int calculatedChecksum = 0;
-				for (int i = 3; i < index; i++) // Start after "###"
+				for (int i = 3; i < index; i++) // Start after "###", stop before checksum
 				{
-					if (char.IsDigit(packet[i]))
-					{
-						calculatedChecksum += (int)packet[i];
-					}
+					calculatedChecksum += (int)packet[i];
 				}
 				calculatedChecksum %= 1000;
 
