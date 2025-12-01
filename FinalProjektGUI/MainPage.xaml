@@ -3,43 +3,44 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
              x:Class="FinalProjektGUI.MainPage"
-             Title="Meadow Serial Monitor">
+             Title="Solar Power Plant Serial Monitor">
 
     <Grid Padding="10" RowSpacing="10" ColumnSpacing="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Mode Selector Panel -->
+        <!-- Combined Control Panel -->
         <Frame Grid.Row="0" BorderColor="Gray" CornerRadius="5" Padding="10">
-            <HorizontalStackLayout Spacing="20" HorizontalOptions="Center">
-                <Label Text="View Mode:" VerticalOptions="Center" FontAttributes="Bold"/>
-                <RadioButton x:Name="MonitorModeRadio" Content="Monitor" IsChecked="True" CheckedChanged="OnViewModeChanged" GroupName="ViewMode"/>
-                <RadioButton x:Name="GraphModeRadio" Content="Graph" CheckedChanged="OnViewModeChanged" GroupName="ViewMode"/>
-            </HorizontalStackLayout>
-        </Frame>
-
-        <!-- Serial Port Connection Panel -->
-        <Frame Grid.Row="1" BorderColor="Gray" CornerRadius="5" Padding="10">
-            <Grid ColumnSpacing="10">
+            <Grid ColumnSpacing="15" RowSpacing="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
                 <Label Grid.Column="0" Text="COM Port:" VerticalOptions="Center"/>
-                <Picker Grid.Column="1" x:Name="ComPortPicker" VerticalOptions="Center"/>
+                <Picker Grid.Column="1" x:Name="ComPortPicker" VerticalOptions="Center" MinimumWidthRequest="100"/>
                 <Button Grid.Column="2" x:Name="ConnectButton" Text="Connect" Clicked="OnConnectClicked" WidthRequest="100"/>
                 <Button Grid.Column="3" x:Name="DisconnectButton" Text="Disconnect" Clicked="OnDisconnectClicked" WidthRequest="100" IsEnabled="False"/>
+                
+                <BoxView Grid.Column="4" WidthRequest="2" BackgroundColor="Gray" Margin="10,0"/>
+                
+                <Label Grid.Column="5" Text="View Mode:" VerticalOptions="Center" FontAttributes="Bold"/>
+                <HorizontalStackLayout Grid.Column="6" Spacing="10">
+                    <RadioButton x:Name="MonitorModeRadio" Content="Monitor" IsChecked="True" CheckedChanged="OnViewModeChanged" GroupName="ViewMode"/>
+                    <RadioButton x:Name="GraphModeRadio" Content="Graph" CheckedChanged="OnViewModeChanged" GroupName="ViewMode"/>
+                </HorizontalStackLayout>
             </Grid>
         </Frame>
 
         <!-- Monitor View -->
-        <Grid x:Name="MonitorView" Grid.Row="2" RowSpacing="10" ColumnSpacing="10" IsVisible="True">
+        <Grid x:Name="MonitorView" Grid.Row="1" RowSpacing="10" ColumnSpacing="10" IsVisible="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -223,11 +224,18 @@
                     <Label Grid.Row="0" Grid.Column="0" Text="LED Control" FontAttributes="Bold" Grid.ColumnSpan="3" HorizontalOptions="Center" FontSize="16"/>
 
                     <!-- Mode Selector -->
-                    <HorizontalStackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Spacing="10" HorizontalOptions="Center">
-                        <Label Text="Manual" VerticalOptions="Center"/>
-                        <Switch x:Name="ModeSwitch" Toggled="OnModeChanged" VerticalOptions="Center"/>
-                        <Label Text="Traffic" VerticalOptions="Center"/>
-                    </HorizontalStackLayout>
+                    <VerticalStackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Spacing="10" HorizontalOptions="Center">
+                        <HorizontalStackLayout Spacing="10">
+                            <Label Text="Manual" VerticalOptions="Center"/>
+                            <Switch x:Name="ModeSwitch" Toggled="OnModeChanged" VerticalOptions="Center"/>
+                            <Label Text="Traffic" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Spacing="10">
+                            <Label Text="Christmas" VerticalOptions="Center" TextColor="Red"/>
+                            <Switch x:Name="ChristmasSwitch" Toggled="OnChristmasChanged" VerticalOptions="Center"/>
+                            <Label Text="Mode" VerticalOptions="Center" TextColor="Green"/>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
 
                     <VerticalStackLayout Grid.Row="2" Grid.Column="0" Spacing="5">
                         <Label Text="Yellow LED" HorizontalOptions="Center" TextColor="Orange" FontAttributes="Bold"/>
@@ -295,7 +303,7 @@
         <!-- End Monitor View -->
 
         <!-- Graph View -->
-        <Grid x:Name="GraphView" Grid.Row="2" RowSpacing="10" IsVisible="False">
+        <Grid x:Name="GraphView" Grid.Row="1" RowSpacing="10" IsVisible="False">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
@@ -303,136 +311,219 @@
 
             <!-- Time Window Selector -->
             <Frame Grid.Row="0" BorderColor="Gray" CornerRadius="5" Padding="10">
-                <HorizontalStackLayout Spacing="20" HorizontalOptions="Center">
-                    <HorizontalStackLayout Spacing="10">
-                        <Label Text="Time Window:" VerticalOptions="Center" FontAttributes="Bold"/>
-                        <Picker x:Name="TimeWindowPicker" SelectedIndexChanged="OnTimeWindowChanged" WidthRequest="150">
-                            <Picker.ItemsSource>
-                                <x:Array Type="{x:Type x:String}">
-                                    <x:String>10 seconds</x:String>
-                                    <x:String>30 seconds</x:String>
-                                    <x:String>1 minute</x:String>
-                                    <x:String>2 minutes</x:String>
-                                    <x:String>5 minutes</x:String>
-                                    <x:String>10 minutes</x:String>
-                                </x:Array>
-                            </Picker.ItemsSource>
-                        </Picker>
-                    </HorizontalStackLayout>
-                    <HorizontalStackLayout Spacing="10">
-                        <Label Text="Current Scale (mA):" VerticalOptions="Center" FontAttributes="Bold"/>
-                        <Picker x:Name="CurrentScalePicker" SelectedIndexChanged="OnCurrentScaleChanged" WidthRequest="100">
-                            <Picker.ItemsSource>
-                                <x:Array Type="{x:Type x:String}">
-                                    <x:String>1</x:String>
-                                    <x:String>2</x:String>
-                                    <x:String>3</x:String>
-                                    <x:String>4</x:String>
-                                    <x:String>5</x:String>
-                                    <x:String>6</x:String>
-                                    <x:String>7</x:String>
-                                    <x:String>8</x:String>
-                                    <x:String>9</x:String>
-                                    <x:String>10</x:String>
-                                </x:Array>
-                            </Picker.ItemsSource>
-                        </Picker>
-                    </HorizontalStackLayout>
+                <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                    <Label Text="Time Window:" VerticalOptions="Center" FontAttributes="Bold"/>
+                    <Picker x:Name="TimeWindowPicker" SelectedIndexChanged="OnTimeWindowChanged" WidthRequest="150">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>10 seconds</x:String>
+                                <x:String>30 seconds</x:String>
+                                <x:String>1 minute</x:String>
+                                <x:String>2 minutes</x:String>
+                                <x:String>5 minutes</x:String>
+                                <x:String>10 minutes</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
                 </HorizontalStackLayout>
             </Frame>
 
             <!-- Charts ScrollView -->
             <ScrollView Grid.Row="1">
                 <VerticalStackLayout Spacing="15" Padding="10">
-                    <!-- Solar Output Chart -->
-                    <Frame BorderColor="Gray" CornerRadius="5" Padding="10">
-                        <Grid RowSpacing="5">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="300"/>
-                            </Grid.RowDefinitions>
-                            <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
-                                <Label Grid.Column="0" Text="Solar Output Voltage (0-3.5V)" FontAttributes="Bold" FontSize="16"/>
-                                <Button Grid.Column="1" Text="Clear" Clicked="OnClearSolarChart" WidthRequest="80"/>
+                    <!-- Combined Graphs at Top -->
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                        <!-- Combined Voltage Chart -->
+                        <Frame Grid.Column="0" BorderColor="Gray" CornerRadius="5" Padding="10">
+                            <Grid RowSpacing="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="300"/>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Row="0" Text="Voltages (Combined)" FontAttributes="Bold" FontSize="16" HorizontalOptions="Center"/>
+                                <lvc:CartesianChart Grid.Row="1" x:Name="CombinedVoltageChart" BackgroundColor="#1A1A1A"/>
                             </Grid>
-                            <lvc:CartesianChart Grid.Row="1" x:Name="SolarChart" BackgroundColor="#1A1A1A"/>
-                        </Grid>
-                    </Frame>
+                        </Frame>
 
-                    <!-- Battery Voltage Chart -->
-                    <Frame BorderColor="Gray" CornerRadius="5" Padding="10">
-                        <Grid RowSpacing="5">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="300"/>
-                            </Grid.RowDefinitions>
-                            <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
-                                <Label Grid.Column="0" Text="Battery Voltage (0-3.5V)" FontAttributes="Bold" FontSize="16"/>
-                                <Button Grid.Column="1" Text="Clear" Clicked="OnClearBatteryChart" WidthRequest="80"/>
+                        <!-- Combined Current Chart -->
+                        <Frame Grid.Column="1" BorderColor="Gray" CornerRadius="5" Padding="10">
+                            <Grid RowSpacing="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="300"/>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Row="0" Text="Currents (Combined)" FontAttributes="Bold" FontSize="16" HorizontalOptions="Center"/>
+                                <lvc:CartesianChart Grid.Row="1" x:Name="CombinedCurrentChart" BackgroundColor="#1A1A1A"/>
                             </Grid>
-                            <lvc:CartesianChart Grid.Row="1" x:Name="BatteryChart" BackgroundColor="#1A1A1A"/>
-                        </Grid>
-                    </Frame>
+                        </Frame>
+                    </Grid>
 
-                    <!-- Total Load Current Chart -->
-                    <Frame BorderColor="Gray" CornerRadius="5" Padding="10">
-                        <Grid RowSpacing="5">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="300"/>
-                            </Grid.RowDefinitions>
-                            <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
-                                <Label Grid.Column="0" Text="Total Load Current (mA)" FontAttributes="Bold" FontSize="16"/>
-                                <Button Grid.Column="1" Text="Clear" Clicked="OnClearTotalLoadChart" WidthRequest="80"/>
+                    <!-- Voltage Charts -->
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                        <!-- Solar Output Chart -->
+                        <Frame Grid.Column="0" BorderColor="Gray" CornerRadius="5" Padding="10">
+                            <Grid RowSpacing="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="300"/>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                                    <Label Grid.Column="0" Text="Solar Output Voltage (0-3.5V)" FontAttributes="Bold" FontSize="16"/>
+                                    <Button Grid.Column="1" Text="Clear" Clicked="OnClearSolarChart" WidthRequest="80"/>
+                                </Grid>
+                                <lvc:CartesianChart Grid.Row="1" x:Name="SolarChart" BackgroundColor="#1A1A1A"/>
                             </Grid>
-                            <lvc:CartesianChart Grid.Row="1" x:Name="TotalLoadChart" BackgroundColor="#1A1A1A"/>
-                        </Grid>
-                    </Frame>
+                        </Frame>
 
-                    <!-- Yellow LED Current Chart -->
-                    <Frame BorderColor="Gray" CornerRadius="5" Padding="10">
-                        <Grid RowSpacing="5">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="300"/>
-                            </Grid.RowDefinitions>
-                            <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
-                                <Label Grid.Column="0" Text="Yellow LED Current (mA)" FontAttributes="Bold" FontSize="16"/>
-                                <Button Grid.Column="1" Text="Clear" Clicked="OnClearYellowChart" WidthRequest="80"/>
+                        <!-- Battery Voltage Chart -->
+                        <Frame Grid.Column="1" BorderColor="Gray" CornerRadius="5" Padding="10">
+                            <Grid RowSpacing="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="300"/>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                                    <Label Grid.Column="0" Text="Battery Voltage (0-3.5V)" FontAttributes="Bold" FontSize="16"/>
+                                    <Button Grid.Column="1" Text="Clear" Clicked="OnClearBatteryChart" WidthRequest="80"/>
+                                </Grid>
+                                <lvc:CartesianChart Grid.Row="1" x:Name="BatteryChart" BackgroundColor="#1A1A1A"/>
                             </Grid>
-                            <lvc:CartesianChart Grid.Row="1" x:Name="YellowChart" BackgroundColor="#1A1A1A"/>
-                        </Grid>
-                    </Frame>
+                        </Frame>
+                    </Grid>
 
-                    <!-- Red LED Current Chart -->
-                    <Frame BorderColor="Gray" CornerRadius="5" Padding="10">
-                        <Grid RowSpacing="5">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="300"/>
-                            </Grid.RowDefinitions>
-                            <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
-                                <Label Grid.Column="0" Text="Red LED Current (mA)" FontAttributes="Bold" FontSize="16"/>
-                                <Button Grid.Column="1" Text="Clear" Clicked="OnClearRedChart" WidthRequest="80"/>
+                    <!-- Current Charts Row 1 -->
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                        <!-- Total Load Current Chart -->
+                        <Frame Grid.Column="0" BorderColor="Gray" CornerRadius="5" Padding="10">
+                            <Grid RowSpacing="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="300"/>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0" ColumnDefinitions="*,Auto,Auto,Auto">
+                                    <Label Grid.Column="0" Text="Total Load Current (mA)" FontAttributes="Bold" FontSize="16"/>
+                                    <Label Grid.Column="1" Text="Scale:" VerticalOptions="Center" Margin="0,0,5,0"/>
+                                    <Picker Grid.Column="2" x:Name="TotalLoadScalePicker" SelectedIndexChanged="OnTotalLoadScaleChanged" WidthRequest="60">
+                                        <Picker.ItemsSource>
+                                            <x:Array Type="{x:Type x:String}">
+                                                <x:String>1</x:String>
+                                                <x:String>2</x:String>
+                                                <x:String>3</x:String>
+                                                <x:String>4</x:String>
+                                                <x:String>5</x:String>
+                                                <x:String>6</x:String>
+                                                <x:String>7</x:String>
+                                                <x:String>8</x:String>
+                                                <x:String>9</x:String>
+                                                <x:String>10</x:String>
+                                            </x:Array>
+                                        </Picker.ItemsSource>
+                                    </Picker>
+                                    <Button Grid.Column="3" Text="Clear" Clicked="OnClearTotalLoadChart" WidthRequest="80" Margin="10,0,0,0"/>
+                                </Grid>
+                                <lvc:CartesianChart Grid.Row="1" x:Name="TotalLoadChart" BackgroundColor="#1A1A1A"/>
                             </Grid>
-                            <lvc:CartesianChart Grid.Row="1" x:Name="RedChart" BackgroundColor="#1A1A1A"/>
-                        </Grid>
-                    </Frame>
+                        </Frame>
 
-                    <!-- Green LED Current Chart -->
-                    <Frame BorderColor="Gray" CornerRadius="5" Padding="10">
-                        <Grid RowSpacing="5">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="300"/>
-                            </Grid.RowDefinitions>
-                            <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
-                                <Label Grid.Column="0" Text="Green LED Current (mA)" FontAttributes="Bold" FontSize="16"/>
-                                <Button Grid.Column="1" Text="Clear" Clicked="OnClearGreenChart" WidthRequest="80"/>
+                        <!-- Yellow LED Current Chart -->
+                        <Frame Grid.Column="1" BorderColor="Gray" CornerRadius="5" Padding="10">
+                            <Grid RowSpacing="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="300"/>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0" ColumnDefinitions="*,Auto,Auto,Auto">
+                                    <Label Grid.Column="0" Text="Yellow LED Current (mA)" FontAttributes="Bold" FontSize="16"/>
+                                    <Label Grid.Column="1" Text="Scale:" VerticalOptions="Center" Margin="0,0,5,0"/>
+                                    <Picker Grid.Column="2" x:Name="YellowScalePicker" SelectedIndexChanged="OnYellowScaleChanged" WidthRequest="60">
+                                        <Picker.ItemsSource>
+                                            <x:Array Type="{x:Type x:String}">
+                                                <x:String>1</x:String>
+                                                <x:String>2</x:String>
+                                                <x:String>3</x:String>
+                                                <x:String>4</x:String>
+                                                <x:String>5</x:String>
+                                                <x:String>6</x:String>
+                                                <x:String>7</x:String>
+                                                <x:String>8</x:String>
+                                                <x:String>9</x:String>
+                                                <x:String>10</x:String>
+                                            </x:Array>
+                                        </Picker.ItemsSource>
+                                    </Picker>
+                                    <Button Grid.Column="3" Text="Clear" Clicked="OnClearYellowChart" WidthRequest="80" Margin="10,0,0,0"/>
+                                </Grid>
+                                <lvc:CartesianChart Grid.Row="1" x:Name="YellowChart" BackgroundColor="#1A1A1A"/>
                             </Grid>
-                            <lvc:CartesianChart Grid.Row="1" x:Name="GreenChart" BackgroundColor="#1A1A1A"/>
-                        </Grid>
-                    </Frame>
+                        </Frame>
+                    </Grid>
+
+                    <!-- Current Charts Row 2 -->
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                        <!-- Red LED Current Chart -->
+                        <Frame Grid.Column="0" BorderColor="Gray" CornerRadius="5" Padding="10">
+                            <Grid RowSpacing="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="300"/>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0" ColumnDefinitions="*,Auto,Auto,Auto">
+                                    <Label Grid.Column="0" Text="Red LED Current (mA)" FontAttributes="Bold" FontSize="16"/>
+                                    <Label Grid.Column="1" Text="Scale:" VerticalOptions="Center" Margin="0,0,5,0"/>
+                                    <Picker Grid.Column="2" x:Name="RedScalePicker" SelectedIndexChanged="OnRedScaleChanged" WidthRequest="60">
+                                        <Picker.ItemsSource>
+                                            <x:Array Type="{x:Type x:String}">
+                                                <x:String>1</x:String>
+                                                <x:String>2</x:String>
+                                                <x:String>3</x:String>
+                                                <x:String>4</x:String>
+                                                <x:String>5</x:String>
+                                                <x:String>6</x:String>
+                                                <x:String>7</x:String>
+                                                <x:String>8</x:String>
+                                                <x:String>9</x:String>
+                                                <x:String>10</x:String>
+                                            </x:Array>
+                                        </Picker.ItemsSource>
+                                    </Picker>
+                                    <Button Grid.Column="3" Text="Clear" Clicked="OnClearRedChart" WidthRequest="80" Margin="10,0,0,0"/>
+                                </Grid>
+                                <lvc:CartesianChart Grid.Row="1" x:Name="RedChart" BackgroundColor="#1A1A1A"/>
+                            </Grid>
+                        </Frame>
+
+                        <!-- Green LED Current Chart -->
+                        <Frame Grid.Column="1" BorderColor="Gray" CornerRadius="5" Padding="10">
+                            <Grid RowSpacing="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="300"/>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0" ColumnDefinitions="*,Auto,Auto,Auto">
+                                    <Label Grid.Column="0" Text="Green LED Current (mA)" FontAttributes="Bold" FontSize="16"/>
+                                    <Label Grid.Column="1" Text="Scale:" VerticalOptions="Center" Margin="0,0,5,0"/>
+                                    <Picker Grid.Column="2" x:Name="GreenScalePicker" SelectedIndexChanged="OnGreenScaleChanged" WidthRequest="60">
+                                        <Picker.ItemsSource>
+                                            <x:Array Type="{x:Type x:String}">
+                                                <x:String>1</x:String>
+                                                <x:String>2</x:String>
+                                                <x:String>3</x:String>
+                                                <x:String>4</x:String>
+                                                <x:String>5</x:String>
+                                                <x:String>6</x:String>
+                                                <x:String>7</x:String>
+                                                <x:String>8</x:String>
+                                                <x:String>9</x:String>
+                                                <x:String>10</x:String>
+                                            </x:Array>
+                                        </Picker.ItemsSource>
+                                    </Picker>
+                                    <Button Grid.Column="3" Text="Clear" Clicked="OnClearGreenChart" WidthRequest="80" Margin="10,0,0,0"/>
+                                </Grid>
+                                <lvc:CartesianChart Grid.Row="1" x:Name="GreenChart" BackgroundColor="#1A1A1A"/>
+                            </Grid>
+                        </Frame>
+                    </Grid>
                 </VerticalStackLayout>
             </ScrollView>
         </Grid>

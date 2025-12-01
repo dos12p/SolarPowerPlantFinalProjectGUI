@@ -1,4 +1,4 @@
-﻿using System.IO.Ports;
+using System.IO.Ports;
 using System.Text;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
@@ -37,6 +37,12 @@ public partial class MainPage : ContentPage
 	private int _trafficState = 0; // 0=Green, 1=Yellow, 2=Red
 	private readonly int[] _trafficDurations = { 4000, 2000, 7000 }; // Green, Yellow, Red in ms
 
+	// Christmas Mode
+	private bool _isChristmasMode = false;
+	private System.Timers.Timer? _christmasTimer;
+	private int _christmasState = 0;
+	private readonly int[] _christmasDurations = { 500, 500, 500, 500, 500, 500 }; // Pattern timing in ms
+
 	// Graph Data Collections
 	private ObservableCollection<ObservablePoint> _solarData = new();
 	private ObservableCollection<ObservablePoint> _batteryData = new();
@@ -45,12 +51,24 @@ public partial class MainPage : ContentPage
 	private ObservableCollection<ObservablePoint> _redData = new();
 	private ObservableCollection<ObservablePoint> _greenData = new();
 	private int _timeWindowSeconds = 10; // Default 10 seconds
-	private int _currentScaleMax = 4; // Default 4mA max
+
+	// Individual scale for each current chart
+	private int _totalLoadScaleMax = 4;
+	private int _yellowScaleMax = 4;
+	private int _redScaleMax = 4;
+	private int _greenScaleMax = 4;
+	private int _combinedCurrentScaleMax = 4;
 
 	// Keep track of start time for X-axis
 	private DateTime _graphStartTime = DateTime.Now;
 	private List<Axis> _allXAxes = new();
-	private List<Axis> _allCurrentYAxes = new();
+
+	// Y-axis references for individual charts
+	private Axis? _totalLoadYAxis;
+	private Axis? _yellowYAxis;
+	private Axis? _redYAxis;
+	private Axis? _greenYAxis;
+	private Axis? _combinedCurrentYAxis;
 
 	public MainPage()
 	{
@@ -66,7 +84,10 @@ public partial class MainPage : ContentPage
 		// Initialize graphs
 		InitializeGraphs();
 		TimeWindowPicker.SelectedIndex = 0; // Default to 10 seconds
-		CurrentScalePicker.SelectedIndex = 3; // Default to 4mA
+		TotalLoadScalePicker.SelectedIndex = 3; // Default to 4mA
+		YellowScalePicker.SelectedIndex = 3;
+		RedScalePicker.SelectedIndex = 3;
+		GreenScalePicker.SelectedIndex = 3;
 	}
 
 	private void LoadAvailablePorts()
@@ -100,6 +121,12 @@ public partial class MainPage : ContentPage
 			_serialPort = new SerialPort(portName, 115200, Parity.None, 8, StopBits.One);
 			_serialPort.DataReceived += SerialPort_DataReceived;
 			_serialPort.Open();
+
+			// Initialize LEDs off
+			Led2Switch.IsToggled = false;
+			Led3Switch.IsToggled = false;
+			Led4Switch.IsToggled = false;
+			SendLedPacket();
 
 			ConnectButton.IsEnabled = false;
 			DisconnectButton.IsEnabled = true;
@@ -426,7 +453,7 @@ public partial class MainPage : ContentPage
 		}
 	}
 
-	private void SendLedPacket()
+	private void SendLedPacket(bool forceBlueOn = false)
 	{
 		try
 		{
@@ -436,9 +463,9 @@ public partial class MainPage : ContentPage
 			}
 
 			// Build LED state string (4 binary digits) - Active Low for LEDs, Active High for Blue LED
-			// First digit: Blue LED (1 = ON when tripped, 0 = OFF normally)
+			// First digit: Blue LED (1 = ON when tripped or forced, 0 = OFF normally)
 			// Remaining digits: Yellow, Red, Green LEDs (0 = ON, 1 = OFF)
-			string led1 = _isTripped ? "1" : "0"; // Blue LED - Active High
+			string led1 = (_isTripped || forceBlueOn) ? "1" : "0"; // Blue LED - Active High
 			string led2 = (!_isTripped && Led2Switch.IsToggled) ? "0" : "1"; // Yellow - Active Low
 			string led3 = (!_isTripped && Led3Switch.IsToggled) ? "0" : "1"; // Red - Active Low
 			string led4 = (!_isTripped && Led4Switch.IsToggled) ? "0" : "1"; // Green - Active Low
@@ -475,12 +502,32 @@ public partial class MainPage : ContentPage
 	{
 		MainThread.BeginInvokeOnMainThread(() =>
 		{
+			// Switch to manual mode
+			if (_isTrafficMode)
+			{
+				_isTrafficMode = false;
+				ModeSwitch.IsToggled = false;
+			}
+			if (_isChristmasMode)
+			{
+				_isChristmasMode = false;
+				ChristmasSwitch.IsToggled = false;
+			}
+
 			// Stop traffic timer if running
 			if (_trafficTimer != null)
 			{
 				_trafficTimer.Stop();
 				_trafficTimer.Dispose();
 				_trafficTimer = null;
+			}
+
+			// Stop Christmas timer if running
+			if (_christmasTimer != null)
+			{
+				_christmasTimer.Stop();
+				_christmasTimer.Dispose();
+				_christmasTimer = null;
 			}
 
 			// Turn off all LED switches
@@ -538,6 +585,19 @@ public partial class MainPage : ContentPage
 
 		if (_isTrafficMode)
 		{
+			// Disable Christmas mode
+			if (_isChristmasMode)
+			{
+				_isChristmasMode = false;
+				ChristmasSwitch.IsToggled = false;
+				if (_christmasTimer != null)
+				{
+					_christmasTimer.Stop();
+					_christmasTimer.Dispose();
+					_christmasTimer = null;
+				}
+			}
+
 			// Disable manual LED switches
 			Led2Switch.IsEnabled = false;
 			Led3Switch.IsEnabled = false;
@@ -632,6 +692,148 @@ public partial class MainPage : ContentPage
 		SendLedPacket();
 	}
 
+	// Christmas mode methods
+	private void OnChristmasChanged(object? sender, ToggledEventArgs e)
+	{
+		_isChristmasMode = e.Value;
+
+		if (_isChristmasMode)
+		{
+			// Disable traffic mode
+			if (_isTrafficMode)
+			{
+				_isTrafficMode = false;
+				ModeSwitch.IsToggled = false;
+				if (_trafficTimer != null)
+				{
+					_trafficTimer.Stop();
+					_trafficTimer.Dispose();
+					_trafficTimer = null;
+				}
+			}
+
+			// Disable manual LED switches
+			Led2Switch.IsEnabled = false;
+			Led3Switch.IsEnabled = false;
+			Led4Switch.IsEnabled = false;
+
+			// Disable breaker reset during Christmas mode
+			ResetBreakerButton.IsEnabled = false;
+
+			// Start Christmas pattern
+			_christmasState = 0;
+			StartChristmasCycle();
+			AddToLog("Christmas mode ENABLED");
+		}
+		else
+		{
+			// Stop Christmas timer
+			if (_christmasTimer != null)
+			{
+				_christmasTimer.Stop();
+				_christmasTimer.Dispose();
+				_christmasTimer = null;
+			}
+
+			// Turn off all LEDs
+			Led2Switch.IsToggled = false;
+			Led3Switch.IsToggled = false;
+			Led4Switch.IsToggled = false;
+			SendLedPacket();
+
+			// Re-enable manual LED switches if not tripped
+			if (!_isTripped)
+			{
+				Led2Switch.IsEnabled = true;
+				Led3Switch.IsEnabled = true;
+				Led4Switch.IsEnabled = true;
+				ResetBreakerButton.IsEnabled = true;
+			}
+
+			AddToLog("Christmas mode DISABLED");
+		}
+	}
+
+	private void StartChristmasCycle()
+	{
+		MainThread.BeginInvokeOnMainThread(() =>
+		{
+			// Set initial state
+			UpdateChristmasLights();
+
+			// Create and start timer
+			_christmasTimer = new System.Timers.Timer(_christmasDurations[_christmasState]);
+			_christmasTimer.Elapsed += OnChristmasTimerElapsed;
+			_christmasTimer.AutoReset = false;
+			_christmasTimer.Start();
+		});
+	}
+
+	private void OnChristmasTimerElapsed(object? sender, System.Timers.ElapsedEventArgs e)
+	{
+		if (!_isChristmasMode || _isTripped)
+		{
+			return;
+		}
+
+		// Move to next state
+		_christmasState = (_christmasState + 1) % 6;
+
+		MainThread.BeginInvokeOnMainThread(() =>
+		{
+			UpdateChristmasLights();
+
+			// Restart timer with new duration
+			if (_christmasTimer != null)
+			{
+				_christmasTimer.Interval = _christmasDurations[_christmasState];
+				_christmasTimer.Start();
+			}
+		});
+	}
+
+	private void UpdateChristmasLights()
+	{
+		// Christmas pattern: alternating red/green with blue flashing
+		// Pattern states: 0=Red+Blue, 1=Red, 2=Green+Blue, 3=Green, 4=All+Blue, 5=Off
+		switch (_christmasState)
+		{
+			case 0: // Red + Blue flash
+				Led3Switch.IsToggled = true;  // Red on (active-low)
+				Led2Switch.IsToggled = false; // Yellow off
+				Led4Switch.IsToggled = false; // Green off
+				break;
+			case 1: // Red only
+				Led3Switch.IsToggled = true;  // Red on
+				Led2Switch.IsToggled = false; // Yellow off
+				Led4Switch.IsToggled = false; // Green off
+				break;
+			case 2: // Green + Blue flash
+				Led3Switch.IsToggled = false; // Red off
+				Led2Switch.IsToggled = false; // Yellow off
+				Led4Switch.IsToggled = true;  // Green on (active-low)
+				break;
+			case 3: // Green only
+				Led3Switch.IsToggled = false; // Red off
+				Led2Switch.IsToggled = false; // Yellow off
+				Led4Switch.IsToggled = true;  // Green on
+				break;
+			case 4: // All + Blue flash
+				Led3Switch.IsToggled = true;  // Red on
+				Led2Switch.IsToggled = true;  // Yellow on
+				Led4Switch.IsToggled = true;  // Green on
+				break;
+			case 5: // All off
+				Led3Switch.IsToggled = false;
+				Led2Switch.IsToggled = false;
+				Led4Switch.IsToggled = false;
+				break;
+		}
+		
+		// Send packet with Blue LED active on states 0, 2, 4
+		SendLedPacket(_christmasState == 0 || _christmasState == 2 || _christmasState == 4);
+	}
+
 	protected override void OnDisappearing()
 	{
 		base.OnDisappearing();
@@ -643,15 +845,101 @@ public partial class MainPage : ContentPage
 			_trafficTimer = null;
 		}
 		
+		if (_christmasTimer != null)
+		{
+			_christmasTimer.Stop();
+			_christmasTimer.Dispose();
+			_christmasTimer = null;
+		}
+		
 		DisconnectSerial();
 	}
 
 	// Graph Methods
 	private void InitializeGraphs()
 	{
-		var drawMargin = new LiveChartsCore.Measure.Margin(50, 10, 30, 30);
+		// Increased margins: left, top, right, bottom to keep labels outside gridlines
+		var drawMargin = new LiveChartsCore.Measure.Margin(70, 50, 30, 50);
 		_allXAxes.Clear();
-		_allCurrentYAxes.Clear();
+
+		// Combined Voltage Chart
+		CombinedVoltageChart.Series = new ISeries[]
+		{
+			new LineSeries<ObservablePoint>
+			{
+				Values = _solarData,
+				Fill = null,
+				Stroke = new SolidColorPaint(SKColors.Orange) { StrokeThickness = 2 },
+				GeometrySize = 0,
+				LineSmoothness = 0,
+				Name = "Solar"
+			},
+			new LineSeries<ObservablePoint>
+			{
+				Values = _batteryData,
+				Fill = null,
+				Stroke = new SolidColorPaint(SKColors.LimeGreen) { StrokeThickness = 2 },
+				GeometrySize = 0,
+				LineSmoothness = 0,
+				Name = "Battery"
+			}
+		};
+		var combinedVoltageXAxis = CreateTimeAxis();
+		_allXAxes.Add(combinedVoltageXAxis);
+		CombinedVoltageChart.XAxes = new[] { combinedVoltageXAxis };
+		CombinedVoltageChart.YAxes = new[] { CreateVoltageAxis() };
+		CombinedVoltageChart.DrawMargin = drawMargin;
+		CombinedVoltageChart.LegendPosition = LiveChartsCore.Measure.LegendPosition.Top;
+		CombinedVoltageChart.LegendTextPaint = new SolidColorPaint(SKColors.White);
+
+		// Combined Current Chart
+		CombinedCurrentChart.Series = new ISeries[]
+		{
+			new LineSeries<ObservablePoint>
+			{
+				Values = _totalLoadData,
+				Fill = null,
+				Stroke = new SolidColorPaint(SKColors.DeepSkyBlue) { StrokeThickness = 2 },
+				GeometrySize = 0,
+				LineSmoothness = 0,
+				Name = "Total Load"
+			},
+			new LineSeries<ObservablePoint>
+			{
+				Values = _yellowData,
+				Fill = null,
+				Stroke = new SolidColorPaint(SKColors.Gold) { StrokeThickness = 2 },
+				GeometrySize = 0,
+				LineSmoothness = 0,
+				Name = "Yellow LED"
+			},
+			new LineSeries<ObservablePoint>
+			{
+				Values = _redData,
+				Fill = null,
+				Stroke = new SolidColorPaint(SKColors.Red) { StrokeThickness = 2 },
+				GeometrySize = 0,
+				LineSmoothness = 0,
+				Name = "Red LED"
+			},
+			new LineSeries<ObservablePoint>
+			{
+				Values = _greenData,
+				Fill = null,
+				Stroke = new SolidColorPaint(SKColors.LimeGreen) { StrokeThickness = 2 },
+				GeometrySize = 0,
+				LineSmoothness = 0,
+				Name = "Green LED"
+			}
+		};
+		var combinedCurrentXAxis = CreateTimeAxis();
+		_allXAxes.Add(combinedCurrentXAxis);
+		_combinedCurrentYAxis = CreateCurrentAxis(_combinedCurrentScaleMax);
+		CombinedCurrentChart.XAxes = new[] { combinedCurrentXAxis };
+		CombinedCurrentChart.YAxes = new[] { _combinedCurrentYAxis };
+		CombinedCurrentChart.DrawMargin = drawMargin;
+		CombinedCurrentChart.LegendPosition = LiveChartsCore.Measure.LegendPosition.Top;
+		CombinedCurrentChart.LegendTextPaint = new SolidColorPaint(SKColors.White);
 
 		// Solar Chart
 		SolarChart.Series = new ISeries[]
@@ -703,10 +991,9 @@ public partial class MainPage : ContentPage
 		};
 		var totalLoadXAxis = CreateTimeAxis();
 		_allXAxes.Add(totalLoadXAxis);
-		var totalLoadYAxis = CreateCurrentAxis();
-		_allCurrentYAxes.Add(totalLoadYAxis);
+		_totalLoadYAxis = CreateCurrentAxis(_totalLoadScaleMax);
 		TotalLoadChart.XAxes = new[] { totalLoadXAxis };
-		TotalLoadChart.YAxes = new[] { totalLoadYAxis };
+		TotalLoadChart.YAxes = new[] { _totalLoadYAxis };
 		TotalLoadChart.DrawMargin = drawMargin;
 
 		// Yellow LED Chart
@@ -723,10 +1010,9 @@ public partial class MainPage : ContentPage
 		};
 		var yellowXAxis = CreateTimeAxis();
 		_allXAxes.Add(yellowXAxis);
-		var yellowYAxis = CreateCurrentAxis();
-		_allCurrentYAxes.Add(yellowYAxis);
+		_yellowYAxis = CreateCurrentAxis(_yellowScaleMax);
 		YellowChart.XAxes = new[] { yellowXAxis };
-		YellowChart.YAxes = new[] { yellowYAxis };
+		YellowChart.YAxes = new[] { _yellowYAxis };
 		YellowChart.DrawMargin = drawMargin;
 
 		// Red LED Chart
@@ -743,10 +1029,9 @@ public partial class MainPage : ContentPage
 		};
 		var redXAxis = CreateTimeAxis();
 		_allXAxes.Add(redXAxis);
-		var redYAxis = CreateCurrentAxis();
-		_allCurrentYAxes.Add(redYAxis);
+		_redYAxis = CreateCurrentAxis(_redScaleMax);
 		RedChart.XAxes = new[] { redXAxis };
-		RedChart.YAxes = new[] { redYAxis };
+		RedChart.YAxes = new[] { _redYAxis };
 		RedChart.DrawMargin = drawMargin;
 
 		// Green LED Chart
@@ -763,10 +1048,9 @@ public partial class MainPage : ContentPage
 		};
 		var greenXAxis = CreateTimeAxis();
 		_allXAxes.Add(greenXAxis);
-		var greenYAxis = CreateCurrentAxis();
-		_allCurrentYAxes.Add(greenYAxis);
+		_greenYAxis = CreateCurrentAxis(_greenScaleMax);
 		GreenChart.XAxes = new[] { greenXAxis };
-		GreenChart.YAxes = new[] { greenYAxis };
+		GreenChart.YAxes = new[] { _greenYAxis };
 		GreenChart.DrawMargin = drawMargin;
 	}
 
@@ -787,13 +1071,13 @@ public partial class MainPage : ContentPage
 		{
 			Labeler = value => TimeSpan.FromSeconds(value).ToString(@"mm\:ss"),
 			MinStep = stepSize,
-			ForceStepToMin = true, // Force using the step size
-			Name = "Time (seconds)",
-			NamePaint = new SolidColorPaint(SKColors.White),
+			ForceStepToMin = true,
 			LabelsPaint = new SolidColorPaint(SKColors.LightGray),
+			LabelsRotation = 0,
 			SeparatorsPaint = new SolidColorPaint(SKColors.Gray) { StrokeThickness = 1 },
 			AnimationsSpeed = TimeSpan.FromMilliseconds(0),
-			IsVisible = true
+			IsVisible = true,
+			ShowSeparatorLines = true
 		};
 	}
 
@@ -803,24 +1087,22 @@ public partial class MainPage : ContentPage
 		{
 			MinLimit = 0,
 			MaxLimit = 3.5,
-			Name = "Voltage (V)",
-			NamePaint = new SolidColorPaint(SKColors.White),
 			LabelsPaint = new SolidColorPaint(SKColors.LightGray),
-			SeparatorsPaint = new SolidColorPaint(SKColors.Gray) { StrokeThickness = 1 }
+			SeparatorsPaint = new SolidColorPaint(SKColors.Gray) { StrokeThickness = 1 },
+			ShowSeparatorLines = true
 		};
 	}
 
-	private Axis CreateCurrentAxis()
+	private Axis CreateCurrentAxis(int maxScale)
 	{
 		return new Axis
 		{
 			MinLimit = 0,
-			MaxLimit = _currentScaleMax,
-			Name = "Current (mA)",
-			NamePaint = new SolidColorPaint(SKColors.White),
+			MaxLimit = maxScale,
 			LabelsPaint = new SolidColorPaint(SKColors.LightGray),
 			SeparatorsPaint = new SolidColorPaint(SKColors.Gray) { StrokeThickness = 1 },
-			AnimationsSpeed = TimeSpan.FromMilliseconds(0) // No animation on axis
+			AnimationsSpeed = TimeSpan.FromMilliseconds(0),
+			ShowSeparatorLines = true
 		};
 	}
 
@@ -841,9 +1123,9 @@ public partial class MainPage : ContentPage
 				_redData.Add(new ObservablePoint(secondsElapsed, red));
 				_greenData.Add(new ObservablePoint(secondsElapsed, green));
 
-				// Debug logging
-				AddToLog($"GRAPH DATA: Solar={solar:F3}V, Battery={battery:F3}V, Load={totalLoad:F1}mA, Y={yellow:F1}, R={red:F1}, G={green:F1} (Points: {_solarData.Count}, Time: {secondsElapsed:F1}s)");
-
+				// Calculate visible window boundaries
+				double minLimit, maxLimit;
+				
 				// Update X-axis window to show most recent time window
 				if (secondsElapsed > _timeWindowSeconds)
 				{
@@ -860,8 +1142,8 @@ public partial class MainPage : ContentPage
 
 					// Round minLimit to nearest step for visual stability
 					double rawMin = secondsElapsed - _timeWindowSeconds;
-					double minLimit = Math.Floor(rawMin / stepSize) * stepSize;
-					double maxLimit = minLimit + _timeWindowSeconds;
+					minLimit = Math.Floor(rawMin / stepSize) * stepSize;
+					maxLimit = minLimit + _timeWindowSeconds;
 
 					foreach (var axis in _allXAxes)
 					{
@@ -869,27 +1151,34 @@ public partial class MainPage : ContentPage
 						axis.MaxLimit = maxLimit;
 					}
 
-					// Keep data for up to 10 minutes (600 seconds), remove anything older
-					double maxDataRetention = 600; // 10 minutes
-					double cutoffSeconds = secondsElapsed - maxDataRetention;
-					if (cutoffSeconds > 0)
-					{
-						RemoveOldData(_solarData, cutoffSeconds);
-						RemoveOldData(_batteryData, cutoffSeconds);
-						RemoveOldData(_totalLoadData, cutoffSeconds);
-						RemoveOldData(_yellowData, cutoffSeconds);
-						RemoveOldData(_redData, cutoffSeconds);
-						RemoveOldData(_greenData, cutoffSeconds);
-					}
+					
 				}
 				else
 				{
 					// Still filling initial window
+					minLimit = 0;
+					maxLimit = _timeWindowSeconds;
+					
 					foreach (var axis in _allXAxes)
 					{
-						axis.MinLimit = 0;
-						axis.MaxLimit = _timeWindowSeconds;
+						axis.MinLimit = minLimit;
+						axis.MaxLimit = maxLimit;
 					}
+				}
+				
+				// Always keep data for 10 minutes (600 seconds), regardless of visible window
+				// Only remove data older than 10 minutes from current time
+				double maxDataRetentionSeconds = 600; // 10 minutes
+				double dataRemovalCutoff = secondsElapsed - maxDataRetentionSeconds;
+				
+				if (dataRemovalCutoff > 0)
+				{
+					RemoveOldData(_solarData, dataRemovalCutoff);
+					RemoveOldData(_batteryData, dataRemovalCutoff);
+					RemoveOldData(_totalLoadData, dataRemovalCutoff);
+					RemoveOldData(_yellowData, dataRemovalCutoff);
+					RemoveOldData(_redData, dataRemovalCutoff);
+					RemoveOldData(_greenData, dataRemovalCutoff);
 				}
 			}
 			catch (Exception ex)
@@ -929,61 +1218,115 @@ public partial class MainPage : ContentPage
 		switch (TimeWindowPicker.SelectedIndex)
 		{
 			case 0: _timeWindowSeconds = 10; break;
-			case 1: _timeWindowSeconds = 30; break;
-			case 2: _timeWindowSeconds = 60; break;
-			case 3: _timeWindowSeconds = 120; break;
-			case 4: _timeWindowSeconds = 300; break;
-			case 5: _timeWindowSeconds = 600; break;
+		case 1: _timeWindowSeconds = 30; break;
+		case 2: _timeWindowSeconds = 60; break;
+		case 3: _timeWindowSeconds = 120; break;
+		case 4: _timeWindowSeconds = 300; break;
+		case 5: _timeWindowSeconds = 600; break;
 		}
-
+		
 		// Reinitialize graphs with new time window and step size
 		InitializeGraphs();
-	}
-
-	private void OnClearSolarChart(object? sender, EventArgs e)
+	}	private void OnClearSolarChart(object? sender, EventArgs e)
 	{
 		_solarData.Clear();
-		_graphStartTime = DateTime.Now;
+		// Force chart repaint to remove cached rendering artifacts
+		var currentSeries = SolarChart.Series;
+		SolarChart.Series = Array.Empty<ISeries>();
+		SolarChart.Series = currentSeries;
 	}
 
 	private void OnClearBatteryChart(object? sender, EventArgs e)
 	{
 		_batteryData.Clear();
+		// Force chart repaint to remove cached rendering artifacts
+		var currentSeries = BatteryChart.Series;
+		BatteryChart.Series = Array.Empty<ISeries>();
+		BatteryChart.Series = currentSeries;
 	}
 
 	private void OnClearTotalLoadChart(object? sender, EventArgs e)
 	{
 		_totalLoadData.Clear();
+		// Force chart repaint to remove cached rendering artifacts
+		var currentSeries = TotalLoadChart.Series;
+		TotalLoadChart.Series = Array.Empty<ISeries>();
+		TotalLoadChart.Series = currentSeries;
 	}
 
 	private void OnClearYellowChart(object? sender, EventArgs e)
 	{
 		_yellowData.Clear();
+		// Force chart repaint to remove cached rendering artifacts
+		var currentSeries = YellowChart.Series;
+		YellowChart.Series = Array.Empty<ISeries>();
+		YellowChart.Series = currentSeries;
 	}
 
 	private void OnClearRedChart(object? sender, EventArgs e)
 	{
 		_redData.Clear();
+		// Force chart repaint to remove cached rendering artifacts
+		var currentSeries = RedChart.Series;
+		RedChart.Series = Array.Empty<ISeries>();
+		RedChart.Series = currentSeries;
 	}
 
 	private void OnClearGreenChart(object? sender, EventArgs e)
 	{
 		_greenData.Clear();
+		// Force chart repaint to remove cached rendering artifacts
+		var currentSeries = GreenChart.Series;
+		GreenChart.Series = Array.Empty<ISeries>();
+		GreenChart.Series = currentSeries;
 	}
 
-	private void OnCurrentScaleChanged(object? sender, EventArgs e)
+	private void OnTotalLoadScaleChanged(object? sender, EventArgs e)
 	{
-		if (CurrentScalePicker.SelectedIndex == -1)
+		if (TotalLoadScalePicker.SelectedIndex == -1)
 			return;
 
-		// Scale is 1-10 mA, index is 0-9
-		_currentScaleMax = CurrentScalePicker.SelectedIndex + 1;
+		_totalLoadScaleMax = TotalLoadScalePicker.SelectedIndex + 1;
+		if (_totalLoadYAxis != null)
+			_totalLoadYAxis.MaxLimit = _totalLoadScaleMax;
+		if (_combinedCurrentYAxis != null)
+			_combinedCurrentYAxis.MaxLimit = _combinedCurrentScaleMax;
+	}
 
-		// Update all current Y-axis limits
-		foreach (var axis in _allCurrentYAxes)
-		{
-			axis.MaxLimit = _currentScaleMax;
-		}
+	private void OnYellowScaleChanged(object? sender, EventArgs e)
+	{
+		if (YellowScalePicker.SelectedIndex == -1)
+			return;
+
+		_yellowScaleMax = YellowScalePicker.SelectedIndex + 1;
+		if (_yellowYAxis != null)
+			_yellowYAxis.MaxLimit = _yellowScaleMax;
+		if (_combinedCurrentYAxis != null)
+			_combinedCurrentYAxis.MaxLimit = _combinedCurrentScaleMax;
+	}
+
+	private void OnRedScaleChanged(object? sender, EventArgs e)
+	{
+		if (RedScalePicker.SelectedIndex == -1)
+			return;
+
+		_redScaleMax = RedScalePicker.SelectedIndex + 1;
+		if (_redYAxis != null)
+			_redYAxis.MaxLimit = _redScaleMax;
+		if (_combinedCurrentYAxis != null)
+			_combinedCurrentYAxis.MaxLimit = _combinedCurrentScaleMax;
+	}
+
+	private void OnGreenScaleChanged(object? sender, EventArgs e)
+	{
+		if (GreenScalePicker.SelectedIndex == -1)
+			return;
+
+		_greenScaleMax = GreenScalePicker.SelectedIndex + 1;
+		if (_greenYAxis != null)
+			_greenYAxis.MaxLimit = _greenScaleMax;
+		if (_combinedCurrentYAxis != null)
+			_combinedCurrentYAxis.MaxLimit = _combinedCurrentScaleMax;
 	}
 }
 
