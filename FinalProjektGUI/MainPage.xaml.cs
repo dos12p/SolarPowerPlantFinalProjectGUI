@@ -16,7 +16,12 @@ public partial class MainPage : ContentPage
 
 	// Circuit Protection
 	private bool _isTripped = false;
-	private const double TripThreshold = 4.0; // mA
+	private const double TripThreshold = 0.9; // mA
+
+	// Battery Charged State Detection
+	private Queue<double> _batteryCurrentHistory = new Queue<double>();
+	private const int ChargedDetectionWindow = 5;
+	private const double ChargedThreshold = 0.05; // Consider 0.0mA if within ±0.05mA
 
 	public MainPage()
 	{
@@ -264,7 +269,24 @@ public partial class MainPage : ContentPage
 
 				// Battery Status (ADC5 - ADC4) / 100
 				double batteryCurrent = (avgValues[5] - avgValues[4]) / 100.0;
-				if (batteryCurrent >= 0)
+				
+				// Track battery current history for charged state detection
+				_batteryCurrentHistory.Enqueue(batteryCurrent);
+				if (_batteryCurrentHistory.Count > ChargedDetectionWindow)
+				{
+					_batteryCurrentHistory.Dequeue();
+				}
+
+				// Check if battery is in charged state (5 consecutive ~0.0mA readings)
+				bool isCharged = _batteryCurrentHistory.Count == ChargedDetectionWindow &&
+				                 _batteryCurrentHistory.All(c => Math.Abs(c) < ChargedThreshold);
+
+				if (isCharged)
+				{
+					BatteryStatusLabel.Text = "CHARGED";
+					BatteryStatusLabel.TextColor = Colors.Blue;
+				}
+				else if (batteryCurrent >= 0)
 				{
 					BatteryStatusLabel.Text = $"CHARGING at {Math.Abs(batteryCurrent):F1} mA";
 					BatteryStatusLabel.TextColor = Colors.Green;
@@ -288,12 +310,12 @@ public partial class MainPage : ContentPage
 				double totalLoad = yellowCurrent + redCurrent + greenCurrent;
 				TotalLoadCurrentLabel.Text = $"{totalLoad:F1} mA";
 
-				// Check for overcurrent trip condition (latching)
-				if (!_isTripped && totalLoad > TripThreshold)
+				// Check for overcurrent trip condition (latching) - only during discharge
+				if (!_isTripped && batteryCurrent < 0 && totalLoad > TripThreshold)
 				{
 					_isTripped = true;
 					TripCircuit();
-					AddToLog($"TRIP: Overcurrent detected ({totalLoad:F1} mA > {TripThreshold} mA)");
+					AddToLog($"TRIP: Overcurrent detected ({totalLoad:F1} mA > {TripThreshold} mA) during discharge");
 				}
 			}
 		}
