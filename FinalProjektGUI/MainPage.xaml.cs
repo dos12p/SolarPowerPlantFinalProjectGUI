@@ -16,12 +16,18 @@ public partial class MainPage : ContentPage
 
 	// Circuit Protection
 	private bool _isTripped = false;
-	private const double TripThreshold = 0.9; // mA
+	private const double TripThreshold = 9.0; // mA (discharge current)
 
 	// Battery Charged State Detection
 	private Queue<double> _batteryCurrentHistory = new Queue<double>();
 	private const int ChargedDetectionWindow = 5;
 	private const double ChargedThreshold = 0.05; // Consider 0.0mA if within ±0.05mA
+
+	// Traffic Light Mode
+	private bool _isTrafficMode = false;
+	private System.Timers.Timer? _trafficTimer;
+	private int _trafficState = 0; // 0=Green, 1=Yellow, 2=Red
+	private readonly int[] _trafficDurations = { 4000, 2000, 7000 }; // Green, Yellow, Red in ms
 
 	public MainPage()
 	{
@@ -310,12 +316,13 @@ public partial class MainPage : ContentPage
 				double totalLoad = yellowCurrent + redCurrent + greenCurrent;
 				TotalLoadCurrentLabel.Text = $"{totalLoad:F1} mA";
 
-				// Check for overcurrent trip condition (latching) - only during discharge
-				if (!_isTripped && batteryCurrent < 0 && totalLoad > TripThreshold)
+				// Check for overcurrent trip condition (latching) - battery discharge > 9mA
+				double dischargeCurrent = Math.Abs(batteryCurrent);
+				if (!_isTripped && batteryCurrent < 0 && dischargeCurrent > TripThreshold)
 				{
 					_isTripped = true;
 					TripCircuit();
-					AddToLog($"TRIP: Overcurrent detected ({totalLoad:F1} mA > {TripThreshold} mA) during discharge");
+					AddToLog($"TRIP: Battery discharge overcurrent ({dischargeCurrent:F1} mA > {TripThreshold} mA)");
 				}
 			}
 		}
@@ -349,7 +356,10 @@ public partial class MainPage : ContentPage
 
 	private void OnLedToggled(object? sender, ToggledEventArgs e)
 	{
-		SendLedPacket();
+		if (!_isTrafficMode)
+		{
+			SendLedPacket();
+		}
 	}
 
 	private void SendLedPacket()
@@ -401,6 +411,14 @@ public partial class MainPage : ContentPage
 	{
 		MainThread.BeginInvokeOnMainThread(() =>
 		{
+			// Stop traffic timer if running
+			if (_trafficTimer != null)
+			{
+				_trafficTimer.Stop();
+				_trafficTimer.Dispose();
+				_trafficTimer = null;
+			}
+
 			// Turn off all LED switches
 			Led2Switch.IsToggled = false;
 			Led3Switch.IsToggled = false;
@@ -439,9 +457,117 @@ public partial class MainPage : ContentPage
 		AddToLog("Circuit breaker RESET");
 	}
 
+	private void OnModeChanged(object? sender, ToggledEventArgs e)
+	{
+		_isTrafficMode = e.Value;
+
+		if (_isTrafficMode)
+		{
+			// Disable manual LED switches
+			Led2Switch.IsEnabled = false;
+			Led3Switch.IsEnabled = false;
+			Led4Switch.IsEnabled = false;
+
+			// Start traffic light cycle
+			_trafficState = 0;
+			StartTrafficCycle();
+			AddToLog("Traffic mode ENABLED");
+		}
+		else
+		{
+			// Stop traffic timer
+			if (_trafficTimer != null)
+			{
+				_trafficTimer.Stop();
+				_trafficTimer.Dispose();
+				_trafficTimer = null;
+			}
+
+			// Re-enable manual LED switches if not tripped
+			if (!_isTripped)
+			{
+				Led2Switch.IsEnabled = true;
+				Led3Switch.IsEnabled = true;
+				Led4Switch.IsEnabled = true;
+			}
+
+			AddToLog("Traffic mode DISABLED");
+		}
+	}
+
+	private void StartTrafficCycle()
+	{
+		MainThread.BeginInvokeOnMainThread(() =>
+		{
+			// Set initial state (Green)
+			UpdateTrafficLights();
+
+			// Create and start timer
+			_trafficTimer = new System.Timers.Timer(_trafficDurations[_trafficState]);
+			_trafficTimer.Elapsed += OnTrafficTimerElapsed;
+			_trafficTimer.AutoReset = false;
+			_trafficTimer.Start();
+		});
+	}
+
+	private void OnTrafficTimerElapsed(object? sender, System.Timers.ElapsedEventArgs e)
+	{
+		if (!_isTrafficMode || _isTripped)
+		{
+			return;
+		}
+
+		// Move to next state
+		_trafficState = (_trafficState + 1) % 3;
+
+		MainThread.BeginInvokeOnMainThread(() =>
+		{
+			UpdateTrafficLights();
+
+			// Restart timer with new duration
+			if (_trafficTimer != null)
+			{
+				_trafficTimer.Interval = _trafficDurations[_trafficState];
+				_trafficTimer.Start();
+			}
+		});
+	}
+
+	private void UpdateTrafficLights()
+	{
+		// Turn off all LEDs first
+		Led2Switch.IsToggled = false; // Yellow
+		Led3Switch.IsToggled = false; // Red
+		Led4Switch.IsToggled = false; // Green
+
+		// Turn on current state LED
+		switch (_trafficState)
+		{
+			case 0: // Green
+				Led4Switch.IsToggled = true;
+				break;
+			case 1: // Yellow
+				Led2Switch.IsToggled = true;
+				break;
+			case 2: // Red
+				Led3Switch.IsToggled = true;
+				break;
+		}
+
+		SendLedPacket();
+	}
+
 	protected override void OnDisappearing()
 	{
 		base.OnDisappearing();
+		
+		if (_trafficTimer != null)
+		{
+			_trafficTimer.Stop();
+			_trafficTimer.Dispose();
+			_trafficTimer = null;
+		}
+		
 		DisconnectSerial();
 	}
 }
