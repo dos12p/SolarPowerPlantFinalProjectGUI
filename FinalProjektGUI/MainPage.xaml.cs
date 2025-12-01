@@ -3,6 +3,7 @@ using System.Text;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
+using LiveChartsCore.Defaults;
 using SkiaSharp;
 using System.Collections.ObjectModel;
 
@@ -641,6 +642,8 @@ public partial class MainPage : ContentPage
 	// Graph Methods
 	private void InitializeGraphs()
 	{
+		var drawMargin = new LiveChartsCore.Measure.Margin(50, 10, 30, 30);
+
 		// Solar Chart
 		SolarChart.Series = new ISeries[]
 		{
@@ -648,13 +651,14 @@ public partial class MainPage : ContentPage
 			{
 				Values = _solarData,
 				Fill = null,
-				Stroke = new SolidColorPaint(SKColors.Orange) { StrokeThickness = 2 },
+				Stroke = new SolidColorPaint(SKColors.Orange) { StrokeThickness = 3 },
 				GeometrySize = 0,
 				LineSmoothness = 0
 			}
 		};
 		SolarChart.XAxes = new[] { CreateTimeAxis() };
 		SolarChart.YAxes = new[] { CreateVoltageAxis() };
+		SolarChart.DrawMargin = drawMargin;
 
 		// Battery Chart
 		BatteryChart.Series = new ISeries[]
@@ -663,13 +667,14 @@ public partial class MainPage : ContentPage
 			{
 				Values = _batteryData,
 				Fill = null,
-				Stroke = new SolidColorPaint(SKColors.Green) { StrokeThickness = 2 },
+				Stroke = new SolidColorPaint(SKColors.LimeGreen) { StrokeThickness = 3 },
 				GeometrySize = 0,
 				LineSmoothness = 0
 			}
 		};
 		BatteryChart.XAxes = new[] { CreateTimeAxis() };
 		BatteryChart.YAxes = new[] { CreateVoltageAxis() };
+		BatteryChart.DrawMargin = drawMargin;
 
 		// Total Load Chart
 		TotalLoadChart.Series = new ISeries[]
@@ -678,13 +683,14 @@ public partial class MainPage : ContentPage
 			{
 				Values = _totalLoadData,
 				Fill = null,
-				Stroke = new SolidColorPaint(SKColors.Blue) { StrokeThickness = 2 },
+				Stroke = new SolidColorPaint(SKColors.DeepSkyBlue) { StrokeThickness = 3 },
 				GeometrySize = 0,
 				LineSmoothness = 0
 			}
 		};
 		TotalLoadChart.XAxes = new[] { CreateTimeAxis() };
 		TotalLoadChart.YAxes = new[] { CreateCurrentAxis() };
+		TotalLoadChart.DrawMargin = drawMargin;
 
 		// Yellow LED Chart
 		YellowChart.Series = new ISeries[]
@@ -693,13 +699,14 @@ public partial class MainPage : ContentPage
 			{
 				Values = _yellowData,
 				Fill = null,
-				Stroke = new SolidColorPaint(SKColors.Gold) { StrokeThickness = 2 },
+				Stroke = new SolidColorPaint(SKColors.Gold) { StrokeThickness = 3 },
 				GeometrySize = 0,
 				LineSmoothness = 0
 			}
 		};
 		YellowChart.XAxes = new[] { CreateTimeAxis() };
 		YellowChart.YAxes = new[] { CreateCurrentAxis() };
+		YellowChart.DrawMargin = drawMargin;
 
 		// Red LED Chart
 		RedChart.Series = new ISeries[]
@@ -708,13 +715,14 @@ public partial class MainPage : ContentPage
 			{
 				Values = _redData,
 				Fill = null,
-				Stroke = new SolidColorPaint(SKColors.Red) { StrokeThickness = 2 },
+				Stroke = new SolidColorPaint(SKColors.Red) { StrokeThickness = 3 },
 				GeometrySize = 0,
 				LineSmoothness = 0
 			}
 		};
 		RedChart.XAxes = new[] { CreateTimeAxis() };
 		RedChart.YAxes = new[] { CreateCurrentAxis() };
+		RedChart.DrawMargin = drawMargin;
 
 		// Green LED Chart
 		GreenChart.Series = new ISeries[]
@@ -723,13 +731,14 @@ public partial class MainPage : ContentPage
 			{
 				Values = _greenData,
 				Fill = null,
-				Stroke = new SolidColorPaint(SKColors.LimeGreen) { StrokeThickness = 2 },
+				Stroke = new SolidColorPaint(SKColors.LimeGreen) { StrokeThickness = 3 },
 				GeometrySize = 0,
 				LineSmoothness = 0
 			}
 		};
 		GreenChart.XAxes = new[] { CreateTimeAxis() };
 		GreenChart.YAxes = new[] { CreateCurrentAxis() };
+		GreenChart.DrawMargin = drawMargin;
 	}
 
 	private Axis CreateTimeAxis()
@@ -738,7 +747,10 @@ public partial class MainPage : ContentPage
 		{
 			Labeler = value => new DateTime((long)value).ToString("HH:mm:ss"),
 			MinStep = TimeSpan.FromSeconds(1).Ticks,
-			Name = "Time"
+			Name = "Time",
+			NamePaint = new SolidColorPaint(SKColors.White),
+			LabelsPaint = new SolidColorPaint(SKColors.LightGray),
+			SeparatorsPaint = new SolidColorPaint(SKColors.Gray) { StrokeThickness = 1 }
 		};
 	}
 
@@ -748,7 +760,10 @@ public partial class MainPage : ContentPage
 		{
 			MinLimit = 0,
 			MaxLimit = 3.5,
-			Name = "Voltage (V)"
+			Name = "Voltage (V)",
+			NamePaint = new SolidColorPaint(SKColors.White),
+			LabelsPaint = new SolidColorPaint(SKColors.LightGray),
+			SeparatorsPaint = new SolidColorPaint(SKColors.Gray) { StrokeThickness = 1 }
 		};
 	}
 
@@ -758,7 +773,10 @@ public partial class MainPage : ContentPage
 		{
 			MinLimit = 0,
 			MaxLimit = 10,
-			Name = "Current (mA)"
+			Name = "Current (mA)",
+			NamePaint = new SolidColorPaint(SKColors.White),
+			LabelsPaint = new SolidColorPaint(SKColors.LightGray),
+			SeparatorsPaint = new SolidColorPaint(SKColors.Gray) { StrokeThickness = 1 }
 		};
 	}
 
@@ -795,12 +813,12 @@ public partial class MainPage : ContentPage
 
 	private void OnViewModeChanged(object? sender, CheckedChangedEventArgs e)
 	{
-		if (MonitorRadio.IsChecked)
+		if (MonitorModeRadio.IsChecked)
 		{
 			MonitorView.IsVisible = true;
 			GraphView.IsVisible = false;
 		}
-		else if (GraphRadio.IsChecked)
+		else if (GraphModeRadio.IsChecked)
 		{
 			MonitorView.IsVisible = false;
 			GraphView.IsVisible = true;

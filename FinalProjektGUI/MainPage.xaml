@@ -333,7 +333,7 @@
                                 <Label Grid.Column="0" Text="Solar Output Voltage (0-3.5V)" FontAttributes="Bold" FontSize="16"/>
                                 <Button Grid.Column="1" Text="Clear" Clicked="OnClearSolarChart" WidthRequest="80"/>
                             </Grid>
-                            <lvc:CartesianChart Grid.Row="1" x:Name="SolarChart"/>
+                            <lvc:CartesianChart Grid.Row="1" x:Name="SolarChart" BackgroundColor="#1A1A1A"/>
                         </Grid>
                     </Frame>
 
@@ -348,7 +348,7 @@
                                 <Label Grid.Column="0" Text="Battery Voltage (0-3.5V)" FontAttributes="Bold" FontSize="16"/>
                                 <Button Grid.Column="1" Text="Clear" Clicked="OnClearBatteryChart" WidthRequest="80"/>
                             </Grid>
-                            <lvc:CartesianChart Grid.Row="1" x:Name="BatteryChart"/>
+                            <lvc:CartesianChart Grid.Row="1" x:Name="BatteryChart" BackgroundColor="#1A1A1A"/>
                         </Grid>
                     </Frame>
 
@@ -363,7 +363,7 @@
                                 <Label Grid.Column="0" Text="Total Load Current (0-10mA)" FontAttributes="Bold" FontSize="16"/>
                                 <Button Grid.Column="1" Text="Clear" Clicked="OnClearTotalLoadChart" WidthRequest="80"/>
                             </Grid>
-                            <lvc:CartesianChart Grid.Row="1" x:Name="TotalLoadChart"/>
+                            <lvc:CartesianChart Grid.Row="1" x:Name="TotalLoadChart" BackgroundColor="#1A1A1A"/>
                         </Grid>
                     </Frame>
 
@@ -378,7 +378,7 @@
                                 <Label Grid.Column="0" Text="Yellow LED Current (0-10mA)" FontAttributes="Bold" FontSize="16"/>
                                 <Button Grid.Column="1" Text="Clear" Clicked="OnClearYellowChart" WidthRequest="80"/>
                             </Grid>
-                            <lvc:CartesianChart Grid.Row="1" x:Name="YellowChart"/>
+                            <lvc:CartesianChart Grid.Row="1" x:Name="YellowChart" BackgroundColor="#1A1A1A"/>
                         </Grid>
                     </Frame>
 
@@ -393,7 +393,7 @@
                                 <Label Grid.Column="0" Text="Red LED Current (0-10mA)" FontAttributes="Bold" FontSize="16"/>
                                 <Button Grid.Column="1" Text="Clear" Clicked="OnClearRedChart" WidthRequest="80"/>
                             </Grid>
-                            <lvc:CartesianChart Grid.Row="1" x:Name="RedChart"/>
+                            <lvc:CartesianChart Grid.Row="1" x:Name="RedChart" BackgroundColor="#1A1A1A"/>
                         </Grid>
                     </Frame>
 
@@ -408,7 +408,7 @@
                                 <Label Grid.Column="0" Text="Green LED Current (0-10mA)" FontAttributes="Bold" FontSize="16"/>
                                 <Button Grid.Column="1" Text="Clear" Clicked="OnClearGreenChart" WidthRequest="80"/>
                             </Grid>
-                            <lvc:CartesianChart Grid.Row="1" x:Name="GreenChart"/>
+                            <lvc:CartesianChart Grid.Row="1" x:Name="GreenChart" BackgroundColor="#1A1A1A"/>
                         </Grid>
                     </Frame>
                 </VerticalStackLayout>
