@@ -303,19 +303,41 @@
 
             <!-- Time Window Selector -->
             <Frame Grid.Row="0" BorderColor="Gray" CornerRadius="5" Padding="10">
-                <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
-                    <Label Text="Time Window:" VerticalOptions="Center" FontAttributes="Bold"/>
-                    <Picker x:Name="TimeWindowPicker" SelectedIndexChanged="OnTimeWindowChanged" WidthRequest="150">
-                        <Picker.ItemsSource>
-                            <x:Array Type="{x:Type x:String}">
-                                <x:String>10 seconds</x:String>
-                                <x:String>30 seconds</x:String>
-                                <x:String>1 minute</x:String>
-                                <x:String>2 minutes</x:String>
-                                <x:String>5 minutes</x:String>
-                            </x:Array>
-                        </Picker.ItemsSource>
-                    </Picker>
+                <HorizontalStackLayout Spacing="20" HorizontalOptions="Center">
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Time Window:" VerticalOptions="Center" FontAttributes="Bold"/>
+                        <Picker x:Name="TimeWindowPicker" SelectedIndexChanged="OnTimeWindowChanged" WidthRequest="150">
+                            <Picker.ItemsSource>
+                                <x:Array Type="{x:Type x:String}">
+                                    <x:String>10 seconds</x:String>
+                                    <x:String>30 seconds</x:String>
+                                    <x:String>1 minute</x:String>
+                                    <x:String>2 minutes</x:String>
+                                    <x:String>5 minutes</x:String>
+                                    <x:String>10 minutes</x:String>
+                                </x:Array>
+                            </Picker.ItemsSource>
+                        </Picker>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Current Scale (mA):" VerticalOptions="Center" FontAttributes="Bold"/>
+                        <Picker x:Name="CurrentScalePicker" SelectedIndexChanged="OnCurrentScaleChanged" WidthRequest="100">
+                            <Picker.ItemsSource>
+                                <x:Array Type="{x:Type x:String}">
+                                    <x:String>1</x:String>
+                                    <x:String>2</x:String>
+                                    <x:String>3</x:String>
+                                    <x:String>4</x:String>
+                                    <x:String>5</x:String>
+                                    <x:String>6</x:String>
+                                    <x:String>7</x:String>
+                                    <x:String>8</x:String>
+                                    <x:String>9</x:String>
+                                    <x:String>10</x:String>
+                                </x:Array>
+                            </Picker.ItemsSource>
+                        </Picker>
+                    </HorizontalStackLayout>
                 </HorizontalStackLayout>
             </Frame>
 
@@ -360,7 +382,7 @@
                                 <RowDefinition Height="300"/>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
-                                <Label Grid.Column="0" Text="Total Load Current (0-10mA)" FontAttributes="Bold" FontSize="16"/>
+                                <Label Grid.Column="0" Text="Total Load Current (mA)" FontAttributes="Bold" FontSize="16"/>
                                 <Button Grid.Column="1" Text="Clear" Clicked="OnClearTotalLoadChart" WidthRequest="80"/>
                             </Grid>
                             <lvc:CartesianChart Grid.Row="1" x:Name="TotalLoadChart" BackgroundColor="#1A1A1A"/>
@@ -375,7 +397,7 @@
                                 <RowDefinition Height="300"/>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
-                                <Label Grid.Column="0" Text="Yellow LED Current (0-10mA)" FontAttributes="Bold" FontSize="16"/>
+                                <Label Grid.Column="0" Text="Yellow LED Current (mA)" FontAttributes="Bold" FontSize="16"/>
                                 <Button Grid.Column="1" Text="Clear" Clicked="OnClearYellowChart" WidthRequest="80"/>
                             </Grid>
                             <lvc:CartesianChart Grid.Row="1" x:Name="YellowChart" BackgroundColor="#1A1A1A"/>
@@ -390,7 +412,7 @@
                                 <RowDefinition Height="300"/>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
-                                <Label Grid.Column="0" Text="Red LED Current (0-10mA)" FontAttributes="Bold" FontSize="16"/>
+                                <Label Grid.Column="0" Text="Red LED Current (mA)" FontAttributes="Bold" FontSize="16"/>
                                 <Button Grid.Column="1" Text="Clear" Clicked="OnClearRedChart" WidthRequest="80"/>
                             </Grid>
                             <lvc:CartesianChart Grid.Row="1" x:Name="RedChart" BackgroundColor="#1A1A1A"/>
@@ -405,7 +427,7 @@
                                 <RowDefinition Height="300"/>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
-                                <Label Grid.Column="0" Text="Green LED Current (0-10mA)" FontAttributes="Bold" FontSize="16"/>
+                                <Label Grid.Column="0" Text="Green LED Current (mA)" FontAttributes="Bold" FontSize="16"/>
                                 <Button Grid.Column="1" Text="Clear" Clicked="OnClearGreenChart" WidthRequest="80"/>
                             </Grid>
                             <lvc:CartesianChart Grid.Row="1" x:Name="GreenChart" BackgroundColor="#1A1A1A"/>

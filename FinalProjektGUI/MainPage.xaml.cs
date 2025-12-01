@@ -45,9 +45,12 @@ public partial class MainPage : ContentPage
 	private ObservableCollection<ObservablePoint> _redData = new();
 	private ObservableCollection<ObservablePoint> _greenData = new();
 	private int _timeWindowSeconds = 10; // Default 10 seconds
+	private int _currentScaleMax = 4; // Default 4mA max
 
 	// Keep track of start time for X-axis
 	private DateTime _graphStartTime = DateTime.Now;
+	private List<Axis> _allXAxes = new();
+	private List<Axis> _allCurrentYAxes = new();
 
 	public MainPage()
 	{
@@ -63,6 +66,7 @@ public partial class MainPage : ContentPage
 		// Initialize graphs
 		InitializeGraphs();
 		TimeWindowPicker.SelectedIndex = 0; // Default to 10 seconds
+		CurrentScalePicker.SelectedIndex = 3; // Default to 4mA
 	}
 
 	private void LoadAvailablePorts()
@@ -646,6 +650,8 @@ public partial class MainPage : ContentPage
 	private void InitializeGraphs()
 	{
 		var drawMargin = new LiveChartsCore.Measure.Margin(50, 10, 30, 30);
+		_allXAxes.Clear();
+		_allCurrentYAxes.Clear();
 
 		// Solar Chart
 		SolarChart.Series = new ISeries[]
@@ -659,7 +665,9 @@ public partial class MainPage : ContentPage
 				LineSmoothness = 0
 			}
 		};
-		SolarChart.XAxes = new[] { CreateTimeAxis() };
+		var solarXAxis = CreateTimeAxis();
+		_allXAxes.Add(solarXAxis);
+		SolarChart.XAxes = new[] { solarXAxis };
 		SolarChart.YAxes = new[] { CreateVoltageAxis() };
 		SolarChart.DrawMargin = drawMargin;
 
@@ -675,7 +683,9 @@ public partial class MainPage : ContentPage
 				LineSmoothness = 0
 			}
 		};
-		BatteryChart.XAxes = new[] { CreateTimeAxis() };
+		var batteryXAxis = CreateTimeAxis();
+		_allXAxes.Add(batteryXAxis);
+		BatteryChart.XAxes = new[] { batteryXAxis };
 		BatteryChart.YAxes = new[] { CreateVoltageAxis() };
 		BatteryChart.DrawMargin = drawMargin;
 
@@ -691,8 +701,12 @@ public partial class MainPage : ContentPage
 				LineSmoothness = 0
 			}
 		};
-		TotalLoadChart.XAxes = new[] { CreateTimeAxis() };
-		TotalLoadChart.YAxes = new[] { CreateCurrentAxis() };
+		var totalLoadXAxis = CreateTimeAxis();
+		_allXAxes.Add(totalLoadXAxis);
+		var totalLoadYAxis = CreateCurrentAxis();
+		_allCurrentYAxes.Add(totalLoadYAxis);
+		TotalLoadChart.XAxes = new[] { totalLoadXAxis };
+		TotalLoadChart.YAxes = new[] { totalLoadYAxis };
 		TotalLoadChart.DrawMargin = drawMargin;
 
 		// Yellow LED Chart
@@ -707,8 +721,12 @@ public partial class MainPage : ContentPage
 				LineSmoothness = 0
 			}
 		};
-		YellowChart.XAxes = new[] { CreateTimeAxis() };
-		YellowChart.YAxes = new[] { CreateCurrentAxis() };
+		var yellowXAxis = CreateTimeAxis();
+		_allXAxes.Add(yellowXAxis);
+		var yellowYAxis = CreateCurrentAxis();
+		_allCurrentYAxes.Add(yellowYAxis);
+		YellowChart.XAxes = new[] { yellowXAxis };
+		YellowChart.YAxes = new[] { yellowYAxis };
 		YellowChart.DrawMargin = drawMargin;
 
 		// Red LED Chart
@@ -723,8 +741,12 @@ public partial class MainPage : ContentPage
 				LineSmoothness = 0
 			}
 		};
-		RedChart.XAxes = new[] { CreateTimeAxis() };
-		RedChart.YAxes = new[] { CreateCurrentAxis() };
+		var redXAxis = CreateTimeAxis();
+		_allXAxes.Add(redXAxis);
+		var redYAxis = CreateCurrentAxis();
+		_allCurrentYAxes.Add(redYAxis);
+		RedChart.XAxes = new[] { redXAxis };
+		RedChart.YAxes = new[] { redYAxis };
 		RedChart.DrawMargin = drawMargin;
 
 		// Green LED Chart
@@ -739,21 +761,39 @@ public partial class MainPage : ContentPage
 				LineSmoothness = 0
 			}
 		};
-		GreenChart.XAxes = new[] { CreateTimeAxis() };
-		GreenChart.YAxes = new[] { CreateCurrentAxis() };
+		var greenXAxis = CreateTimeAxis();
+		_allXAxes.Add(greenXAxis);
+		var greenYAxis = CreateCurrentAxis();
+		_allCurrentYAxes.Add(greenYAxis);
+		GreenChart.XAxes = new[] { greenXAxis };
+		GreenChart.YAxes = new[] { greenYAxis };
 		GreenChart.DrawMargin = drawMargin;
 	}
 
 	private Axis CreateTimeAxis()
 	{
+		// Calculate a nice step size based on time window
+		double stepSize = _timeWindowSeconds switch
+		{
+			<= 10 => 2,      // 2 second intervals for 10s window
+			<= 30 => 5,      // 5 second intervals for 30s window  
+			<= 60 => 10,     // 10 second intervals for 1min window
+			<= 120 => 20,    // 20 second intervals for 2min window
+			<= 300 => 60,    // 60 second intervals for 5min window
+			_ => 120         // 120 second intervals for 10min window
+		};
+
 		return new Axis
 		{
 			Labeler = value => TimeSpan.FromSeconds(value).ToString(@"mm\:ss"),
-			MinStep = 1,
+			MinStep = stepSize,
+			ForceStepToMin = true, // Force using the step size
 			Name = "Time (seconds)",
 			NamePaint = new SolidColorPaint(SKColors.White),
 			LabelsPaint = new SolidColorPaint(SKColors.LightGray),
-			SeparatorsPaint = new SolidColorPaint(SKColors.Gray) { StrokeThickness = 1 }
+			SeparatorsPaint = new SolidColorPaint(SKColors.Gray) { StrokeThickness = 1 },
+			AnimationsSpeed = TimeSpan.FromMilliseconds(0),
+			IsVisible = true
 		};
 	}
 
@@ -775,11 +815,12 @@ public partial class MainPage : ContentPage
 		return new Axis
 		{
 			MinLimit = 0,
-			MaxLimit = 10,
+			MaxLimit = _currentScaleMax,
 			Name = "Current (mA)",
 			NamePaint = new SolidColorPaint(SKColors.White),
 			LabelsPaint = new SolidColorPaint(SKColors.LightGray),
-			SeparatorsPaint = new SolidColorPaint(SKColors.Gray) { StrokeThickness = 1 }
+			SeparatorsPaint = new SolidColorPaint(SKColors.Gray) { StrokeThickness = 1 },
+			AnimationsSpeed = TimeSpan.FromMilliseconds(0) // No animation on axis
 		};
 	}
 
@@ -792,7 +833,7 @@ public partial class MainPage : ContentPage
 				var now = DateTime.Now;
 				double secondsElapsed = (now - _graphStartTime).TotalSeconds;
 
-				// Add data points with seconds elapsed as X value
+				// Add data points with actual elapsed time as X value
 				_solarData.Add(new ObservablePoint(secondsElapsed, solar));
 				_batteryData.Add(new ObservablePoint(secondsElapsed, battery));
 				_totalLoadData.Add(new ObservablePoint(secondsElapsed, totalLoad));
@@ -803,14 +844,53 @@ public partial class MainPage : ContentPage
 				// Debug logging
 				AddToLog($"GRAPH DATA: Solar={solar:F3}V, Battery={battery:F3}V, Load={totalLoad:F1}mA, Y={yellow:F1}, R={red:F1}, G={green:F1} (Points: {_solarData.Count}, Time: {secondsElapsed:F1}s)");
 
-				// Remove old data points outside time window
-				double cutoffSeconds = secondsElapsed - _timeWindowSeconds;
-				RemoveOldData(_solarData, cutoffSeconds);
-				RemoveOldData(_batteryData, cutoffSeconds);
-				RemoveOldData(_totalLoadData, cutoffSeconds);
-				RemoveOldData(_yellowData, cutoffSeconds);
-				RemoveOldData(_redData, cutoffSeconds);
-				RemoveOldData(_greenData, cutoffSeconds);
+				// Update X-axis window to show most recent time window
+				if (secondsElapsed > _timeWindowSeconds)
+				{
+					// Calculate step size for current window
+					double stepSize = _timeWindowSeconds switch
+					{
+						<= 10 => 2,
+						<= 30 => 5,
+						<= 60 => 10,
+						<= 120 => 20,
+						<= 300 => 60,
+						_ => 120
+					};
+
+					// Round minLimit to nearest step for visual stability
+					double rawMin = secondsElapsed - _timeWindowSeconds;
+					double minLimit = Math.Floor(rawMin / stepSize) * stepSize;
+					double maxLimit = minLimit + _timeWindowSeconds;
+
+					foreach (var axis in _allXAxes)
+					{
+						axis.MinLimit = minLimit;
+						axis.MaxLimit = maxLimit;
+					}
+
+					// Keep data for up to 10 minutes (600 seconds), remove anything older
+					double maxDataRetention = 600; // 10 minutes
+					double cutoffSeconds = secondsElapsed - maxDataRetention;
+					if (cutoffSeconds > 0)
+					{
+						RemoveOldData(_solarData, cutoffSeconds);
+						RemoveOldData(_batteryData, cutoffSeconds);
+						RemoveOldData(_totalLoadData, cutoffSeconds);
+						RemoveOldData(_yellowData, cutoffSeconds);
+						RemoveOldData(_redData, cutoffSeconds);
+						RemoveOldData(_greenData, cutoffSeconds);
+					}
+				}
+				else
+				{
+					// Still filling initial window
+					foreach (var axis in _allXAxes)
+					{
+						axis.MinLimit = 0;
+						axis.MaxLimit = _timeWindowSeconds;
+					}
+				}
 			}
 			catch (Exception ex)
 			{
@@ -853,7 +933,11 @@ public partial class MainPage : ContentPage
 			case 2: _timeWindowSeconds = 60; break;
 			case 3: _timeWindowSeconds = 120; break;
 			case 4: _timeWindowSeconds = 300; break;
+			case 5: _timeWindowSeconds = 600; break;
 		}
+
+		// Reinitialize graphs with new time window and step size
+		InitializeGraphs();
 	}
 
 	private void OnClearSolarChart(object? sender, EventArgs e)
@@ -885,6 +969,21 @@ public partial class MainPage : ContentPage
 	private void OnClearGreenChart(object? sender, EventArgs e)
 	{
 		_greenData.Clear();
+	}
+
+	private void OnCurrentScaleChanged(object? sender, EventArgs e)
+	{
+		if (CurrentScalePicker.SelectedIndex == -1)
+			return;
+
+		// Scale is 1-10 mA, index is 0-9
+		_currentScaleMax = CurrentScalePicker.SelectedIndex + 1;
+
+		// Update all current Y-axis limits
+		foreach (var axis in _allCurrentYAxes)
+		{
+			axis.MaxLimit = _currentScaleMax;
+		}
 	}
 }
 
