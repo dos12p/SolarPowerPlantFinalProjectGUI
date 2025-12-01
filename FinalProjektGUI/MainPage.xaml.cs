@@ -17,7 +17,7 @@ public partial class MainPage : ContentPage
 	// Circuit Protection
 	private bool _isTripped = false;
 	private const double TripThreshold = 0.9; // mA (discharge current)
-	private const double LowVoltageThreshold = 2.0; // V
+	private const double LowVoltageThreshold = 1.5; // V
 
 	// Battery Voltage Averaging
 	private Queue<double> _batteryVoltageHistory = new Queue<double>();
