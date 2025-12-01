@@ -16,7 +16,7 @@ public partial class MainPage : ContentPage
 
 	// Circuit Protection
 	private bool _isTripped = false;
-	private const double TripThreshold = 9.0; // mA (discharge current)
+	private const double TripThreshold = 0.9; // mA (discharge current)
 
 	// Battery Charged State Detection
 	private Queue<double> _batteryCurrentHistory = new Queue<double>();
