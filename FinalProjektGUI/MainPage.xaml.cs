@@ -38,13 +38,16 @@ public partial class MainPage : ContentPage
 	private readonly int[] _trafficDurations = { 4000, 2000, 7000 }; // Green, Yellow, Red in ms
 
 	// Graph Data Collections
-	private ObservableCollection<DateTimePoint> _solarData = new();
-	private ObservableCollection<DateTimePoint> _batteryData = new();
-	private ObservableCollection<DateTimePoint> _totalLoadData = new();
-	private ObservableCollection<DateTimePoint> _yellowData = new();
-	private ObservableCollection<DateTimePoint> _redData = new();
-	private ObservableCollection<DateTimePoint> _greenData = new();
+	private ObservableCollection<ObservablePoint> _solarData = new();
+	private ObservableCollection<ObservablePoint> _batteryData = new();
+	private ObservableCollection<ObservablePoint> _totalLoadData = new();
+	private ObservableCollection<ObservablePoint> _yellowData = new();
+	private ObservableCollection<ObservablePoint> _redData = new();
+	private ObservableCollection<ObservablePoint> _greenData = new();
 	private int _timeWindowSeconds = 10; // Default 10 seconds
+
+	// Keep track of start time for X-axis
+	private DateTime _graphStartTime = DateTime.Now;
 
 	public MainPage()
 	{
@@ -647,7 +650,7 @@ public partial class MainPage : ContentPage
 		// Solar Chart
 		SolarChart.Series = new ISeries[]
 		{
-			new LineSeries<DateTimePoint>
+			new LineSeries<ObservablePoint>
 			{
 				Values = _solarData,
 				Fill = null,
@@ -663,7 +666,7 @@ public partial class MainPage : ContentPage
 		// Battery Chart
 		BatteryChart.Series = new ISeries[]
 		{
-			new LineSeries<DateTimePoint>
+			new LineSeries<ObservablePoint>
 			{
 				Values = _batteryData,
 				Fill = null,
@@ -679,7 +682,7 @@ public partial class MainPage : ContentPage
 		// Total Load Chart
 		TotalLoadChart.Series = new ISeries[]
 		{
-			new LineSeries<DateTimePoint>
+			new LineSeries<ObservablePoint>
 			{
 				Values = _totalLoadData,
 				Fill = null,
@@ -695,7 +698,7 @@ public partial class MainPage : ContentPage
 		// Yellow LED Chart
 		YellowChart.Series = new ISeries[]
 		{
-			new LineSeries<DateTimePoint>
+			new LineSeries<ObservablePoint>
 			{
 				Values = _yellowData,
 				Fill = null,
@@ -711,7 +714,7 @@ public partial class MainPage : ContentPage
 		// Red LED Chart
 		RedChart.Series = new ISeries[]
 		{
-			new LineSeries<DateTimePoint>
+			new LineSeries<ObservablePoint>
 			{
 				Values = _redData,
 				Fill = null,
@@ -727,7 +730,7 @@ public partial class MainPage : ContentPage
 		// Green LED Chart
 		GreenChart.Series = new ISeries[]
 		{
-			new LineSeries<DateTimePoint>
+			new LineSeries<ObservablePoint>
 			{
 				Values = _greenData,
 				Fill = null,
@@ -745,9 +748,9 @@ public partial class MainPage : ContentPage
 	{
 		return new Axis
 		{
-			Labeler = value => new DateTime((long)value).ToString("HH:mm:ss"),
-			MinStep = TimeSpan.FromSeconds(1).Ticks,
-			Name = "Time",
+			Labeler = value => TimeSpan.FromSeconds(value).ToString(@"mm\:ss"),
+			MinStep = 1,
+			Name = "Time (seconds)",
 			NamePaint = new SolidColorPaint(SKColors.White),
 			LabelsPaint = new SolidColorPaint(SKColors.LightGray),
 			SeparatorsPaint = new SolidColorPaint(SKColors.Gray) { StrokeThickness = 1 }
@@ -782,30 +785,43 @@ public partial class MainPage : ContentPage
 
 	private void AddGraphData(double solar, double battery, double totalLoad, double yellow, double red, double green)
 	{
-		var now = DateTime.Now;
-		var point = new DateTimePoint(now, 0);
+		MainThread.BeginInvokeOnMainThread(() =>
+		{
+			try
+			{
+				var now = DateTime.Now;
+				double secondsElapsed = (now - _graphStartTime).TotalSeconds;
 
-		// Add data points
-		_solarData.Add(new DateTimePoint(now, solar));
-		_batteryData.Add(new DateTimePoint(now, battery));
-		_totalLoadData.Add(new DateTimePoint(now, totalLoad));
-		_yellowData.Add(new DateTimePoint(now, yellow));
-		_redData.Add(new DateTimePoint(now, red));
-		_greenData.Add(new DateTimePoint(now, green));
+				// Add data points with seconds elapsed as X value
+				_solarData.Add(new ObservablePoint(secondsElapsed, solar));
+				_batteryData.Add(new ObservablePoint(secondsElapsed, battery));
+				_totalLoadData.Add(new ObservablePoint(secondsElapsed, totalLoad));
+				_yellowData.Add(new ObservablePoint(secondsElapsed, yellow));
+				_redData.Add(new ObservablePoint(secondsElapsed, red));
+				_greenData.Add(new ObservablePoint(secondsElapsed, green));
 
-		// Remove old data points outside time window
-		var cutoff = now.AddSeconds(-_timeWindowSeconds);
-		RemoveOldData(_solarData, cutoff);
-		RemoveOldData(_batteryData, cutoff);
-		RemoveOldData(_totalLoadData, cutoff);
-		RemoveOldData(_yellowData, cutoff);
-		RemoveOldData(_redData, cutoff);
-		RemoveOldData(_greenData, cutoff);
+				// Debug logging
+				AddToLog($"GRAPH DATA: Solar={solar:F3}V, Battery={battery:F3}V, Load={totalLoad:F1}mA, Y={yellow:F1}, R={red:F1}, G={green:F1} (Points: {_solarData.Count}, Time: {secondsElapsed:F1}s)");
+
+				// Remove old data points outside time window
+				double cutoffSeconds = secondsElapsed - _timeWindowSeconds;
+				RemoveOldData(_solarData, cutoffSeconds);
+				RemoveOldData(_batteryData, cutoffSeconds);
+				RemoveOldData(_totalLoadData, cutoffSeconds);
+				RemoveOldData(_yellowData, cutoffSeconds);
+				RemoveOldData(_redData, cutoffSeconds);
+				RemoveOldData(_greenData, cutoffSeconds);
+			}
+			catch (Exception ex)
+			{
+				AddToLog($"ERROR adding graph data: {ex.Message}");
+			}
+		});
 	}
 
-	private void RemoveOldData(ObservableCollection<DateTimePoint> data, DateTime cutoff)
+	private void RemoveOldData(ObservableCollection<ObservablePoint> data, double cutoffSeconds)
 	{
-		while (data.Count > 0 && data[0].DateTime < cutoff)
+		while (data.Count > 0 && data[0].X < cutoffSeconds)
 		{
 			data.RemoveAt(0);
 		}
@@ -843,6 +859,7 @@ public partial class MainPage : ContentPage
 	private void OnClearSolarChart(object? sender, EventArgs e)
 	{
 		_solarData.Clear();
+		_graphStartTime = DateTime.Now;
 	}
 
 	private void OnClearBatteryChart(object? sender, EventArgs e)
