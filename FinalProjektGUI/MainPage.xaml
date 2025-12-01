@@ -208,8 +208,8 @@
             </Grid.ColumnDefinitions>
 
             <!-- LED Control Panel -->
-            <Frame Grid.Row="0" Grid.Column="0" BorderColor="Gray" CornerRadius="5" Padding="10">
-                <Grid ColumnSpacing="15" RowSpacing="10">
+            <Frame Grid.Row="0" Grid.Column="0" BorderColor="Gray" CornerRadius="5" Padding="15">
+                <Grid ColumnSpacing="20" RowSpacing="15">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
@@ -221,38 +221,34 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Label Grid.Row="0" Grid.Column="0" Text="LED Control" FontAttributes="Bold" Grid.ColumnSpan="3" HorizontalOptions="Center" FontSize="16"/>
+                    <Label Grid.Row="0" Grid.Column="0" Text="LED Control" FontAttributes="Bold" Grid.ColumnSpan="3" HorizontalOptions="Center" FontSize="16" Margin="0,0,0,5"/>
 
                     <!-- Mode Selector -->
-                    <VerticalStackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Spacing="10" HorizontalOptions="Center">
-                        <HorizontalStackLayout Spacing="10">
-                            <Label Text="Manual" VerticalOptions="Center"/>
-                            <Switch x:Name="ModeSwitch" Toggled="OnModeChanged" VerticalOptions="Center"/>
-                            <Label Text="Traffic" VerticalOptions="Center"/>
-                        </HorizontalStackLayout>
-                        <HorizontalStackLayout Spacing="10">
-                            <Label Text="Christmas" VerticalOptions="Center" TextColor="Red"/>
-                            <Switch x:Name="ChristmasSwitch" Toggled="OnChristmasChanged" VerticalOptions="Center"/>
-                            <Label Text="Mode" VerticalOptions="Center" TextColor="Green"/>
-                        </HorizontalStackLayout>
-                    </VerticalStackLayout>
+                    <HorizontalStackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Spacing="15" HorizontalOptions="Center">
+                        <Label Text="Manual" VerticalOptions="Center"/>
+                        <Switch x:Name="ModeSwitch" Toggled="OnModeChanged" VerticalOptions="Center"/>
+                        <Label Text="Traffic" VerticalOptions="Center" Margin="0,0,15,0"/>
+                        <Label Text="Christmas" VerticalOptions="Center" TextColor="Red"/>
+                        <Switch x:Name="ChristmasSwitch" Toggled="OnChristmasChanged" VerticalOptions="Center"/>
+                        <Label Text="Mode" VerticalOptions="Center" TextColor="Green"/>
+                    </HorizontalStackLayout>
 
                     <VerticalStackLayout Grid.Row="2" Grid.Column="0" Spacing="5">
                         <Label Text="Yellow LED" HorizontalOptions="Center" TextColor="Orange" FontAttributes="Bold"/>
                         <Switch x:Name="Led2Switch" Toggled="OnLedToggled" HorizontalOptions="Center"/>
-                        <Label x:Name="YellowCurrentLabel" Text="0 mA" HorizontalOptions="Center" FontSize="12"/>
+                        <Label x:Name="YellowCurrentLabel" Text="0.0 mA" HorizontalOptions="Center" FontSize="12"/>
                     </VerticalStackLayout>
 
                     <VerticalStackLayout Grid.Row="2" Grid.Column="1" Spacing="5">
                         <Label Text="Red LED" HorizontalOptions="Center" TextColor="Red" FontAttributes="Bold"/>
                         <Switch x:Name="Led3Switch" Toggled="OnLedToggled" HorizontalOptions="Center"/>
-                        <Label x:Name="RedCurrentLabel" Text="0 mA" HorizontalOptions="Center" FontSize="12"/>
+                        <Label x:Name="RedCurrentLabel" Text="0.0 mA" HorizontalOptions="Center" FontSize="12"/>
                     </VerticalStackLayout>
 
                     <VerticalStackLayout Grid.Row="2" Grid.Column="2" Spacing="5">
                         <Label Text="Green LED" HorizontalOptions="Center" TextColor="Green" FontAttributes="Bold"/>
                         <Switch x:Name="Led4Switch" Toggled="OnLedToggled" HorizontalOptions="Center"/>
-                        <Label x:Name="GreenCurrentLabel" Text="0 mA" HorizontalOptions="Center" FontSize="12"/>
+                        <Label x:Name="GreenCurrentLabel" Text="0.0 mA" HorizontalOptions="Center" FontSize="12"/>
                     </VerticalStackLayout>
                 </Grid>
             </Frame>

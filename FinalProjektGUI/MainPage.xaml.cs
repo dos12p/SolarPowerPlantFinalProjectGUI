@@ -22,7 +22,7 @@ public partial class MainPage : ContentPage
 
 	// Circuit Protection
 	private bool _isTripped = false;
-	private const double TripThreshold = 0.9; // mA (discharge current)
+	private const double TripThreshold = 15.0; // mA (overcurrent limit)
 	private const double LowVoltageThreshold = 1.9; // V
 	private const double RecoveryVoltageThreshold = 2.2; // V
 	private bool _isBatteryDead = false;
@@ -717,9 +717,6 @@ public partial class MainPage : ContentPage
 			Led3Switch.IsEnabled = false;
 			Led4Switch.IsEnabled = false;
 
-			// Disable breaker reset during Christmas mode
-			ResetBreakerButton.IsEnabled = false;
-
 			// Start Christmas pattern
 			_christmasState = 0;
 			StartChristmasCycle();
@@ -747,7 +744,6 @@ public partial class MainPage : ContentPage
 				Led2Switch.IsEnabled = true;
 				Led3Switch.IsEnabled = true;
 				Led4Switch.IsEnabled = true;
-				ResetBreakerButton.IsEnabled = true;
 			}
 
 			AddToLog("Christmas mode DISABLED");
