@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
              x:Class="FinalProjektGUI.MainPage"
              Title="Meadow Serial Monitor">
 
@@ -8,18 +9,20 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+
+        <!-- Mode Selector Panel -->
+        <Frame Grid.Row="0" BorderColor="Gray" CornerRadius="5" Padding="10">
+            <HorizontalStackLayout Spacing="20" HorizontalOptions="Center">
+                <Label Text="View Mode:" VerticalOptions="Center" FontAttributes="Bold"/>
+                <RadioButton x:Name="MonitorModeRadio" Content="Monitor" IsChecked="True" CheckedChanged="OnViewModeChanged" GroupName="ViewMode"/>
+                <RadioButton x:Name="GraphModeRadio" Content="Graph" CheckedChanged="OnViewModeChanged" GroupName="ViewMode"/>
+            </HorizontalStackLayout>
+        </Frame>
 
         <!-- Serial Port Connection Panel -->
-        <Frame Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" BorderColor="Gray" CornerRadius="5" Padding="10">
+        <Frame Grid.Row="1" BorderColor="Gray" CornerRadius="5" Padding="10">
             <Grid ColumnSpacing="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -35,8 +38,22 @@
             </Grid>
         </Frame>
 
+        <!-- Monitor View -->
+        <Grid x:Name="MonitorView" Grid.Row="2" RowSpacing="10" ColumnSpacing="10" IsVisible="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
         <!-- Solar Output Panel -->
-        <Frame Grid.Row="1" Grid.Column="0" BorderColor="Gray" CornerRadius="5" Padding="10">
+        <Frame Grid.Row="0" Grid.Column="0" BorderColor="Gray" CornerRadius="5" Padding="10">
             <Grid RowSpacing="5">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -49,7 +66,7 @@
         </Frame>
 
         <!-- Battery Status Panel -->
-        <Frame Grid.Row="1" Grid.Column="1" BorderColor="Gray" CornerRadius="5" Padding="10">
+        <Frame Grid.Row="0" Grid.Column="1" BorderColor="Gray" CornerRadius="5" Padding="10">
             <Grid RowSpacing="5">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -66,7 +83,7 @@
         </Frame>
 
         <!-- Circuit Status Panel -->
-        <Frame Grid.Row="1" Grid.Column="2" BorderColor="Gray" CornerRadius="5" Padding="10">
+        <Frame Grid.Row="0" Grid.Column="2" BorderColor="Gray" CornerRadius="5" Padding="10">
             <Grid RowSpacing="5">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -81,7 +98,7 @@
         </Frame>
 
         <!-- Parsed Data Display Panel -->
-        <Frame Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" BorderColor="Gray" CornerRadius="5" Padding="10">
+        <Frame Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" BorderColor="Gray" CornerRadius="5" Padding="10">
             <Grid RowSpacing="5" ColumnSpacing="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -122,7 +139,7 @@
         </Frame>
 
         <!-- Digital Inputs and Checksum -->
-        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" ColumnSpacing="10">
+        <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" ColumnSpacing="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -179,7 +196,7 @@
         </Grid>
 
         <!-- Main Content Area -->
-        <Grid Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" RowSpacing="10" ColumnSpacing="10">
+        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" RowSpacing="10" ColumnSpacing="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
@@ -274,6 +291,131 @@
                 </Grid>
             </Frame>
         </Grid>
+        </Grid>
+        <!-- End Monitor View -->
+
+        <!-- Graph View -->
+        <Grid x:Name="GraphView" Grid.Row="2" RowSpacing="10" IsVisible="False">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Time Window Selector -->
+            <Frame Grid.Row="0" BorderColor="Gray" CornerRadius="5" Padding="10">
+                <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                    <Label Text="Time Window:" VerticalOptions="Center" FontAttributes="Bold"/>
+                    <Picker x:Name="TimeWindowPicker" SelectedIndexChanged="OnTimeWindowChanged" WidthRequest="150">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>10 seconds</x:String>
+                                <x:String>30 seconds</x:String>
+                                <x:String>1 minute</x:String>
+                                <x:String>2 minutes</x:String>
+                                <x:String>5 minutes</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                </HorizontalStackLayout>
+            </Frame>
+
+            <!-- Charts ScrollView -->
+            <ScrollView Grid.Row="1">
+                <VerticalStackLayout Spacing="15" Padding="10">
+                    <!-- Solar Output Chart -->
+                    <Frame BorderColor="Gray" CornerRadius="5" Padding="10">
+                        <Grid RowSpacing="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="300"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                                <Label Grid.Column="0" Text="Solar Output Voltage (0-3.5V)" FontAttributes="Bold" FontSize="16"/>
+                                <Button Grid.Column="1" Text="Clear" Clicked="OnClearSolarChart" WidthRequest="80"/>
+                            </Grid>
+                            <lvc:CartesianChart Grid.Row="1" x:Name="SolarChart"/>
+                        </Grid>
+                    </Frame>
+
+                    <!-- Battery Voltage Chart -->
+                    <Frame BorderColor="Gray" CornerRadius="5" Padding="10">
+                        <Grid RowSpacing="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="300"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                                <Label Grid.Column="0" Text="Battery Voltage (0-3.5V)" FontAttributes="Bold" FontSize="16"/>
+                                <Button Grid.Column="1" Text="Clear" Clicked="OnClearBatteryChart" WidthRequest="80"/>
+                            </Grid>
+                            <lvc:CartesianChart Grid.Row="1" x:Name="BatteryChart"/>
+                        </Grid>
+                    </Frame>
+
+                    <!-- Total Load Current Chart -->
+                    <Frame BorderColor="Gray" CornerRadius="5" Padding="10">
+                        <Grid RowSpacing="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="300"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                                <Label Grid.Column="0" Text="Total Load Current (0-10mA)" FontAttributes="Bold" FontSize="16"/>
+                                <Button Grid.Column="1" Text="Clear" Clicked="OnClearTotalLoadChart" WidthRequest="80"/>
+                            </Grid>
+                            <lvc:CartesianChart Grid.Row="1" x:Name="TotalLoadChart"/>
+                        </Grid>
+                    </Frame>
+
+                    <!-- Yellow LED Current Chart -->
+                    <Frame BorderColor="Gray" CornerRadius="5" Padding="10">
+                        <Grid RowSpacing="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="300"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                                <Label Grid.Column="0" Text="Yellow LED Current (0-10mA)" FontAttributes="Bold" FontSize="16"/>
+                                <Button Grid.Column="1" Text="Clear" Clicked="OnClearYellowChart" WidthRequest="80"/>
+                            </Grid>
+                            <lvc:CartesianChart Grid.Row="1" x:Name="YellowChart"/>
+                        </Grid>
+                    </Frame>
+
+                    <!-- Red LED Current Chart -->
+                    <Frame BorderColor="Gray" CornerRadius="5" Padding="10">
+                        <Grid RowSpacing="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="300"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                                <Label Grid.Column="0" Text="Red LED Current (0-10mA)" FontAttributes="Bold" FontSize="16"/>
+                                <Button Grid.Column="1" Text="Clear" Clicked="OnClearRedChart" WidthRequest="80"/>
+                            </Grid>
+                            <lvc:CartesianChart Grid.Row="1" x:Name="RedChart"/>
+                        </Grid>
+                    </Frame>
+
+                    <!-- Green LED Current Chart -->
+                    <Frame BorderColor="Gray" CornerRadius="5" Padding="10">
+                        <Grid RowSpacing="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="300"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                                <Label Grid.Column="0" Text="Green LED Current (0-10mA)" FontAttributes="Bold" FontSize="16"/>
+                                <Button Grid.Column="1" Text="Clear" Clicked="OnClearGreenChart" WidthRequest="80"/>
+                            </Grid>
+                            <lvc:CartesianChart Grid.Row="1" x:Name="GreenChart"/>
+                        </Grid>
+                    </Frame>
+                </VerticalStackLayout>
+            </ScrollView>
+        </Grid>
+        <!-- End Graph View -->
+
     </Grid>
 
 </ContentPage>
