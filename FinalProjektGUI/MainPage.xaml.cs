@@ -19,13 +19,9 @@ public partial class MainPage : ContentPage
 	private const double TripThreshold = 0.9; // mA (discharge current)
 	private const double LowVoltageThreshold = 2.0; // V
 
-	// Battery State Detection
-	private Queue<double> _batteryCurrentHistory = new Queue<double>();
+	// Battery Voltage Averaging
 	private Queue<double> _batteryVoltageHistory = new Queue<double>();
-	private const int IdleDetectionWindow = 5;
-	private const int ChargedDetectionWindow = 3;
-	private const double IdleCurrentThreshold = 0.05; // Consider 0.0mA if within ±0.05mA
-	private const double ChargedVoltageThreshold = 0.05; // Consider steady if within ±0.05V
+	private const int BatteryVoltageAverageWindow = 6;
 
 	// Traffic Light Mode
 	private bool _isTrafficMode = false;
@@ -277,50 +273,24 @@ public partial class MainPage : ContentPage
 				double solarVoltage = avgValues[0] / 1000.0;
 				SolarOutputLabel.Text = $"{solarVoltage:F3} V";
 
-				// Battery Voltage (ADC4 in volts)
-				double batteryVoltage = avgValues[4] / 1000.0;
+				// Battery Voltage (ADC4 in volts) - with extended averaging
+				double instantVoltage = avgValues[4] / 1000.0;
+				_batteryVoltageHistory.Enqueue(instantVoltage);
+				if (_batteryVoltageHistory.Count > BatteryVoltageAverageWindow)
+				{
+					_batteryVoltageHistory.Dequeue();
+				}
+				double batteryVoltage = _batteryVoltageHistory.Average();
 				BatteryVoltageLabel.Text = $"{batteryVoltage:F3} V";
+
+				// Update battery bar (0V to 5V)
+				double batteryPercentage = Math.Clamp(batteryVoltage / 5.0, 0.0, 1.0);
+				BatteryBar.Progress = batteryPercentage;
 
 				// Battery Status (ADC5 - ADC4) / 100
 				double batteryCurrent = (avgValues[5] - avgValues[4]) / 100.0;
 				
-				// Track battery current and voltage history
-				_batteryCurrentHistory.Enqueue(batteryCurrent);
-				if (_batteryCurrentHistory.Count > IdleDetectionWindow)
-				{
-					_batteryCurrentHistory.Dequeue();
-				}
-
-				_batteryVoltageHistory.Enqueue(batteryVoltage);
-				if (_batteryVoltageHistory.Count > ChargedDetectionWindow)
-				{
-					_batteryVoltageHistory.Dequeue();
-				}
-
-				// Check if battery is in idle state (5 consecutive ~0.0mA readings)
-				bool isIdle = _batteryCurrentHistory.Count == IdleDetectionWindow &&
-				              _batteryCurrentHistory.All(c => Math.Abs(c) < IdleCurrentThreshold);
-
-				// Check if battery is charged (3 consecutive steady voltage readings)
-				bool isCharged = false;
-				if (_batteryVoltageHistory.Count == ChargedDetectionWindow)
-				{
-					double minVoltage = _batteryVoltageHistory.Min();
-					double maxVoltage = _batteryVoltageHistory.Max();
-					isCharged = (maxVoltage - minVoltage) <= ChargedVoltageThreshold;
-				}
-
-				if (isCharged)
-				{
-					BatteryStatusLabel.Text = "CHARGED";
-					BatteryStatusLabel.TextColor = Colors.Blue;
-				}
-				else if (isIdle)
-				{
-					BatteryStatusLabel.Text = "IDLE";
-					BatteryStatusLabel.TextColor = Colors.Gray;
-				}
-				else if (batteryCurrent >= 0)
+				if (batteryCurrent >= 0)
 				{
 					BatteryStatusLabel.Text = $"CHARGING at {Math.Abs(batteryCurrent):F1} mA";
 					BatteryStatusLabel.TextColor = Colors.Green;

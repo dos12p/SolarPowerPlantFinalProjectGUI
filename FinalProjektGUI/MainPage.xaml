@@ -55,11 +55,13 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 
                 <Label Grid.Row="0" Text="Battery Status" FontAttributes="Bold" FontSize="16" HorizontalOptions="Center"/>
                 <Label Grid.Row="1" x:Name="BatteryVoltageLabel" Text="0.000 V" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center"/>
-                <Label Grid.Row="2" x:Name="BatteryStatusLabel" Text="--- at 0 mA" FontSize="14" FontAttributes="Bold" HorizontalOptions="Center"/>
+                <ProgressBar Grid.Row="2" x:Name="BatteryBar" Progress="0" ProgressColor="Green" HeightRequest="20"/>
+                <Label Grid.Row="3" x:Name="BatteryStatusLabel" Text="--- at 0 mA" FontSize="14" FontAttributes="Bold" HorizontalOptions="Center"/>
             </Grid>
         </Frame>
 
