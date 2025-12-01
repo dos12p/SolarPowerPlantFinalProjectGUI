@@ -273,6 +273,10 @@ public partial class MainPage : ContentPage
 				double solarVoltage = avgValues[0] / 1000.0;
 				SolarOutputLabel.Text = $"{solarVoltage:F3} V";
 
+				// Battery Voltage (ADC4 in volts)
+				double batteryVoltage = avgValues[4] / 1000.0;
+				BatteryVoltageLabel.Text = $"{batteryVoltage:F3} V";
+
 				// Battery Status (ADC5 - ADC4) / 100
 				double batteryCurrent = (avgValues[5] - avgValues[4]) / 100.0;
 				
