@@ -662,10 +662,10 @@
           }
         }
       },
-      "SkiaSharp/3.0.0-preview.5.4": {
+      "SkiaSharp/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp.NativeAssets.Android": "3.0.0-preview.5.4"
+          "SkiaSharp.NativeAssets.Android": "3.116.0"
         },
         "compile": {
           "ref/net8.0-android34.0/SkiaSharp.dll": {}
@@ -693,7 +693,7 @@
           }
         }
       },
-      "SkiaSharp.NativeAssets.Android/3.0.0-preview.5.4": {
+      "SkiaSharp.NativeAssets.Android/3.116.0": {
         "type": "package",
         "compile": {
           "lib/net8.0-android34.0/_._": {}
@@ -723,10 +723,10 @@
           }
         }
       },
-      "SkiaSharp.Views/3.0.0-preview.5.4": {
+      "SkiaSharp.Views/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0"
         },
         "compile": {
           "lib/net8.0-android34.0/SkiaSharp.Views.Android.dll": {
@@ -739,13 +739,13 @@
           }
         }
       },
-      "SkiaSharp.Views.Maui.Controls/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Controls/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Controls": "8.0.82",
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views.Maui.Core": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views.Maui.Core": "3.116.0"
         },
         "compile": {
           "lib/net8.0-android34.0/SkiaSharp.Views.Maui.Controls.dll": {
@@ -758,12 +758,12 @@
           }
         }
       },
-      "SkiaSharp.Views.Maui.Core/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Core/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views": "3.116.0"
         },
         "compile": {
           "lib/net8.0-android34.0/SkiaSharp.Views.Maui.Core.dll": {
@@ -3416,10 +3416,10 @@
       "runtime.osx-x64.runtime.native.System.IO.Ports/8.0.0": {
         "type": "package"
       },
-      "SkiaSharp/3.0.0-preview.5.4": {
+      "SkiaSharp/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp.NativeAssets.Android": "3.0.0-preview.5.4"
+          "SkiaSharp.NativeAssets.Android": "3.116.0"
         },
         "compile": {
           "ref/net8.0-android34.0/SkiaSharp.dll": {}
@@ -3447,7 +3447,7 @@
           }
         }
       },
-      "SkiaSharp.NativeAssets.Android/3.0.0-preview.5.4": {
+      "SkiaSharp.NativeAssets.Android/3.116.0": {
         "type": "package",
         "compile": {
           "lib/net8.0-android34.0/_._": {}
@@ -3462,10 +3462,10 @@
           "buildTransitive/net8.0-android34.0/SkiaSharp.NativeAssets.Android.targets": {}
         }
       },
-      "SkiaSharp.Views/3.0.0-preview.5.4": {
+      "SkiaSharp.Views/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0"
         },
         "compile": {
           "lib/net8.0-android34.0/SkiaSharp.Views.Android.dll": {
@@ -3478,13 +3478,13 @@
           }
         }
       },
-      "SkiaSharp.Views.Maui.Controls/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Controls/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Controls": "8.0.82",
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views.Maui.Core": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views.Maui.Core": "3.116.0"
         },
         "compile": {
           "lib/net8.0-android34.0/SkiaSharp.Views.Maui.Controls.dll": {
@@ -3497,12 +3497,12 @@
           }
         }
       },
-      "SkiaSharp.Views.Maui.Core/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Core/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views": "3.116.0"
         },
         "compile": {
           "lib/net8.0-android34.0/SkiaSharp.Views.Maui.Core.dll": {
@@ -6145,10 +6145,10 @@
       "runtime.osx-x64.runtime.native.System.IO.Ports/8.0.0": {
         "type": "package"
       },
-      "SkiaSharp/3.0.0-preview.5.4": {
+      "SkiaSharp/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp.NativeAssets.Android": "3.0.0-preview.5.4"
+          "SkiaSharp.NativeAssets.Android": "3.116.0"
         },
         "compile": {
           "ref/net8.0-android34.0/SkiaSharp.dll": {}
@@ -6176,7 +6176,7 @@
           }
         }
       },
-      "SkiaSharp.NativeAssets.Android/3.0.0-preview.5.4": {
+      "SkiaSharp.NativeAssets.Android/3.116.0": {
         "type": "package",
         "compile": {
           "lib/net8.0-android34.0/_._": {}
@@ -6191,10 +6191,10 @@
           "buildTransitive/net8.0-android34.0/SkiaSharp.NativeAssets.Android.targets": {}
         }
       },
-      "SkiaSharp.Views/3.0.0-preview.5.4": {
+      "SkiaSharp.Views/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0"
         },
         "compile": {
           "lib/net8.0-android34.0/SkiaSharp.Views.Android.dll": {
@@ -6207,13 +6207,13 @@
           }
         }
       },
-      "SkiaSharp.Views.Maui.Controls/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Controls/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Controls": "8.0.82",
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views.Maui.Core": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views.Maui.Core": "3.116.0"
         },
         "compile": {
           "lib/net8.0-android34.0/SkiaSharp.Views.Maui.Controls.dll": {
@@ -6226,12 +6226,12 @@
           }
         }
       },
-      "SkiaSharp.Views.Maui.Core/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Core/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views": "3.116.0"
         },
         "compile": {
           "lib/net8.0-android34.0/SkiaSharp.Views.Maui.Core.dll": {
@@ -8868,10 +8868,10 @@
       "runtime.osx-x64.runtime.native.System.IO.Ports/8.0.0": {
         "type": "package"
       },
-      "SkiaSharp/3.0.0-preview.5.4": {
+      "SkiaSharp/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp.NativeAssets.Android": "3.0.0-preview.5.4"
+          "SkiaSharp.NativeAssets.Android": "3.116.0"
         },
         "compile": {
           "ref/net8.0-android34.0/SkiaSharp.dll": {}
@@ -8899,7 +8899,7 @@
           }
         }
       },
-      "SkiaSharp.NativeAssets.Android/3.0.0-preview.5.4": {
+      "SkiaSharp.NativeAssets.Android/3.116.0": {
         "type": "package",
         "compile": {
           "lib/net8.0-android34.0/_._": {}
@@ -8911,10 +8911,10 @@
           "buildTransitive/net8.0-android34.0/SkiaSharp.NativeAssets.Android.targets": {}
         }
       },
-      "SkiaSharp.Views/3.0.0-preview.5.4": {
+      "SkiaSharp.Views/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0"
         },
         "compile": {
           "lib/net8.0-android34.0/SkiaSharp.Views.Android.dll": {
@@ -8927,13 +8927,13 @@
           }
         }
       },
-      "SkiaSharp.Views.Maui.Controls/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Controls/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Controls": "8.0.82",
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views.Maui.Core": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views.Maui.Core": "3.116.0"
         },
         "compile": {
           "lib/net8.0-android34.0/SkiaSharp.Views.Maui.Controls.dll": {
@@ -8946,12 +8946,12 @@
           }
         }
       },
-      "SkiaSharp.Views.Maui.Core/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Core/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views": "3.116.0"
         },
         "compile": {
           "lib/net8.0-android34.0/SkiaSharp.Views.Maui.Core.dll": {
@@ -11588,10 +11588,10 @@
       "runtime.osx-x64.runtime.native.System.IO.Ports/8.0.0": {
         "type": "package"
       },
-      "SkiaSharp/3.0.0-preview.5.4": {
+      "SkiaSharp/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp.NativeAssets.Android": "3.0.0-preview.5.4"
+          "SkiaSharp.NativeAssets.Android": "3.116.0"
         },
         "compile": {
           "ref/net8.0-android34.0/SkiaSharp.dll": {}
@@ -11619,7 +11619,7 @@
           }
         }
       },
-      "SkiaSharp.NativeAssets.Android/3.0.0-preview.5.4": {
+      "SkiaSharp.NativeAssets.Android/3.116.0": {
         "type": "package",
         "compile": {
           "lib/net8.0-android34.0/_._": {}
@@ -11631,10 +11631,10 @@
           "buildTransitive/net8.0-android34.0/SkiaSharp.NativeAssets.Android.targets": {}
         }
       },
-      "SkiaSharp.Views/3.0.0-preview.5.4": {
+      "SkiaSharp.Views/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0"
         },
         "compile": {
           "lib/net8.0-android34.0/SkiaSharp.Views.Android.dll": {
@@ -11647,13 +11647,13 @@
           }
         }
       },
-      "SkiaSharp.Views.Maui.Controls/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Controls/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Controls": "8.0.82",
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views.Maui.Core": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views.Maui.Core": "3.116.0"
         },
         "compile": {
           "lib/net8.0-android34.0/SkiaSharp.Views.Maui.Controls.dll": {
@@ -11666,12 +11666,12 @@
           }
         }
       },
-      "SkiaSharp.Views.Maui.Core/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Core/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views": "3.116.0"
         },
         "compile": {
           "lib/net8.0-android34.0/SkiaSharp.Views.Maui.Core.dll": {
@@ -14308,10 +14308,10 @@
       "runtime.osx-x64.runtime.native.System.IO.Ports/8.0.0": {
         "type": "package"
       },
-      "SkiaSharp/3.0.0-preview.5.4": {
+      "SkiaSharp/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp.NativeAssets.Android": "3.0.0-preview.5.4"
+          "SkiaSharp.NativeAssets.Android": "3.116.0"
         },
         "compile": {
           "ref/net8.0-android34.0/SkiaSharp.dll": {}
@@ -14339,7 +14339,7 @@
           }
         }
       },
-      "SkiaSharp.NativeAssets.Android/3.0.0-preview.5.4": {
+      "SkiaSharp.NativeAssets.Android/3.116.0": {
         "type": "package",
         "compile": {
           "lib/net8.0-android34.0/_._": {}
@@ -14351,10 +14351,10 @@
           "buildTransitive/net8.0-android34.0/SkiaSharp.NativeAssets.Android.targets": {}
         }
       },
-      "SkiaSharp.Views/3.0.0-preview.5.4": {
+      "SkiaSharp.Views/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0"
         },
         "compile": {
           "lib/net8.0-android34.0/SkiaSharp.Views.Android.dll": {
@@ -14367,13 +14367,13 @@
           }
         }
       },
-      "SkiaSharp.Views.Maui.Controls/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Controls/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Controls": "8.0.82",
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views.Maui.Core": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views.Maui.Core": "3.116.0"
         },
         "compile": {
           "lib/net8.0-android34.0/SkiaSharp.Views.Maui.Controls.dll": {
@@ -14386,12 +14386,12 @@
           }
         }
       },
-      "SkiaSharp.Views.Maui.Core/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Core/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views": "3.116.0"
         },
         "compile": {
           "lib/net8.0-android34.0/SkiaSharp.Views.Maui.Core.dll": {
@@ -17071,10 +17071,10 @@
           }
         }
       },
-      "SkiaSharp/3.0.0-preview.5.4": {
+      "SkiaSharp/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp.NativeAssets.iOS": "3.0.0-preview.5.4"
+          "SkiaSharp.NativeAssets.iOS": "3.116.0"
         },
         "compile": {
           "ref/net8.0-ios17.0/SkiaSharp.dll": {}
@@ -17102,7 +17102,7 @@
           }
         }
       },
-      "SkiaSharp.NativeAssets.iOS/3.0.0-preview.5.4": {
+      "SkiaSharp.NativeAssets.iOS/3.116.0": {
         "type": "package",
         "compile": {
           "lib/net8.0-ios17.0/_._": {}
@@ -17140,10 +17140,10 @@
           }
         }
       },
-      "SkiaSharp.Views/3.0.0-preview.5.4": {
+      "SkiaSharp.Views/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0"
         },
         "compile": {
           "lib/net8.0-ios17.0/SkiaSharp.Views.iOS.dll": {
@@ -17156,39 +17156,39 @@
           }
         }
       },
-      "SkiaSharp.Views.Maui.Controls/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Controls/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Controls": "8.0.82",
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views.Maui.Core": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views.Maui.Core": "3.116.0"
         },
         "compile": {
-          "lib/net8.0-ios18.0/SkiaSharp.Views.Maui.Controls.dll": {
+          "lib/net8.0-ios17.5/SkiaSharp.Views.Maui.Controls.dll": {
             "related": ".pdb"
           }
         },
         "runtime": {
-          "lib/net8.0-ios18.0/SkiaSharp.Views.Maui.Controls.dll": {
+          "lib/net8.0-ios17.5/SkiaSharp.Views.Maui.Controls.dll": {
             "related": ".pdb"
           }
         }
       },
-      "SkiaSharp.Views.Maui.Core/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Core/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views": "3.116.0"
         },
         "compile": {
-          "lib/net8.0-ios18.0/SkiaSharp.Views.Maui.Core.dll": {
+          "lib/net8.0-ios17.5/SkiaSharp.Views.Maui.Core.dll": {
             "related": ".pdb"
           }
         },
         "runtime": {
-          "lib/net8.0-ios18.0/SkiaSharp.Views.Maui.Core.dll": {
+          "lib/net8.0-ios17.5/SkiaSharp.Views.Maui.Core.dll": {
             "related": ".pdb"
           }
         }
@@ -17810,10 +17810,10 @@
       "runtime.osx-x64.runtime.native.System.IO.Ports/8.0.0": {
         "type": "package"
       },
-      "SkiaSharp/3.0.0-preview.5.4": {
+      "SkiaSharp/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp.NativeAssets.iOS": "3.0.0-preview.5.4"
+          "SkiaSharp.NativeAssets.iOS": "3.116.0"
         },
         "compile": {
           "ref/net8.0-ios17.0/SkiaSharp.dll": {}
@@ -17841,7 +17841,7 @@
           }
         }
       },
-      "SkiaSharp.NativeAssets.iOS/3.0.0-preview.5.4": {
+      "SkiaSharp.NativeAssets.iOS/3.116.0": {
         "type": "package",
         "compile": {
           "lib/net8.0-ios17.0/_._": {}
@@ -17853,10 +17853,10 @@
           "buildTransitive/net8.0-ios17.0/SkiaSharp.NativeAssets.iOS.targets": {}
         }
       },
-      "SkiaSharp.Views/3.0.0-preview.5.4": {
+      "SkiaSharp.Views/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0"
         },
         "compile": {
           "lib/net8.0-ios17.0/SkiaSharp.Views.iOS.dll": {
@@ -17869,39 +17869,39 @@
           }
         }
       },
-      "SkiaSharp.Views.Maui.Controls/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Controls/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Controls": "8.0.82",
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views.Maui.Core": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views.Maui.Core": "3.116.0"
         },
         "compile": {
-          "lib/net8.0-ios18.0/SkiaSharp.Views.Maui.Controls.dll": {
+          "lib/net8.0-ios17.5/SkiaSharp.Views.Maui.Controls.dll": {
             "related": ".pdb"
           }
         },
         "runtime": {
-          "lib/net8.0-ios18.0/SkiaSharp.Views.Maui.Controls.dll": {
+          "lib/net8.0-ios17.5/SkiaSharp.Views.Maui.Controls.dll": {
             "related": ".pdb"
           }
         }
       },
-      "SkiaSharp.Views.Maui.Core/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Core/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views": "3.116.0"
         },
         "compile": {
-          "lib/net8.0-ios18.0/SkiaSharp.Views.Maui.Core.dll": {
+          "lib/net8.0-ios17.5/SkiaSharp.Views.Maui.Core.dll": {
             "related": ".pdb"
           }
         },
         "runtime": {
-          "lib/net8.0-ios18.0/SkiaSharp.Views.Maui.Core.dll": {
+          "lib/net8.0-ios17.5/SkiaSharp.Views.Maui.Core.dll": {
             "related": ".pdb"
           }
         }
@@ -18513,10 +18513,10 @@
       "runtime.osx-x64.runtime.native.System.IO.Ports/8.0.0": {
         "type": "package"
       },
-      "SkiaSharp/3.0.0-preview.5.4": {
+      "SkiaSharp/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp.NativeAssets.iOS": "3.0.0-preview.5.4"
+          "SkiaSharp.NativeAssets.iOS": "3.116.0"
         },
         "compile": {
           "ref/net8.0-ios17.0/SkiaSharp.dll": {}
@@ -18544,7 +18544,7 @@
           }
         }
       },
-      "SkiaSharp.NativeAssets.iOS/3.0.0-preview.5.4": {
+      "SkiaSharp.NativeAssets.iOS/3.116.0": {
         "type": "package",
         "compile": {
           "lib/net8.0-ios17.0/_._": {}
@@ -18556,10 +18556,10 @@
           "buildTransitive/net8.0-ios17.0/SkiaSharp.NativeAssets.iOS.targets": {}
         }
       },
-      "SkiaSharp.Views/3.0.0-preview.5.4": {
+      "SkiaSharp.Views/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0"
         },
         "compile": {
           "lib/net8.0-ios17.0/SkiaSharp.Views.iOS.dll": {
@@ -18572,39 +18572,39 @@
           }
         }
       },
-      "SkiaSharp.Views.Maui.Controls/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Controls/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Controls": "8.0.82",
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views.Maui.Core": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views.Maui.Core": "3.116.0"
         },
         "compile": {
-          "lib/net8.0-ios18.0/SkiaSharp.Views.Maui.Controls.dll": {
+          "lib/net8.0-ios17.5/SkiaSharp.Views.Maui.Controls.dll": {
             "related": ".pdb"
           }
         },
         "runtime": {
-          "lib/net8.0-ios18.0/SkiaSharp.Views.Maui.Controls.dll": {
+          "lib/net8.0-ios17.5/SkiaSharp.Views.Maui.Controls.dll": {
             "related": ".pdb"
           }
         }
       },
-      "SkiaSharp.Views.Maui.Core/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Core/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views": "3.116.0"
         },
         "compile": {
-          "lib/net8.0-ios18.0/SkiaSharp.Views.Maui.Core.dll": {
+          "lib/net8.0-ios17.5/SkiaSharp.Views.Maui.Core.dll": {
             "related": ".pdb"
           }
         },
         "runtime": {
-          "lib/net8.0-ios18.0/SkiaSharp.Views.Maui.Core.dll": {
+          "lib/net8.0-ios17.5/SkiaSharp.Views.Maui.Core.dll": {
             "related": ".pdb"
           }
         }
@@ -19220,10 +19220,10 @@
       "runtime.osx-x64.runtime.native.System.IO.Ports/8.0.0": {
         "type": "package"
       },
-      "SkiaSharp/3.0.0-preview.5.4": {
+      "SkiaSharp/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp.NativeAssets.iOS": "3.0.0-preview.5.4"
+          "SkiaSharp.NativeAssets.iOS": "3.116.0"
         },
         "compile": {
           "ref/net8.0-ios17.0/SkiaSharp.dll": {}
@@ -19251,7 +19251,7 @@
           }
         }
       },
-      "SkiaSharp.NativeAssets.iOS/3.0.0-preview.5.4": {
+      "SkiaSharp.NativeAssets.iOS/3.116.0": {
         "type": "package",
         "compile": {
           "lib/net8.0-ios17.0/_._": {}
@@ -19268,10 +19268,10 @@
           "buildTransitive/net8.0-ios17.0/SkiaSharp.NativeAssets.iOS.targets": {}
         }
       },
-      "SkiaSharp.Views/3.0.0-preview.5.4": {
+      "SkiaSharp.Views/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0"
         },
         "compile": {
           "lib/net8.0-ios17.0/SkiaSharp.Views.iOS.dll": {
@@ -19284,39 +19284,39 @@
           }
         }
       },
-      "SkiaSharp.Views.Maui.Controls/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Controls/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Controls": "8.0.82",
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views.Maui.Core": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views.Maui.Core": "3.116.0"
         },
         "compile": {
-          "lib/net8.0-ios18.0/SkiaSharp.Views.Maui.Controls.dll": {
+          "lib/net8.0-ios17.5/SkiaSharp.Views.Maui.Controls.dll": {
             "related": ".pdb"
           }
         },
         "runtime": {
-          "lib/net8.0-ios18.0/SkiaSharp.Views.Maui.Controls.dll": {
+          "lib/net8.0-ios17.5/SkiaSharp.Views.Maui.Controls.dll": {
             "related": ".pdb"
           }
         }
       },
-      "SkiaSharp.Views.Maui.Core/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Core/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views": "3.116.0"
         },
         "compile": {
-          "lib/net8.0-ios18.0/SkiaSharp.Views.Maui.Core.dll": {
+          "lib/net8.0-ios17.5/SkiaSharp.Views.Maui.Core.dll": {
             "related": ".pdb"
           }
         },
         "runtime": {
-          "lib/net8.0-ios18.0/SkiaSharp.Views.Maui.Core.dll": {
+          "lib/net8.0-ios17.5/SkiaSharp.Views.Maui.Core.dll": {
             "related": ".pdb"
           }
         }
@@ -19932,10 +19932,10 @@
       "runtime.osx-x64.runtime.native.System.IO.Ports/8.0.0": {
         "type": "package"
       },
-      "SkiaSharp/3.0.0-preview.5.4": {
+      "SkiaSharp/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp.NativeAssets.iOS": "3.0.0-preview.5.4"
+          "SkiaSharp.NativeAssets.iOS": "3.116.0"
         },
         "compile": {
           "ref/net8.0-ios17.0/SkiaSharp.dll": {}
@@ -19963,7 +19963,7 @@
           }
         }
       },
-      "SkiaSharp.NativeAssets.iOS/3.0.0-preview.5.4": {
+      "SkiaSharp.NativeAssets.iOS/3.116.0": {
         "type": "package",
         "compile": {
           "lib/net8.0-ios17.0/_._": {}
@@ -19980,10 +19980,10 @@
           "buildTransitive/net8.0-ios17.0/SkiaSharp.NativeAssets.iOS.targets": {}
         }
       },
-      "SkiaSharp.Views/3.0.0-preview.5.4": {
+      "SkiaSharp.Views/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0"
         },
         "compile": {
           "lib/net8.0-ios17.0/SkiaSharp.Views.iOS.dll": {
@@ -19996,39 +19996,39 @@
           }
         }
       },
-      "SkiaSharp.Views.Maui.Controls/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Controls/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Controls": "8.0.82",
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views.Maui.Core": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views.Maui.Core": "3.116.0"
         },
         "compile": {
-          "lib/net8.0-ios18.0/SkiaSharp.Views.Maui.Controls.dll": {
+          "lib/net8.0-ios17.5/SkiaSharp.Views.Maui.Controls.dll": {
             "related": ".pdb"
           }
         },
         "runtime": {
-          "lib/net8.0-ios18.0/SkiaSharp.Views.Maui.Controls.dll": {
+          "lib/net8.0-ios17.5/SkiaSharp.Views.Maui.Controls.dll": {
             "related": ".pdb"
           }
         }
       },
-      "SkiaSharp.Views.Maui.Core/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Core/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views": "3.116.0"
         },
         "compile": {
-          "lib/net8.0-ios18.0/SkiaSharp.Views.Maui.Core.dll": {
+          "lib/net8.0-ios17.5/SkiaSharp.Views.Maui.Core.dll": {
             "related": ".pdb"
           }
         },
         "runtime": {
-          "lib/net8.0-ios18.0/SkiaSharp.Views.Maui.Core.dll": {
+          "lib/net8.0-ios17.5/SkiaSharp.Views.Maui.Core.dll": {
             "related": ".pdb"
           }
         }
@@ -20637,10 +20637,10 @@
       "runtime.osx-x64.runtime.native.System.IO.Ports/8.0.0": {
         "type": "package"
       },
-      "SkiaSharp/3.0.0-preview.5.4": {
+      "SkiaSharp/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp.NativeAssets.iOS": "3.0.0-preview.5.4"
+          "SkiaSharp.NativeAssets.iOS": "3.116.0"
         },
         "compile": {
           "ref/net8.0-ios17.0/SkiaSharp.dll": {}
@@ -20668,7 +20668,7 @@
           }
         }
       },
-      "SkiaSharp.NativeAssets.iOS/3.0.0-preview.5.4": {
+      "SkiaSharp.NativeAssets.iOS/3.116.0": {
         "type": "package",
         "compile": {
           "lib/net8.0-ios17.0/_._": {}
@@ -20680,10 +20680,10 @@
           "buildTransitive/net8.0-ios17.0/SkiaSharp.NativeAssets.iOS.targets": {}
         }
       },
-      "SkiaSharp.Views/3.0.0-preview.5.4": {
+      "SkiaSharp.Views/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0"
         },
         "compile": {
           "lib/net8.0-ios17.0/SkiaSharp.Views.iOS.dll": {
@@ -20696,39 +20696,39 @@
           }
         }
       },
-      "SkiaSharp.Views.Maui.Controls/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Controls/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Controls": "8.0.82",
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views.Maui.Core": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views.Maui.Core": "3.116.0"
         },
         "compile": {
-          "lib/net8.0-ios18.0/SkiaSharp.Views.Maui.Controls.dll": {
+          "lib/net8.0-ios17.5/SkiaSharp.Views.Maui.Controls.dll": {
             "related": ".pdb"
           }
         },
         "runtime": {
-          "lib/net8.0-ios18.0/SkiaSharp.Views.Maui.Controls.dll": {
+          "lib/net8.0-ios17.5/SkiaSharp.Views.Maui.Controls.dll": {
             "related": ".pdb"
           }
         }
       },
-      "SkiaSharp.Views.Maui.Core/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Core/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views": "3.116.0"
         },
         "compile": {
-          "lib/net8.0-ios18.0/SkiaSharp.Views.Maui.Core.dll": {
+          "lib/net8.0-ios17.5/SkiaSharp.Views.Maui.Core.dll": {
             "related": ".pdb"
           }
         },
         "runtime": {
-          "lib/net8.0-ios18.0/SkiaSharp.Views.Maui.Core.dll": {
+          "lib/net8.0-ios17.5/SkiaSharp.Views.Maui.Core.dll": {
             "related": ".pdb"
           }
         }
@@ -21373,10 +21373,10 @@
           }
         }
       },
-      "SkiaSharp/3.0.0-preview.5.4": {
+      "SkiaSharp/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp.NativeAssets.MacCatalyst": "3.0.0-preview.5.4"
+          "SkiaSharp.NativeAssets.MacCatalyst": "3.116.0"
         },
         "compile": {
           "ref/net8.0-maccatalyst17.0/SkiaSharp.dll": {}
@@ -21404,7 +21404,7 @@
           }
         }
       },
-      "SkiaSharp.NativeAssets.MacCatalyst/3.0.0-preview.5.4": {
+      "SkiaSharp.NativeAssets.MacCatalyst/3.116.0": {
         "type": "package",
         "compile": {
           "lib/net8.0-maccatalyst17.0/_._": {}
@@ -21422,10 +21422,10 @@
           }
         }
       },
-      "SkiaSharp.Views/3.0.0-preview.5.4": {
+      "SkiaSharp.Views/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0"
         },
         "compile": {
           "lib/net8.0-maccatalyst17.0/SkiaSharp.Views.iOS.dll": {
@@ -21438,39 +21438,39 @@
           }
         }
       },
-      "SkiaSharp.Views.Maui.Controls/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Controls/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Controls": "8.0.82",
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views.Maui.Core": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views.Maui.Core": "3.116.0"
         },
         "compile": {
-          "lib/net8.0-maccatalyst18.0/SkiaSharp.Views.Maui.Controls.dll": {
+          "lib/net8.0-maccatalyst17.5/SkiaSharp.Views.Maui.Controls.dll": {
             "related": ".pdb"
           }
         },
         "runtime": {
-          "lib/net8.0-maccatalyst18.0/SkiaSharp.Views.Maui.Controls.dll": {
+          "lib/net8.0-maccatalyst17.5/SkiaSharp.Views.Maui.Controls.dll": {
             "related": ".pdb"
           }
         }
       },
-      "SkiaSharp.Views.Maui.Core/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Core/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views": "3.116.0"
         },
         "compile": {
-          "lib/net8.0-maccatalyst18.0/SkiaSharp.Views.Maui.Core.dll": {
+          "lib/net8.0-maccatalyst17.5/SkiaSharp.Views.Maui.Core.dll": {
             "related": ".pdb"
           }
         },
         "runtime": {
-          "lib/net8.0-maccatalyst18.0/SkiaSharp.Views.Maui.Core.dll": {
+          "lib/net8.0-maccatalyst17.5/SkiaSharp.Views.Maui.Core.dll": {
             "related": ".pdb"
           }
         }
@@ -22092,10 +22092,10 @@
       "runtime.osx-x64.runtime.native.System.IO.Ports/8.0.0": {
         "type": "package"
       },
-      "SkiaSharp/3.0.0-preview.5.4": {
+      "SkiaSharp/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp.NativeAssets.MacCatalyst": "3.0.0-preview.5.4"
+          "SkiaSharp.NativeAssets.MacCatalyst": "3.116.0"
         },
         "compile": {
           "ref/net8.0-maccatalyst17.0/SkiaSharp.dll": {}
@@ -22123,7 +22123,7 @@
           }
         }
       },
-      "SkiaSharp.NativeAssets.MacCatalyst/3.0.0-preview.5.4": {
+      "SkiaSharp.NativeAssets.MacCatalyst/3.116.0": {
         "type": "package",
         "compile": {
           "lib/net8.0-maccatalyst17.0/_._": {}
@@ -22135,10 +22135,10 @@
           "buildTransitive/net8.0-maccatalyst17.0/SkiaSharp.NativeAssets.MacCatalyst.targets": {}
         }
       },
-      "SkiaSharp.Views/3.0.0-preview.5.4": {
+      "SkiaSharp.Views/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0"
         },
         "compile": {
           "lib/net8.0-maccatalyst17.0/SkiaSharp.Views.iOS.dll": {
@@ -22151,39 +22151,39 @@
           }
         }
       },
-      "SkiaSharp.Views.Maui.Controls/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Controls/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Controls": "8.0.82",
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views.Maui.Core": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views.Maui.Core": "3.116.0"
         },
         "compile": {
-          "lib/net8.0-maccatalyst18.0/SkiaSharp.Views.Maui.Controls.dll": {
+          "lib/net8.0-maccatalyst17.5/SkiaSharp.Views.Maui.Controls.dll": {
             "related": ".pdb"
           }
         },
         "runtime": {
-          "lib/net8.0-maccatalyst18.0/SkiaSharp.Views.Maui.Controls.dll": {
+          "lib/net8.0-maccatalyst17.5/SkiaSharp.Views.Maui.Controls.dll": {
             "related": ".pdb"
           }
         }
       },
-      "SkiaSharp.Views.Maui.Core/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Core/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views": "3.116.0"
         },
         "compile": {
-          "lib/net8.0-maccatalyst18.0/SkiaSharp.Views.Maui.Core.dll": {
+          "lib/net8.0-maccatalyst17.5/SkiaSharp.Views.Maui.Core.dll": {
             "related": ".pdb"
           }
         },
         "runtime": {
-          "lib/net8.0-maccatalyst18.0/SkiaSharp.Views.Maui.Core.dll": {
+          "lib/net8.0-maccatalyst17.5/SkiaSharp.Views.Maui.Core.dll": {
             "related": ".pdb"
           }
         }
@@ -22795,10 +22795,10 @@
       "runtime.osx-x64.runtime.native.System.IO.Ports/8.0.0": {
         "type": "package"
       },
-      "SkiaSharp/3.0.0-preview.5.4": {
+      "SkiaSharp/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp.NativeAssets.MacCatalyst": "3.0.0-preview.5.4"
+          "SkiaSharp.NativeAssets.MacCatalyst": "3.116.0"
         },
         "compile": {
           "ref/net8.0-maccatalyst17.0/SkiaSharp.dll": {}
@@ -22826,7 +22826,7 @@
           }
         }
       },
-      "SkiaSharp.NativeAssets.MacCatalyst/3.0.0-preview.5.4": {
+      "SkiaSharp.NativeAssets.MacCatalyst/3.116.0": {
         "type": "package",
         "compile": {
           "lib/net8.0-maccatalyst17.0/_._": {}
@@ -22838,10 +22838,10 @@
           "buildTransitive/net8.0-maccatalyst17.0/SkiaSharp.NativeAssets.MacCatalyst.targets": {}
         }
       },
-      "SkiaSharp.Views/3.0.0-preview.5.4": {
+      "SkiaSharp.Views/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0"
         },
         "compile": {
           "lib/net8.0-maccatalyst17.0/SkiaSharp.Views.iOS.dll": {
@@ -22854,39 +22854,39 @@
           }
         }
       },
-      "SkiaSharp.Views.Maui.Controls/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Controls/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Controls": "8.0.82",
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views.Maui.Core": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views.Maui.Core": "3.116.0"
         },
         "compile": {
-          "lib/net8.0-maccatalyst18.0/SkiaSharp.Views.Maui.Controls.dll": {
+          "lib/net8.0-maccatalyst17.5/SkiaSharp.Views.Maui.Controls.dll": {
             "related": ".pdb"
           }
         },
         "runtime": {
-          "lib/net8.0-maccatalyst18.0/SkiaSharp.Views.Maui.Controls.dll": {
+          "lib/net8.0-maccatalyst17.5/SkiaSharp.Views.Maui.Controls.dll": {
             "related": ".pdb"
           }
         }
       },
-      "SkiaSharp.Views.Maui.Core/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Core/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views": "3.116.0"
         },
         "compile": {
-          "lib/net8.0-maccatalyst18.0/SkiaSharp.Views.Maui.Core.dll": {
+          "lib/net8.0-maccatalyst17.5/SkiaSharp.Views.Maui.Core.dll": {
             "related": ".pdb"
           }
         },
         "runtime": {
-          "lib/net8.0-maccatalyst18.0/SkiaSharp.Views.Maui.Core.dll": {
+          "lib/net8.0-maccatalyst17.5/SkiaSharp.Views.Maui.Core.dll": {
             "related": ".pdb"
           }
         }
@@ -23495,10 +23495,10 @@
       "runtime.osx-x64.runtime.native.System.IO.Ports/8.0.0": {
         "type": "package"
       },
-      "SkiaSharp/3.0.0-preview.5.4": {
+      "SkiaSharp/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp.NativeAssets.MacCatalyst": "3.0.0-preview.5.4"
+          "SkiaSharp.NativeAssets.MacCatalyst": "3.116.0"
         },
         "compile": {
           "ref/net8.0-maccatalyst17.0/SkiaSharp.dll": {}
@@ -23526,7 +23526,7 @@
           }
         }
       },
-      "SkiaSharp.NativeAssets.MacCatalyst/3.0.0-preview.5.4": {
+      "SkiaSharp.NativeAssets.MacCatalyst/3.116.0": {
         "type": "package",
         "compile": {
           "lib/net8.0-maccatalyst17.0/_._": {}
@@ -23538,10 +23538,10 @@
           "buildTransitive/net8.0-maccatalyst17.0/SkiaSharp.NativeAssets.MacCatalyst.targets": {}
         }
       },
-      "SkiaSharp.Views/3.0.0-preview.5.4": {
+      "SkiaSharp.Views/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0"
         },
         "compile": {
           "lib/net8.0-maccatalyst17.0/SkiaSharp.Views.iOS.dll": {
@@ -23554,39 +23554,39 @@
           }
         }
       },
-      "SkiaSharp.Views.Maui.Controls/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Controls/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Controls": "8.0.82",
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views.Maui.Core": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views.Maui.Core": "3.116.0"
         },
         "compile": {
-          "lib/net8.0-maccatalyst18.0/SkiaSharp.Views.Maui.Controls.dll": {
+          "lib/net8.0-maccatalyst17.5/SkiaSharp.Views.Maui.Controls.dll": {
             "related": ".pdb"
           }
         },
         "runtime": {
-          "lib/net8.0-maccatalyst18.0/SkiaSharp.Views.Maui.Controls.dll": {
+          "lib/net8.0-maccatalyst17.5/SkiaSharp.Views.Maui.Controls.dll": {
             "related": ".pdb"
           }
         }
       },
-      "SkiaSharp.Views.Maui.Core/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Core/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views": "3.116.0"
         },
         "compile": {
-          "lib/net8.0-maccatalyst18.0/SkiaSharp.Views.Maui.Core.dll": {
+          "lib/net8.0-maccatalyst17.5/SkiaSharp.Views.Maui.Core.dll": {
             "related": ".pdb"
           }
         },
         "runtime": {
-          "lib/net8.0-maccatalyst18.0/SkiaSharp.Views.Maui.Core.dll": {
+          "lib/net8.0-maccatalyst17.5/SkiaSharp.Views.Maui.Core.dll": {
             "related": ".pdb"
           }
         }
@@ -24198,10 +24198,10 @@
       "runtime.osx-x64.runtime.native.System.IO.Ports/8.0.0": {
         "type": "package"
       },
-      "SkiaSharp/3.0.0-preview.5.4": {
+      "SkiaSharp/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp.NativeAssets.MacCatalyst": "3.0.0-preview.5.4"
+          "SkiaSharp.NativeAssets.MacCatalyst": "3.116.0"
         },
         "compile": {
           "ref/net8.0-maccatalyst17.0/SkiaSharp.dll": {}
@@ -24229,7 +24229,7 @@
           }
         }
       },
-      "SkiaSharp.NativeAssets.MacCatalyst/3.0.0-preview.5.4": {
+      "SkiaSharp.NativeAssets.MacCatalyst/3.116.0": {
         "type": "package",
         "compile": {
           "lib/net8.0-maccatalyst17.0/_._": {}
@@ -24244,10 +24244,10 @@
           "buildTransitive/net8.0-maccatalyst17.0/SkiaSharp.NativeAssets.MacCatalyst.targets": {}
         }
       },
-      "SkiaSharp.Views/3.0.0-preview.5.4": {
+      "SkiaSharp.Views/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0"
         },
         "compile": {
           "lib/net8.0-maccatalyst17.0/SkiaSharp.Views.iOS.dll": {
@@ -24260,39 +24260,39 @@
           }
         }
       },
-      "SkiaSharp.Views.Maui.Controls/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Controls/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Controls": "8.0.82",
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views.Maui.Core": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views.Maui.Core": "3.116.0"
         },
         "compile": {
-          "lib/net8.0-maccatalyst18.0/SkiaSharp.Views.Maui.Controls.dll": {
+          "lib/net8.0-maccatalyst17.5/SkiaSharp.Views.Maui.Controls.dll": {
             "related": ".pdb"
           }
         },
         "runtime": {
-          "lib/net8.0-maccatalyst18.0/SkiaSharp.Views.Maui.Controls.dll": {
+          "lib/net8.0-maccatalyst17.5/SkiaSharp.Views.Maui.Controls.dll": {
             "related": ".pdb"
           }
         }
       },
-      "SkiaSharp.Views.Maui.Core/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Core/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views": "3.116.0"
         },
         "compile": {
-          "lib/net8.0-maccatalyst18.0/SkiaSharp.Views.Maui.Core.dll": {
+          "lib/net8.0-maccatalyst17.5/SkiaSharp.Views.Maui.Core.dll": {
             "related": ".pdb"
           }
         },
         "runtime": {
-          "lib/net8.0-maccatalyst18.0/SkiaSharp.Views.Maui.Core.dll": {
+          "lib/net8.0-maccatalyst17.5/SkiaSharp.Views.Maui.Core.dll": {
             "related": ".pdb"
           }
         }
@@ -24901,10 +24901,10 @@
       "runtime.osx-x64.runtime.native.System.IO.Ports/8.0.0": {
         "type": "package"
       },
-      "SkiaSharp/3.0.0-preview.5.4": {
+      "SkiaSharp/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp.NativeAssets.MacCatalyst": "3.0.0-preview.5.4"
+          "SkiaSharp.NativeAssets.MacCatalyst": "3.116.0"
         },
         "compile": {
           "ref/net8.0-maccatalyst17.0/SkiaSharp.dll": {}
@@ -24932,7 +24932,7 @@
           }
         }
       },
-      "SkiaSharp.NativeAssets.MacCatalyst/3.0.0-preview.5.4": {
+      "SkiaSharp.NativeAssets.MacCatalyst/3.116.0": {
         "type": "package",
         "compile": {
           "lib/net8.0-maccatalyst17.0/_._": {}
@@ -24944,10 +24944,10 @@
           "buildTransitive/net8.0-maccatalyst17.0/SkiaSharp.NativeAssets.MacCatalyst.targets": {}
         }
       },
-      "SkiaSharp.Views/3.0.0-preview.5.4": {
+      "SkiaSharp.Views/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0"
         },
         "compile": {
           "lib/net8.0-maccatalyst17.0/SkiaSharp.Views.iOS.dll": {
@@ -24960,39 +24960,39 @@
           }
         }
       },
-      "SkiaSharp.Views.Maui.Controls/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Controls/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Controls": "8.0.82",
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views.Maui.Core": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views.Maui.Core": "3.116.0"
         },
         "compile": {
-          "lib/net8.0-maccatalyst18.0/SkiaSharp.Views.Maui.Controls.dll": {
+          "lib/net8.0-maccatalyst17.5/SkiaSharp.Views.Maui.Controls.dll": {
             "related": ".pdb"
           }
         },
         "runtime": {
-          "lib/net8.0-maccatalyst18.0/SkiaSharp.Views.Maui.Controls.dll": {
+          "lib/net8.0-maccatalyst17.5/SkiaSharp.Views.Maui.Controls.dll": {
             "related": ".pdb"
           }
         }
       },
-      "SkiaSharp.Views.Maui.Core/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Core/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views": "3.116.0"
         },
         "compile": {
-          "lib/net8.0-maccatalyst18.0/SkiaSharp.Views.Maui.Core.dll": {
+          "lib/net8.0-maccatalyst17.5/SkiaSharp.Views.Maui.Core.dll": {
             "related": ".pdb"
           }
         },
         "runtime": {
-          "lib/net8.0-maccatalyst18.0/SkiaSharp.Views.Maui.Core.dll": {
+          "lib/net8.0-maccatalyst17.5/SkiaSharp.Views.Maui.Core.dll": {
             "related": ".pdb"
           }
         }
@@ -25911,10 +25911,10 @@
           }
         }
       },
-      "SkiaSharp/3.0.0-preview.5.4": {
+      "SkiaSharp/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp.NativeAssets.Win32": "3.0.0-preview.5.4"
+          "SkiaSharp.NativeAssets.Win32": "3.116.0"
         },
         "compile": {
           "ref/net8.0-windows10.0.19041/SkiaSharp.dll": {}
@@ -25942,7 +25942,7 @@
           }
         }
       },
-      "SkiaSharp.NativeAssets.Win32/3.0.0-preview.5.4": {
+      "SkiaSharp.NativeAssets.Win32/3.116.0": {
         "type": "package",
         "compile": {
           "lib/net8.0-windows10.0.19041/_._": {}
@@ -25965,7 +25965,7 @@
           }
         }
       },
-      "SkiaSharp.NativeAssets.WinUI/3.0.0-preview.5.4": {
+      "SkiaSharp.NativeAssets.WinUI/3.116.0": {
         "type": "package",
         "compile": {
           "lib/net8.0-windows10.0.19041/_._": {}
@@ -26036,10 +26036,10 @@
           }
         }
       },
-      "SkiaSharp.Views/3.0.0-preview.5.4": {
+      "SkiaSharp.Views/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0"
         },
         "compile": {
           "lib/net8.0-windows10.0.19041.0/_._": {}
@@ -26051,13 +26051,13 @@
           "buildTransitive/net8.0-windows10.0.19041/SkiaSharp.Views.targets": {}
         }
       },
-      "SkiaSharp.Views.Maui.Controls/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Controls/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Controls": "8.0.82",
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views.Maui.Core": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views.Maui.Core": "3.116.0"
         },
         "compile": {
           "lib/net8.0-windows10.0.19041/SkiaSharp.Views.Maui.Controls.dll": {
@@ -26070,13 +26070,13 @@
           }
         }
       },
-      "SkiaSharp.Views.Maui.Core/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Core/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views": "3.0.0-preview.5.4",
-          "SkiaSharp.Views.WinUI": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views": "3.116.0",
+          "SkiaSharp.Views.WinUI": "3.116.0"
         },
         "compile": {
           "lib/net8.0-windows10.0.19041/SkiaSharp.Views.Maui.Core.dll": {
@@ -26089,12 +26089,12 @@
           }
         }
       },
-      "SkiaSharp.Views.WinUI/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.WinUI/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.WindowsAppSDK": "1.4.230913002",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.NativeAssets.WinUI": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.NativeAssets.WinUI": "3.116.0"
         },
         "compile": {
           "lib/net8.0-windows10.0.19041/SkiaSharp.Views.Windows.dll": {
@@ -26922,10 +26922,10 @@
       "runtime.osx-x64.runtime.native.System.IO.Ports/8.0.0": {
         "type": "package"
       },
-      "SkiaSharp/3.0.0-preview.5.4": {
+      "SkiaSharp/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp.NativeAssets.Win32": "3.0.0-preview.5.4"
+          "SkiaSharp.NativeAssets.Win32": "3.116.0"
         },
         "compile": {
           "ref/net8.0-windows10.0.19041/SkiaSharp.dll": {}
@@ -26953,7 +26953,7 @@
           }
         }
       },
-      "SkiaSharp.NativeAssets.Win32/3.0.0-preview.5.4": {
+      "SkiaSharp.NativeAssets.Win32/3.116.0": {
         "type": "package",
         "compile": {
           "lib/net8.0-windows10.0.19041/_._": {}
@@ -26962,7 +26962,7 @@
           "lib/net8.0-windows10.0.19041/_._": {}
         }
       },
-      "SkiaSharp.NativeAssets.WinUI/3.0.0-preview.5.4": {
+      "SkiaSharp.NativeAssets.WinUI/3.116.0": {
         "type": "package",
         "compile": {
           "lib/net8.0-windows10.0.19041/_._": {}
@@ -26971,10 +26971,10 @@
           "lib/net8.0-windows10.0.19041/_._": {}
         }
       },
-      "SkiaSharp.Views/3.0.0-preview.5.4": {
+      "SkiaSharp.Views/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0"
         },
         "compile": {
           "lib/net8.0-windows10.0.19041.0/_._": {}
@@ -26986,13 +26986,13 @@
           "buildTransitive/net8.0-windows10.0.19041/SkiaSharp.Views.targets": {}
         }
       },
-      "SkiaSharp.Views.Maui.Controls/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Controls/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Controls": "8.0.82",
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views.Maui.Core": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views.Maui.Core": "3.116.0"
         },
         "compile": {
           "lib/net8.0-windows10.0.19041/SkiaSharp.Views.Maui.Controls.dll": {
@@ -27005,13 +27005,13 @@
           }
         }
       },
-      "SkiaSharp.Views.Maui.Core/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Core/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views": "3.0.0-preview.5.4",
-          "SkiaSharp.Views.WinUI": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views": "3.116.0",
+          "SkiaSharp.Views.WinUI": "3.116.0"
         },
         "compile": {
           "lib/net8.0-windows10.0.19041/SkiaSharp.Views.Maui.Core.dll": {
@@ -27024,12 +27024,12 @@
           }
         }
       },
-      "SkiaSharp.Views.WinUI/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.WinUI/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.WindowsAppSDK": "1.4.230913002",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.NativeAssets.WinUI": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.NativeAssets.WinUI": "3.116.0"
         },
         "compile": {
           "lib/net8.0-windows10.0.19041/SkiaSharp.Views.Windows.dll": {
@@ -27847,10 +27847,10 @@
       "runtime.osx-x64.runtime.native.System.IO.Ports/8.0.0": {
         "type": "package"
       },
-      "SkiaSharp/3.0.0-preview.5.4": {
+      "SkiaSharp/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp.NativeAssets.Win32": "3.0.0-preview.5.4"
+          "SkiaSharp.NativeAssets.Win32": "3.116.0"
         },
         "compile": {
           "ref/net8.0-windows10.0.19041/SkiaSharp.dll": {}
@@ -27878,7 +27878,7 @@
           }
         }
       },
-      "SkiaSharp.NativeAssets.Win32/3.0.0-preview.5.4": {
+      "SkiaSharp.NativeAssets.Win32/3.116.0": {
         "type": "package",
         "compile": {
           "lib/net8.0-windows10.0.19041/_._": {}
@@ -27887,7 +27887,7 @@
           "lib/net8.0-windows10.0.19041/_._": {}
         }
       },
-      "SkiaSharp.NativeAssets.WinUI/3.0.0-preview.5.4": {
+      "SkiaSharp.NativeAssets.WinUI/3.116.0": {
         "type": "package",
         "compile": {
           "lib/net8.0-windows10.0.19041/_._": {}
@@ -27896,10 +27896,10 @@
           "lib/net8.0-windows10.0.19041/_._": {}
         }
       },
-      "SkiaSharp.Views/3.0.0-preview.5.4": {
+      "SkiaSharp.Views/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0"
         },
         "compile": {
           "lib/net8.0-windows10.0.19041.0/_._": {}
@@ -27911,13 +27911,13 @@
           "buildTransitive/net8.0-windows10.0.19041/SkiaSharp.Views.targets": {}
         }
       },
-      "SkiaSharp.Views.Maui.Controls/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Controls/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Controls": "8.0.82",
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views.Maui.Core": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views.Maui.Core": "3.116.0"
         },
         "compile": {
           "lib/net8.0-windows10.0.19041/SkiaSharp.Views.Maui.Controls.dll": {
@@ -27930,13 +27930,13 @@
           }
         }
       },
-      "SkiaSharp.Views.Maui.Core/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Core/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views": "3.0.0-preview.5.4",
-          "SkiaSharp.Views.WinUI": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views": "3.116.0",
+          "SkiaSharp.Views.WinUI": "3.116.0"
         },
         "compile": {
           "lib/net8.0-windows10.0.19041/SkiaSharp.Views.Maui.Core.dll": {
@@ -27949,12 +27949,12 @@
           }
         }
       },
-      "SkiaSharp.Views.WinUI/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.WinUI/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.WindowsAppSDK": "1.4.230913002",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.NativeAssets.WinUI": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.NativeAssets.WinUI": "3.116.0"
         },
         "compile": {
           "lib/net8.0-windows10.0.19041/SkiaSharp.Views.Windows.dll": {
@@ -28769,10 +28769,10 @@
       "runtime.osx-x64.runtime.native.System.IO.Ports/8.0.0": {
         "type": "package"
       },
-      "SkiaSharp/3.0.0-preview.5.4": {
+      "SkiaSharp/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp.NativeAssets.Win32": "3.0.0-preview.5.4"
+          "SkiaSharp.NativeAssets.Win32": "3.116.0"
         },
         "compile": {
           "ref/net8.0-windows10.0.19041/SkiaSharp.dll": {}
@@ -28800,7 +28800,7 @@
           }
         }
       },
-      "SkiaSharp.NativeAssets.Win32/3.0.0-preview.5.4": {
+      "SkiaSharp.NativeAssets.Win32/3.116.0": {
         "type": "package",
         "compile": {
           "lib/net8.0-windows10.0.19041/_._": {}
@@ -28809,7 +28809,7 @@
           "lib/net8.0-windows10.0.19041/_._": {}
         }
       },
-      "SkiaSharp.NativeAssets.WinUI/3.0.0-preview.5.4": {
+      "SkiaSharp.NativeAssets.WinUI/3.116.0": {
         "type": "package",
         "compile": {
           "lib/net8.0-windows10.0.19041/_._": {}
@@ -28818,10 +28818,10 @@
           "lib/net8.0-windows10.0.19041/_._": {}
         }
       },
-      "SkiaSharp.Views/3.0.0-preview.5.4": {
+      "SkiaSharp.Views/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0"
         },
         "compile": {
           "lib/net8.0-windows10.0.19041.0/_._": {}
@@ -28833,13 +28833,13 @@
           "buildTransitive/net8.0-windows10.0.19041/SkiaSharp.Views.targets": {}
         }
       },
-      "SkiaSharp.Views.Maui.Controls/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Controls/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Controls": "8.0.82",
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views.Maui.Core": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views.Maui.Core": "3.116.0"
         },
         "compile": {
           "lib/net8.0-windows10.0.19041/SkiaSharp.Views.Maui.Controls.dll": {
@@ -28852,13 +28852,13 @@
           }
         }
       },
-      "SkiaSharp.Views.Maui.Core/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Core/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views": "3.0.0-preview.5.4",
-          "SkiaSharp.Views.WinUI": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views": "3.116.0",
+          "SkiaSharp.Views.WinUI": "3.116.0"
         },
         "compile": {
           "lib/net8.0-windows10.0.19041/SkiaSharp.Views.Maui.Core.dll": {
@@ -28871,12 +28871,12 @@
           }
         }
       },
-      "SkiaSharp.Views.WinUI/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.WinUI/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.WindowsAppSDK": "1.4.230913002",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.NativeAssets.WinUI": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.NativeAssets.WinUI": "3.116.0"
         },
         "compile": {
           "lib/net8.0-windows10.0.19041/SkiaSharp.Views.Windows.dll": {
@@ -29691,10 +29691,10 @@
       "runtime.osx-x64.runtime.native.System.IO.Ports/8.0.0": {
         "type": "package"
       },
-      "SkiaSharp/3.0.0-preview.5.4": {
+      "SkiaSharp/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp.NativeAssets.Win32": "3.0.0-preview.5.4"
+          "SkiaSharp.NativeAssets.Win32": "3.116.0"
         },
         "compile": {
           "ref/net8.0-windows10.0.19041/SkiaSharp.dll": {}
@@ -29722,7 +29722,7 @@
           }
         }
       },
-      "SkiaSharp.NativeAssets.Win32/3.0.0-preview.5.4": {
+      "SkiaSharp.NativeAssets.Win32/3.116.0": {
         "type": "package",
         "compile": {
           "lib/net8.0-windows10.0.19041/_._": {}
@@ -29731,7 +29731,7 @@
           "lib/net8.0-windows10.0.19041/_._": {}
         }
       },
-      "SkiaSharp.NativeAssets.WinUI/3.0.0-preview.5.4": {
+      "SkiaSharp.NativeAssets.WinUI/3.116.0": {
         "type": "package",
         "compile": {
           "lib/net8.0-windows10.0.19041/_._": {}
@@ -29740,10 +29740,10 @@
           "lib/net8.0-windows10.0.19041/_._": {}
         }
       },
-      "SkiaSharp.Views/3.0.0-preview.5.4": {
+      "SkiaSharp.Views/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0"
         },
         "compile": {
           "lib/net8.0-windows10.0.19041.0/_._": {}
@@ -29755,13 +29755,13 @@
           "buildTransitive/net8.0-windows10.0.19041/SkiaSharp.Views.targets": {}
         }
       },
-      "SkiaSharp.Views.Maui.Controls/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Controls/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Controls": "8.0.82",
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views.Maui.Core": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views.Maui.Core": "3.116.0"
         },
         "compile": {
           "lib/net8.0-windows10.0.19041/SkiaSharp.Views.Maui.Controls.dll": {
@@ -29774,13 +29774,13 @@
           }
         }
       },
-      "SkiaSharp.Views.Maui.Core/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Core/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views": "3.0.0-preview.5.4",
-          "SkiaSharp.Views.WinUI": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views": "3.116.0",
+          "SkiaSharp.Views.WinUI": "3.116.0"
         },
         "compile": {
           "lib/net8.0-windows10.0.19041/SkiaSharp.Views.Maui.Core.dll": {
@@ -29793,12 +29793,12 @@
           }
         }
       },
-      "SkiaSharp.Views.WinUI/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.WinUI/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.WindowsAppSDK": "1.4.230913002",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.NativeAssets.WinUI": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.NativeAssets.WinUI": "3.116.0"
         },
         "compile": {
           "lib/net8.0-windows10.0.19041/SkiaSharp.Views.Windows.dll": {
@@ -30626,10 +30626,10 @@
       "runtime.osx-x64.runtime.native.System.IO.Ports/8.0.0": {
         "type": "package"
       },
-      "SkiaSharp/3.0.0-preview.5.4": {
+      "SkiaSharp/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp.NativeAssets.Win32": "3.0.0-preview.5.4"
+          "SkiaSharp.NativeAssets.Win32": "3.116.0"
         },
         "compile": {
           "ref/net8.0-windows10.0.19041/SkiaSharp.dll": {}
@@ -30657,7 +30657,7 @@
           }
         }
       },
-      "SkiaSharp.NativeAssets.Win32/3.0.0-preview.5.4": {
+      "SkiaSharp.NativeAssets.Win32/3.116.0": {
         "type": "package",
         "compile": {
           "lib/net8.0-windows10.0.19041/_._": {}
@@ -30669,7 +30669,7 @@
           "runtimes/win-x64/native/libSkiaSharp.dll": {}
         }
       },
-      "SkiaSharp.NativeAssets.WinUI/3.0.0-preview.5.4": {
+      "SkiaSharp.NativeAssets.WinUI/3.116.0": {
         "type": "package",
         "compile": {
           "lib/net8.0-windows10.0.19041/_._": {}
@@ -30684,10 +30684,10 @@
           "runtimes/win-x64/native/libGLESv2.dll": {}
         }
       },
-      "SkiaSharp.Views/3.0.0-preview.5.4": {
+      "SkiaSharp.Views/3.116.0": {
         "type": "package",
         "dependencies": {
-          "SkiaSharp": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0"
         },
         "compile": {
           "lib/net8.0-windows10.0.19041.0/_._": {}
@@ -30699,13 +30699,13 @@
           "buildTransitive/net8.0-windows10.0.19041/SkiaSharp.Views.targets": {}
         }
       },
-      "SkiaSharp.Views.Maui.Controls/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Controls/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Controls": "8.0.82",
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views.Maui.Core": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views.Maui.Core": "3.116.0"
         },
         "compile": {
           "lib/net8.0-windows10.0.19041/SkiaSharp.Views.Maui.Controls.dll": {
@@ -30718,13 +30718,13 @@
           }
         }
       },
-      "SkiaSharp.Views.Maui.Core/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.Maui.Core/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Maui.Core": "8.0.82",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.Views": "3.0.0-preview.5.4",
-          "SkiaSharp.Views.WinUI": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.Views": "3.116.0",
+          "SkiaSharp.Views.WinUI": "3.116.0"
         },
         "compile": {
           "lib/net8.0-windows10.0.19041/SkiaSharp.Views.Maui.Core.dll": {
@@ -30737,12 +30737,12 @@
           }
         }
       },
-      "SkiaSharp.Views.WinUI/3.0.0-preview.5.4": {
+      "SkiaSharp.Views.WinUI/3.116.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.WindowsAppSDK": "1.4.230913002",
-          "SkiaSharp": "3.0.0-preview.5.4",
-          "SkiaSharp.NativeAssets.WinUI": "3.0.0-preview.5.4"
+          "SkiaSharp": "3.116.0",
+          "SkiaSharp.NativeAssets.WinUI": "3.116.0"
         },
         "compile": {
           "lib/net8.0-windows10.0.19041/SkiaSharp.Views.Windows.dll": {
@@ -33268,10 +33268,10 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "SkiaSharp/3.0.0-preview.5.4": {
-      "sha512": "r7OBa9kSNUvcz4WUGE4UbYnKJgnJRmDuWaHVrEbtEeca33cInDPATSLGbdShjwb/XG6EkTPtRbs+AznMO5YUdA==",
+    "SkiaSharp/3.116.0": {
+      "sha512": "HvLQXua/TWp7eYWaY3R69b4Tm8AdedfXkKHY3MIgjYFNoQqwPfOd7/u1Bqs8WiBoSa2ISjqUnqzitpihlkvFfQ==",
       "type": "package",
-      "path": "skiasharp/3.0.0-preview.5.4",
+      "path": "skiasharp/3.116.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -33316,7 +33316,7 @@
         "ref/net8.0/SkiaSharp.dll",
         "ref/netstandard2.0/SkiaSharp.dll",
         "ref/netstandard2.1/SkiaSharp.dll",
-        "skiasharp.3.0.0-preview.5.4.nupkg.sha512",
+        "skiasharp.3.116.0.nupkg.sha512",
         "skiasharp.nuspec"
       ]
     },
@@ -33350,10 +33350,10 @@
         "skiasharp.harfbuzz.nuspec"
       ]
     },
-    "SkiaSharp.NativeAssets.Android/3.0.0-preview.5.4": {
-      "sha512": "H9gkR2bYX/wuN9kqXqvkv4oxCq7XFPvH2Ti2ptr9QgwiZXJJdc835NPRKldTdQYuY4iBeb26usuraw9Z1Q5xZw==",
+    "SkiaSharp.NativeAssets.Android/3.116.0": {
+      "sha512": "IuoSkPwj95u0nY9pcBBGgG+jFhZEJdh8Y6SuS6SbFUMZDFMT1VoXYyO6TiM+4gkrkdco2UWz/Gu0sfefqqZHVw==",
       "type": "package",
-      "path": "skiasharp.nativeassets.android/3.0.0-preview.5.4",
+      "path": "skiasharp.nativeassets.android/3.116.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -33367,14 +33367,14 @@
         "runtimes/android-arm64/native/libSkiaSharp.so",
         "runtimes/android-x64/native/libSkiaSharp.so",
         "runtimes/android-x86/native/libSkiaSharp.so",
-        "skiasharp.nativeassets.android.3.0.0-preview.5.4.nupkg.sha512",
+        "skiasharp.nativeassets.android.3.116.0.nupkg.sha512",
         "skiasharp.nativeassets.android.nuspec"
       ]
     },
-    "SkiaSharp.NativeAssets.iOS/3.0.0-preview.5.4": {
-      "sha512": "auqexdsxkZqVydTGOljLN8MDPzxjcAqOjcSmhcxiPYshomSdUQRQpldtVBmO/GBi14EqR1KS4MzJZHBqEXz7iQ==",
+    "SkiaSharp.NativeAssets.iOS/3.116.0": {
+      "sha512": "poev3pbjsq0Viauu5M4ZymcMMdOyVVbkx8+Kx60CkEKTQPL7aZtGjASdDqBHYNlaNDjG1zmNl20YO4UslPk9CA==",
       "type": "package",
-      "path": "skiasharp.nativeassets.ios/3.0.0-preview.5.4",
+      "path": "skiasharp.nativeassets.ios/3.116.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -33390,14 +33390,14 @@
         "runtimes/iossimulator/native/libSkiaSharp.framework/Info.plist",
         "runtimes/iossimulator/native/libSkiaSharp.framework/_CodeSignature/CodeResources",
         "runtimes/iossimulator/native/libSkiaSharp.framework/libSkiaSharp",
-        "skiasharp.nativeassets.ios.3.0.0-preview.5.4.nupkg.sha512",
+        "skiasharp.nativeassets.ios.3.116.0.nupkg.sha512",
         "skiasharp.nativeassets.ios.nuspec"
       ]
     },
-    "SkiaSharp.NativeAssets.MacCatalyst/3.0.0-preview.5.4": {
-      "sha512": "Q344Itue7g/wJ27ESc7AqMoXKMfqqgE4ACZMHdGVfdLcD4XRo2rjYG//rTjpzWJlRZnD2412SzSh5kRYkvybHA==",
+    "SkiaSharp.NativeAssets.MacCatalyst/3.116.0": {
+      "sha512": "ecNOWJbOZ6YsgXt2XZIm189iVpUFuLfbRwMV4k/BjLQomcMnZEdarb6bnCshrXNy16KHY/9n+6EAuG/Ld2itvw==",
       "type": "package",
-      "path": "skiasharp.nativeassets.maccatalyst/3.0.0-preview.5.4",
+      "path": "skiasharp.nativeassets.maccatalyst/3.116.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -33408,14 +33408,14 @@
         "icon.png",
         "lib/net8.0-maccatalyst17.0/_._",
         "runtimes/maccatalyst/native/libSkiaSharp.framework.zip",
-        "skiasharp.nativeassets.maccatalyst.3.0.0-preview.5.4.nupkg.sha512",
+        "skiasharp.nativeassets.maccatalyst.3.116.0.nupkg.sha512",
         "skiasharp.nativeassets.maccatalyst.nuspec"
       ]
     },
-    "SkiaSharp.NativeAssets.Win32/3.0.0-preview.5.4": {
-      "sha512": "5R5mJX7mo0Y7MwDvlrQVEJiCOFYePLbRNzZj2veD0Z5c+kzp8smDfvhfnkAXZsL1VM+GPuusFvSHPGMUBtfdqg==",
+    "SkiaSharp.NativeAssets.Win32/3.116.0": {
+      "sha512": "0uYDLypyfKGfzW/pfRcDNBTMXYKLwF3IUqL0RBF1hyi63ghFxFNr2q4o/00lhxwvKj34rP3RHekY4CA2c8i9LA==",
       "type": "package",
-      "path": "skiasharp.nativeassets.win32/3.0.0-preview.5.4",
+      "path": "skiasharp.nativeassets.win32/3.116.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -33434,14 +33434,14 @@
         "runtimes/win-arm64/native/libSkiaSharp.dll",
         "runtimes/win-x64/native/libSkiaSharp.dll",
         "runtimes/win-x86/native/libSkiaSharp.dll",
-        "skiasharp.nativeassets.win32.3.0.0-preview.5.4.nupkg.sha512",
+        "skiasharp.nativeassets.win32.3.116.0.nupkg.sha512",
         "skiasharp.nativeassets.win32.nuspec"
       ]
     },
-    "SkiaSharp.NativeAssets.WinUI/3.0.0-preview.5.4": {
-      "sha512": "KEnO2eWh8uS3WRb4VbmQ5VKRm9EPtShlD/3L00i6uMDm/50Bc01G/fTIYzP42qGznm/maJoJ10HAphkJkZ9MdA==",
+    "SkiaSharp.NativeAssets.WinUI/3.116.0": {
+      "sha512": "9NTOXsmvudbPzO23B3enheGFyFUAryJeLWZxGl8SMjLPWawdP77gTOxxi86GAZEf7xkXqQT5oelK8tGB7vWEXQ==",
       "type": "package",
-      "path": "skiasharp.nativeassets.winui/3.0.0-preview.5.4",
+      "path": "skiasharp.nativeassets.winui/3.116.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -33466,14 +33466,14 @@
         "runtimes/win-x86/native/SkiaSharp.Views.WinUI.Native.winmd",
         "runtimes/win-x86/native/libEGL.dll",
         "runtimes/win-x86/native/libGLESv2.dll",
-        "skiasharp.nativeassets.winui.3.0.0-preview.5.4.nupkg.sha512",
+        "skiasharp.nativeassets.winui.3.116.0.nupkg.sha512",
         "skiasharp.nativeassets.winui.nuspec"
       ]
     },
-    "SkiaSharp.Views/3.0.0-preview.5.4": {
-      "sha512": "gPWVqZPp6BtPu4TiJWuY9iWZqCXXyLYNkw5EKVdRZiBeB0/wAaZQcSEkig2WmgdVAd0cb+Dx9lmEic9aqEA7vA==",
+    "SkiaSharp.Views/3.116.0": {
+      "sha512": "VOdzTGkvNKZZA3y6n26TJxRea24J/ypOXu9ee7V+fh3IUZqZ6mbUIpCmkFheql0mCQgBG5nY2iogyQdsysQokA==",
       "type": "package",
-      "path": "skiasharp.views/3.0.0-preview.5.4",
+      "path": "skiasharp.views/3.116.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -33500,14 +33500,14 @@
         "lib/net8.0-tvos17.0/SkiaSharp.Views.tvOS.dll",
         "lib/net8.0-tvos17.0/SkiaSharp.Views.tvOS.pdb",
         "lib/net8.0-windows10.0.19041.0/_._",
-        "skiasharp.views.3.0.0-preview.5.4.nupkg.sha512",
+        "skiasharp.views.3.116.0.nupkg.sha512",
         "skiasharp.views.nuspec"
       ]
     },
-    "SkiaSharp.Views.Maui.Controls/3.0.0-preview.5.4": {
-      "sha512": "mp4R2bNFXfNiLWKRHYvNa0oegszVETeCxQp1Y7qbySd4+403PZmUgDlwlpwDBLggqQ3Yqjen6BQMvjV9T/IKWQ==",
+    "SkiaSharp.Views.Maui.Controls/3.116.0": {
+      "sha512": "vtQGkOgoZhsHXc7LUx63GeNaGxDSbZVRP6GA7Kz+8A2fXJV+onUvN0ax4NMNesqCEmf7ZAQZKKYsc1JNfwqO1g==",
       "type": "package",
-      "path": "skiasharp.views.maui.controls/3.0.0-preview.5.4",
+      "path": "skiasharp.views.maui.controls/3.116.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -33517,24 +33517,24 @@
         "lib/net8.0-android34.0/SkiaSharp.Views.Maui.Controls.dll",
         "lib/net8.0-android34.0/SkiaSharp.Views.Maui.Controls.pdb",
         "lib/net8.0-android34.0/SkiaSharp.Views.Maui.Controls.xml",
-        "lib/net8.0-ios18.0/SkiaSharp.Views.Maui.Controls.dll",
-        "lib/net8.0-ios18.0/SkiaSharp.Views.Maui.Controls.pdb",
-        "lib/net8.0-maccatalyst18.0/SkiaSharp.Views.Maui.Controls.dll",
-        "lib/net8.0-maccatalyst18.0/SkiaSharp.Views.Maui.Controls.pdb",
+        "lib/net8.0-ios17.5/SkiaSharp.Views.Maui.Controls.dll",
+        "lib/net8.0-ios17.5/SkiaSharp.Views.Maui.Controls.pdb",
+        "lib/net8.0-maccatalyst17.5/SkiaSharp.Views.Maui.Controls.dll",
+        "lib/net8.0-maccatalyst17.5/SkiaSharp.Views.Maui.Controls.pdb",
         "lib/net8.0-tizen8.0/SkiaSharp.Views.Maui.Controls.dll",
         "lib/net8.0-tizen8.0/SkiaSharp.Views.Maui.Controls.pdb",
         "lib/net8.0-windows10.0.19041/SkiaSharp.Views.Maui.Controls.dll",
         "lib/net8.0-windows10.0.19041/SkiaSharp.Views.Maui.Controls.pdb",
         "lib/net8.0/SkiaSharp.Views.Maui.Controls.dll",
         "lib/net8.0/SkiaSharp.Views.Maui.Controls.pdb",
-        "skiasharp.views.maui.controls.3.0.0-preview.5.4.nupkg.sha512",
+        "skiasharp.views.maui.controls.3.116.0.nupkg.sha512",
         "skiasharp.views.maui.controls.nuspec"
       ]
     },
-    "SkiaSharp.Views.Maui.Core/3.0.0-preview.5.4": {
-      "sha512": "rR8XJU8Jm7twVIaGEA4vi5DxV9ZMh0DP99mpXq282uwooCrWtCh5td8EsUpB8atwFShZLwlrIir7X6R1/L480g==",
+    "SkiaSharp.Views.Maui.Core/3.116.0": {
+      "sha512": "Des3iRdflIPmjThTAmjGa2tbLUYQWA93O/ISOIojP5E2rmkpnRIe96ZO37XnIg+io607Dt70b1kijNkLWTMXEg==",
       "type": "package",
-      "path": "skiasharp.views.maui.core/3.0.0-preview.5.4",
+      "path": "skiasharp.views.maui.core/3.116.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -33544,24 +33544,24 @@
         "lib/net8.0-android34.0/SkiaSharp.Views.Maui.Core.dll",
         "lib/net8.0-android34.0/SkiaSharp.Views.Maui.Core.pdb",
         "lib/net8.0-android34.0/SkiaSharp.Views.Maui.Core.xml",
-        "lib/net8.0-ios18.0/SkiaSharp.Views.Maui.Core.dll",
-        "lib/net8.0-ios18.0/SkiaSharp.Views.Maui.Core.pdb",
-        "lib/net8.0-maccatalyst18.0/SkiaSharp.Views.Maui.Core.dll",
-        "lib/net8.0-maccatalyst18.0/SkiaSharp.Views.Maui.Core.pdb",
+        "lib/net8.0-ios17.5/SkiaSharp.Views.Maui.Core.dll",
+        "lib/net8.0-ios17.5/SkiaSharp.Views.Maui.Core.pdb",
+        "lib/net8.0-maccatalyst17.5/SkiaSharp.Views.Maui.Core.dll",
+        "lib/net8.0-maccatalyst17.5/SkiaSharp.Views.Maui.Core.pdb",
         "lib/net8.0-tizen8.0/SkiaSharp.Views.Maui.Core.dll",
         "lib/net8.0-tizen8.0/SkiaSharp.Views.Maui.Core.pdb",
         "lib/net8.0-windows10.0.19041/SkiaSharp.Views.Maui.Core.dll",
         "lib/net8.0-windows10.0.19041/SkiaSharp.Views.Maui.Core.pdb",
         "lib/net8.0/SkiaSharp.Views.Maui.Core.dll",
         "lib/net8.0/SkiaSharp.Views.Maui.Core.pdb",
-        "skiasharp.views.maui.core.3.0.0-preview.5.4.nupkg.sha512",
+        "skiasharp.views.maui.core.3.116.0.nupkg.sha512",
         "skiasharp.views.maui.core.nuspec"
       ]
     },
-    "SkiaSharp.Views.WinUI/3.0.0-preview.5.4": {
-      "sha512": "wXMTcJJ75s4UkJprf8iOfVrS2P4bL3HDRUAsQy+WtK/oYV2qnWbHd4pYYQZhXPYQDba9zEVcLH1rdJsyD1LxRg==",
+    "SkiaSharp.Views.WinUI/3.116.0": {
+      "sha512": "87DXNI3sTrk8oVjMjaFu48pJZYCqk95RRjGi8Ya/llikrfWWI5fsjJt8SC6VKCE8QEB2zqxVtSQdKeKi2qLwKw==",
       "type": "package",
-      "path": "skiasharp.views.winui/3.0.0-preview.5.4",
+      "path": "skiasharp.views.winui/3.116.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -33572,7 +33572,7 @@
         "lib/net6.0-windows10.0.19041/SkiaSharp.Views.Windows.pdb",
         "lib/net8.0-windows10.0.19041/SkiaSharp.Views.Windows.dll",
         "lib/net8.0-windows10.0.19041/SkiaSharp.Views.Windows.pdb",
-        "skiasharp.views.winui.3.0.0-preview.5.4.nupkg.sha512",
+        "skiasharp.views.winui.3.116.0.nupkg.sha512",
         "skiasharp.views.winui.nuspec"
       ]
     },
@@ -36004,6 +36004,7 @@
       "Microsoft.Maui.Controls >= 10.0.0",
       "Microsoft.Maui.Essentials >= 10.0.0",
       "Microsoft.NET.ILLink.Tasks >= 10.0.0",
+      "SkiaSharp.Views.Maui.Controls >= 3.0.0",
       "System.IO.Ports >= 8.0.0"
     ],
     "net10.0-ios26.1": [
@@ -36012,6 +36013,7 @@
       "Microsoft.Maui.Controls >= 10.0.0",
       "Microsoft.Maui.Essentials >= 10.0.0",
       "Microsoft.NET.ILLink.Tasks >= 10.0.0",
+      "SkiaSharp.Views.Maui.Controls >= 3.0.0",
       "System.IO.Ports >= 8.0.0"
     ],
     "net10.0-maccatalyst26.1": [
@@ -36020,6 +36022,7 @@
       "Microsoft.Maui.Controls >= 10.0.0",
       "Microsoft.Maui.Essentials >= 10.0.0",
       "Microsoft.NET.ILLink.Tasks >= 10.0.0",
+      "SkiaSharp.Views.Maui.Controls >= 3.0.0",
       "System.IO.Ports >= 8.0.0"
     ],
     "net10.0-windows10.0.19041": [
@@ -36027,6 +36030,7 @@
       "Microsoft.Extensions.Logging.Debug >= 10.0.0",
       "Microsoft.Maui.Controls >= 10.0.0",
       "Microsoft.Maui.Essentials >= 10.0.0",
+      "SkiaSharp.Views.Maui.Controls >= 3.0.0",
       "System.IO.Ports >= 8.0.0"
     ]
   },
@@ -36111,6 +36115,10 @@
             "target": "Package",
             "version": "[10.0.0, )",
             "autoReferenced": true
+          },
+          "SkiaSharp.Views.Maui.Controls": {
+            "target": "Package",
+            "version": "[3.0.0, )"
           },
           "System.IO.Ports": {
             "target": "Package",
@@ -36440,6 +36448,10 @@
             "version": "[10.0.0, )",
             "autoReferenced": true
           },
+          "SkiaSharp.Views.Maui.Controls": {
+            "target": "Package",
+            "version": "[3.0.0, )"
+          },
           "System.IO.Ports": {
             "target": "Package",
             "version": "[8.0.0, )"
@@ -36768,6 +36780,10 @@
             "version": "[10.0.0, )",
             "autoReferenced": true
           },
+          "SkiaSharp.Views.Maui.Controls": {
+            "target": "Package",
+            "version": "[3.0.0, )"
+          },
           "System.IO.Ports": {
             "target": "Package",
             "version": "[8.0.0, )"
@@ -37090,6 +37106,10 @@
           "Microsoft.Maui.Essentials": {
             "target": "Package",
             "version": "[10.0.0, )"
+          },
+          "SkiaSharp.Views.Maui.Controls": {
+            "target": "Package",
+            "version": "[3.0.0, )"
           },
           "System.IO.Ports": {
             "target": "Package",
@@ -37415,5 +37435,40 @@
         "#import": []
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1603",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "FinalProjektGUI depends on SkiaSharp.Views.Maui.Controls (>= 3.0.0) but SkiaSharp.Views.Maui.Controls 3.0.0 was not found. SkiaSharp.Views.Maui.Controls 3.116.0 was resolved instead.",
+      "libraryId": "SkiaSharp.Views.Maui.Controls",
+      "targetGraphs": [
+        "net10.0-android36.0",
+        "net10.0-android36.0/android-arm64",
+        "net10.0-android36.0/android-x64",
+        "net10.0-android36.0/iossimulator-x64",
+        "net10.0-android36.0/maccatalyst-x64",
+        "net10.0-android36.0/win-x64",
+        "net10.0-ios26.1",
+        "net10.0-ios26.1/android-arm64",
+        "net10.0-ios26.1/android-x64",
+        "net10.0-ios26.1/iossimulator-x64",
+        "net10.0-ios26.1/maccatalyst-x64",
+        "net10.0-ios26.1/win-x64",
+        "net10.0-maccatalyst26.1",
+        "net10.0-maccatalyst26.1/android-arm64",
+        "net10.0-maccatalyst26.1/android-x64",
+        "net10.0-maccatalyst26.1/iossimulator-x64",
+        "net10.0-maccatalyst26.1/maccatalyst-x64",
+        "net10.0-maccatalyst26.1/win-x64",
+        "net10.0-windows10.0.19041",
+        "net10.0-windows10.0.19041/android-arm64",
+        "net10.0-windows10.0.19041/android-x64",
+        "net10.0-windows10.0.19041/iossimulator-x64",
+        "net10.0-windows10.0.19041/maccatalyst-x64",
+        "net10.0-windows10.0.19041/win-x64"
+      ]
+    }
+  ]
 }

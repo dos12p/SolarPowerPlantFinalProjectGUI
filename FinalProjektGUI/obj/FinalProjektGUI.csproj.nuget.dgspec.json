@@ -83,6 +83,10 @@
               "version": "[10.0.0, )",
               "autoReferenced": true
             },
+            "SkiaSharp.Views.Maui.Controls": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
             "System.IO.Ports": {
               "target": "Package",
               "version": "[8.0.0, )"
@@ -410,6 +414,10 @@
               "target": "Package",
               "version": "[10.0.0, )",
               "autoReferenced": true
+            },
+            "SkiaSharp.Views.Maui.Controls": {
+              "target": "Package",
+              "version": "[3.0.0, )"
             },
             "System.IO.Ports": {
               "target": "Package",
@@ -739,6 +747,10 @@
               "version": "[10.0.0, )",
               "autoReferenced": true
             },
+            "SkiaSharp.Views.Maui.Controls": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
             "System.IO.Ports": {
               "target": "Package",
               "version": "[8.0.0, )"
@@ -1061,6 +1073,10 @@
             "Microsoft.Maui.Essentials": {
               "target": "Package",
               "version": "[10.0.0, )"
+            },
+            "SkiaSharp.Views.Maui.Controls": {
+              "target": "Package",
+              "version": "[3.0.0, )"
             },
             "System.IO.Ports": {
               "target": "Package",

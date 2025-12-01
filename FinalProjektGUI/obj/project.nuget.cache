@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "4DWH9M4FAC8=",
+  "dgSpecHash": "7jpJHSQ+N3o=",
   "success": true,
   "projectFilePath": "C:\\Users\\levip\\VsCodeProjects_LP\\Lab7SerialLP_Meadow\\SolarPowerPlantFinalProjectGUI\\FinalProjektGUI\\FinalProjektGUI.csproj",
   "expectedPackageFiles": [
@@ -48,17 +48,17 @@
     "C:\\Users\\levip\\.nuget\\packages\\runtime.native.system.io.ports\\8.0.0\\runtime.native.system.io.ports.8.0.0.nupkg.sha512",
     "C:\\Users\\levip\\.nuget\\packages\\runtime.osx-arm64.runtime.native.system.io.ports\\8.0.0\\runtime.osx-arm64.runtime.native.system.io.ports.8.0.0.nupkg.sha512",
     "C:\\Users\\levip\\.nuget\\packages\\runtime.osx-x64.runtime.native.system.io.ports\\8.0.0\\runtime.osx-x64.runtime.native.system.io.ports.8.0.0.nupkg.sha512",
-    "C:\\Users\\levip\\.nuget\\packages\\skiasharp\\3.0.0-preview.5.4\\skiasharp.3.0.0-preview.5.4.nupkg.sha512",
+    "C:\\Users\\levip\\.nuget\\packages\\skiasharp\\3.116.0\\skiasharp.3.116.0.nupkg.sha512",
     "C:\\Users\\levip\\.nuget\\packages\\skiasharp.harfbuzz\\2.88.8\\skiasharp.harfbuzz.2.88.8.nupkg.sha512",
-    "C:\\Users\\levip\\.nuget\\packages\\skiasharp.nativeassets.android\\3.0.0-preview.5.4\\skiasharp.nativeassets.android.3.0.0-preview.5.4.nupkg.sha512",
-    "C:\\Users\\levip\\.nuget\\packages\\skiasharp.nativeassets.ios\\3.0.0-preview.5.4\\skiasharp.nativeassets.ios.3.0.0-preview.5.4.nupkg.sha512",
-    "C:\\Users\\levip\\.nuget\\packages\\skiasharp.nativeassets.maccatalyst\\3.0.0-preview.5.4\\skiasharp.nativeassets.maccatalyst.3.0.0-preview.5.4.nupkg.sha512",
-    "C:\\Users\\levip\\.nuget\\packages\\skiasharp.nativeassets.win32\\3.0.0-preview.5.4\\skiasharp.nativeassets.win32.3.0.0-preview.5.4.nupkg.sha512",
-    "C:\\Users\\levip\\.nuget\\packages\\skiasharp.nativeassets.winui\\3.0.0-preview.5.4\\skiasharp.nativeassets.winui.3.0.0-preview.5.4.nupkg.sha512",
-    "C:\\Users\\levip\\.nuget\\packages\\skiasharp.views\\3.0.0-preview.5.4\\skiasharp.views.3.0.0-preview.5.4.nupkg.sha512",
-    "C:\\Users\\levip\\.nuget\\packages\\skiasharp.views.maui.controls\\3.0.0-preview.5.4\\skiasharp.views.maui.controls.3.0.0-preview.5.4.nupkg.sha512",
-    "C:\\Users\\levip\\.nuget\\packages\\skiasharp.views.maui.core\\3.0.0-preview.5.4\\skiasharp.views.maui.core.3.0.0-preview.5.4.nupkg.sha512",
-    "C:\\Users\\levip\\.nuget\\packages\\skiasharp.views.winui\\3.0.0-preview.5.4\\skiasharp.views.winui.3.0.0-preview.5.4.nupkg.sha512",
+    "C:\\Users\\levip\\.nuget\\packages\\skiasharp.nativeassets.android\\3.116.0\\skiasharp.nativeassets.android.3.116.0.nupkg.sha512",
+    "C:\\Users\\levip\\.nuget\\packages\\skiasharp.nativeassets.ios\\3.116.0\\skiasharp.nativeassets.ios.3.116.0.nupkg.sha512",
+    "C:\\Users\\levip\\.nuget\\packages\\skiasharp.nativeassets.maccatalyst\\3.116.0\\skiasharp.nativeassets.maccatalyst.3.116.0.nupkg.sha512",
+    "C:\\Users\\levip\\.nuget\\packages\\skiasharp.nativeassets.win32\\3.116.0\\skiasharp.nativeassets.win32.3.116.0.nupkg.sha512",
+    "C:\\Users\\levip\\.nuget\\packages\\skiasharp.nativeassets.winui\\3.116.0\\skiasharp.nativeassets.winui.3.116.0.nupkg.sha512",
+    "C:\\Users\\levip\\.nuget\\packages\\skiasharp.views\\3.116.0\\skiasharp.views.3.116.0.nupkg.sha512",
+    "C:\\Users\\levip\\.nuget\\packages\\skiasharp.views.maui.controls\\3.116.0\\skiasharp.views.maui.controls.3.116.0.nupkg.sha512",
+    "C:\\Users\\levip\\.nuget\\packages\\skiasharp.views.maui.core\\3.116.0\\skiasharp.views.maui.core.3.116.0.nupkg.sha512",
+    "C:\\Users\\levip\\.nuget\\packages\\skiasharp.views.winui\\3.116.0\\skiasharp.views.winui.3.116.0.nupkg.sha512",
     "C:\\Users\\levip\\.nuget\\packages\\system.io.ports\\8.0.0\\system.io.ports.8.0.0.nupkg.sha512",
     "C:\\Users\\levip\\.nuget\\packages\\xamarin.android.glide\\4.16.0.14\\xamarin.android.glide.4.16.0.14.nupkg.sha512",
     "C:\\Users\\levip\\.nuget\\packages\\xamarin.android.glide.annotations\\4.16.0.14\\xamarin.android.glide.annotations.4.16.0.14.nupkg.sha512",
@@ -154,5 +154,41 @@
     "C:\\Users\\levip\\.nuget\\packages\\xamarin.kotlinx.serialization.core.jvm\\1.9.0.1\\xamarin.kotlinx.serialization.core.jvm.1.9.0.1.nupkg.sha512",
     "C:\\Users\\levip\\.nuget\\packages\\microsoft.windows.sdk.net.ref\\10.0.19041.57\\microsoft.windows.sdk.net.ref.10.0.19041.57.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1603",
+      "level": "Warning",
+      "message": "FinalProjektGUI depends on SkiaSharp.Views.Maui.Controls (>= 3.0.0) but SkiaSharp.Views.Maui.Controls 3.0.0 was not found. SkiaSharp.Views.Maui.Controls 3.116.0 was resolved instead.",
+      "projectPath": "C:\\Users\\levip\\VsCodeProjects_LP\\Lab7SerialLP_Meadow\\SolarPowerPlantFinalProjectGUI\\FinalProjektGUI\\FinalProjektGUI.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Users\\levip\\VsCodeProjects_LP\\Lab7SerialLP_Meadow\\SolarPowerPlantFinalProjectGUI\\FinalProjektGUI\\FinalProjektGUI.csproj",
+      "libraryId": "SkiaSharp.Views.Maui.Controls",
+      "targetGraphs": [
+        "net10.0-android36.0",
+        "net10.0-android36.0/android-arm64",
+        "net10.0-android36.0/android-x64",
+        "net10.0-android36.0/iossimulator-x64",
+        "net10.0-android36.0/maccatalyst-x64",
+        "net10.0-android36.0/win-x64",
+        "net10.0-ios26.1",
+        "net10.0-ios26.1/android-arm64",
+        "net10.0-ios26.1/android-x64",
+        "net10.0-ios26.1/iossimulator-x64",
+        "net10.0-ios26.1/maccatalyst-x64",
+        "net10.0-ios26.1/win-x64",
+        "net10.0-maccatalyst26.1",
+        "net10.0-maccatalyst26.1/android-arm64",
+        "net10.0-maccatalyst26.1/android-x64",
+        "net10.0-maccatalyst26.1/iossimulator-x64",
+        "net10.0-maccatalyst26.1/maccatalyst-x64",
+        "net10.0-maccatalyst26.1/win-x64",
+        "net10.0-windows10.0.19041",
+        "net10.0-windows10.0.19041/android-arm64",
+        "net10.0-windows10.0.19041/android-x64",
+        "net10.0-windows10.0.19041/iossimulator-x64",
+        "net10.0-windows10.0.19041/maccatalyst-x64",
+        "net10.0-windows10.0.19041/win-x64"
+      ]
+    }
+  ]
 }
