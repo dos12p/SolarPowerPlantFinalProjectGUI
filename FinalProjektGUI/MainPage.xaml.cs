@@ -17,7 +17,9 @@ public partial class MainPage : ContentPage
 	// Circuit Protection
 	private bool _isTripped = false;
 	private const double TripThreshold = 0.9; // mA (discharge current)
-	private const double LowVoltageThreshold = 1.5; // V
+	private const double LowVoltageThreshold = 1.9; // V
+	private const double RecoveryVoltageThreshold = 2.2; // V
+	private bool _isBatteryDead = false;
 
 	// Battery Voltage Averaging
 	private Queue<double> _batteryVoltageHistory = new Queue<double>();
@@ -283,14 +285,39 @@ public partial class MainPage : ContentPage
 				double batteryVoltage = _batteryVoltageHistory.Average();
 				BatteryVoltageLabel.Text = $"{batteryVoltage:F3} V";
 
-				// Update battery bar (0V to 5V)
-				double batteryPercentage = Math.Clamp(batteryVoltage / 5.0, 0.0, 1.0);
+				// Update battery bar (1.8V to 2.7V)
+				double batteryPercentage = Math.Clamp((batteryVoltage - 1.8) / (2.7 - 1.8), 0.0, 1.0);
 				BatteryBar.Progress = batteryPercentage;
+
+				// Update battery bar color based on voltage
+				if (batteryVoltage < 1.9)
+				{
+					BatteryBar.ProgressColor = Colors.Red;
+				}
+				else
+				{
+					BatteryBar.ProgressColor = Colors.Green;
+				}
+
+				// Check battery dead state
+				if (batteryVoltage < LowVoltageThreshold)
+				{
+					_isBatteryDead = true;
+				}
+				else if (batteryVoltage >= RecoveryVoltageThreshold)
+				{
+					_isBatteryDead = false;
+				}
 
 				// Battery Status (ADC5 - ADC4) / 100
 				double batteryCurrent = (avgValues[5] - avgValues[4]) / 100.0;
 				
-				if (batteryCurrent >= 0)
+				if (_isBatteryDead)
+				{
+					BatteryStatusLabel.Text = "DEAD";
+					BatteryStatusLabel.TextColor = Colors.Red;
+				}
+				else if (batteryCurrent >= 0)
 				{
 					BatteryStatusLabel.Text = $"CHARGING at {Math.Abs(batteryCurrent):F1} mA";
 					BatteryStatusLabel.TextColor = Colors.Green;
@@ -448,6 +475,17 @@ public partial class MainPage : ContentPage
 
 	private void OnResetBreakerClicked(object? sender, EventArgs e)
 	{
+		// Check if battery is dead
+		if (_isBatteryDead)
+		{
+			// Immediately trip again
+			_isTripped = true;
+			TripCircuit();
+			AddToLog("RESET FAILED: Charge battery to reset breaker (battery voltage must exceed 2.2V)");
+			DisplayAlert("Reset Failed", "Battery is dead. Charge battery above 2.2V to reset breaker.", "OK");
+			return;
+		}
+
 		_isTripped = false;
 
 		// Re-enable LED switches
