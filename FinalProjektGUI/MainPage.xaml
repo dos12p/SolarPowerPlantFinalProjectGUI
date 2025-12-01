@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
              x:Class="FinalProjektGUI.MainPage"
-             Title="Solar Power Plant Serial Monitor">
+             Title="Solar Power Plant GUI">
 
     <Grid Padding="10" RowSpacing="10" ColumnSpacing="10">
         <Grid.RowDefinitions>
