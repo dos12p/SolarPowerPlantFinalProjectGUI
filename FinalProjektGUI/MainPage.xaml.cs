@@ -22,7 +22,7 @@ public partial class MainPage : ContentPage
 
 	// Circuit Protection
 	private bool _isTripped = false;
-	private const double TripThreshold = 15.0; // mA (overcurrent limit)
+	private const double TripThreshold = 1.5; // mA (overcurrent limit)
 	private const double LowVoltageThreshold = 1.9; // V
 	private const double RecoveryVoltageThreshold = 2.2; // V
 	private bool _isBatteryDead = false;
@@ -83,6 +83,7 @@ public partial class MainPage : ContentPage
 
 		// Initialize graphs
 		InitializeGraphs();
+		LedModePicker.SelectedIndex = 0; // Default to Manual
 		TimeWindowPicker.SelectedIndex = 0; // Default to 10 seconds
 		TotalLoadScalePicker.SelectedIndex = 3; // Default to 4mA
 		YellowScalePicker.SelectedIndex = 3;
@@ -503,15 +504,11 @@ public partial class MainPage : ContentPage
 		MainThread.BeginInvokeOnMainThread(() =>
 		{
 			// Switch to manual mode
-			if (_isTrafficMode)
+			if (_isTrafficMode || _isChristmasMode)
 			{
 				_isTrafficMode = false;
-				ModeSwitch.IsToggled = false;
-			}
-			if (_isChristmasMode)
-			{
 				_isChristmasMode = false;
-				ChristmasSwitch.IsToggled = false;
+				LedModePicker.SelectedIndex = 0; // Set to Manual
 			}
 
 			// Stop traffic timer if running
@@ -579,54 +576,73 @@ public partial class MainPage : ContentPage
 		AddToLog("Circuit breaker RESET");
 	}
 
-	private void OnModeChanged(object? sender, ToggledEventArgs e)
+	private void OnLedModeChanged(object? sender, EventArgs e)
 	{
-		_isTrafficMode = e.Value;
+		if (LedModePicker.SelectedIndex == -1)
+			return;
 
-		if (_isTrafficMode)
+		string selectedMode = LedModePicker.SelectedItem.ToString() ?? "Manual";
+
+		// Stop all timers first
+		if (_trafficTimer != null)
 		{
-			// Disable Christmas mode
-			if (_isChristmasMode)
-			{
-				_isChristmasMode = false;
-				ChristmasSwitch.IsToggled = false;
-				if (_christmasTimer != null)
-				{
-					_christmasTimer.Stop();
-					_christmasTimer.Dispose();
-					_christmasTimer = null;
-				}
-			}
-
-			// Disable manual LED switches
-			Led2Switch.IsEnabled = false;
-			Led3Switch.IsEnabled = false;
-			Led4Switch.IsEnabled = false;
-
-			// Start traffic light cycle
-			_trafficState = 0;
-			StartTrafficCycle();
-			AddToLog("Traffic mode ENABLED");
+			_trafficTimer.Stop();
+			_trafficTimer.Dispose();
+			_trafficTimer = null;
 		}
-		else
+		if (_christmasTimer != null)
 		{
-			// Stop traffic timer
-			if (_trafficTimer != null)
-			{
-				_trafficTimer.Stop();
-				_trafficTimer.Dispose();
-				_trafficTimer = null;
-			}
+			_christmasTimer.Stop();
+			_christmasTimer.Dispose();
+			_christmasTimer = null;
+		}
 
-			// Re-enable manual LED switches if not tripped
-			if (!_isTripped)
-			{
-				Led2Switch.IsEnabled = true;
-				Led3Switch.IsEnabled = true;
-				Led4Switch.IsEnabled = true;
-			}
+		// Reset mode flags
+		_isTrafficMode = false;
+		_isChristmasMode = false;
 
-			AddToLog("Traffic mode DISABLED");
+		switch (selectedMode)
+		{
+			case "Manual":
+				// Turn off all LEDs
+				Led2Switch.IsToggled = false;
+				Led3Switch.IsToggled = false;
+				Led4Switch.IsToggled = false;
+				SendLedPacket();
+
+				// Re-enable manual LED switches if not tripped
+				if (!_isTripped)
+				{
+					Led2Switch.IsEnabled = true;
+					Led3Switch.IsEnabled = true;
+					Led4Switch.IsEnabled = true;
+				}
+				AddToLog("Manual mode ENABLED");
+				break;
+
+			case "Traffic":
+				_isTrafficMode = true;
+				// Disable manual LED switches
+				Led2Switch.IsEnabled = false;
+				Led3Switch.IsEnabled = false;
+				Led4Switch.IsEnabled = false;
+				// Start traffic light cycle
+				_trafficState = 0;
+				StartTrafficCycle();
+				AddToLog("Traffic mode ENABLED");
+				break;
+
+			case "Christmas":
+				_isChristmasMode = true;
+				// Disable manual LED switches
+				Led2Switch.IsEnabled = false;
+				Led3Switch.IsEnabled = false;
+				Led4Switch.IsEnabled = false;
+				// Start Christmas pattern
+				_christmasState = 0;
+				StartChristmasCycle();
+				AddToLog("Christmas mode ENABLED");
+				break;
 		}
 	}
 
@@ -693,63 +709,6 @@ public partial class MainPage : ContentPage
 	}
 
 	// Christmas mode methods
-	private void OnChristmasChanged(object? sender, ToggledEventArgs e)
-	{
-		_isChristmasMode = e.Value;
-
-		if (_isChristmasMode)
-		{
-			// Disable traffic mode
-			if (_isTrafficMode)
-			{
-				_isTrafficMode = false;
-				ModeSwitch.IsToggled = false;
-				if (_trafficTimer != null)
-				{
-					_trafficTimer.Stop();
-					_trafficTimer.Dispose();
-					_trafficTimer = null;
-				}
-			}
-
-			// Disable manual LED switches
-			Led2Switch.IsEnabled = false;
-			Led3Switch.IsEnabled = false;
-			Led4Switch.IsEnabled = false;
-
-			// Start Christmas pattern
-			_christmasState = 0;
-			StartChristmasCycle();
-			AddToLog("Christmas mode ENABLED");
-		}
-		else
-		{
-			// Stop Christmas timer
-			if (_christmasTimer != null)
-			{
-				_christmasTimer.Stop();
-				_christmasTimer.Dispose();
-				_christmasTimer = null;
-			}
-
-			// Turn off all LEDs
-			Led2Switch.IsToggled = false;
-			Led3Switch.IsToggled = false;
-			Led4Switch.IsToggled = false;
-			SendLedPacket();
-
-			// Re-enable manual LED switches if not tripped
-			if (!_isTripped)
-			{
-				Led2Switch.IsEnabled = true;
-				Led3Switch.IsEnabled = true;
-				Led4Switch.IsEnabled = true;
-			}
-
-			AddToLog("Christmas mode DISABLED");
-		}
-	}
-
 	private void StartChristmasCycle()
 	{
 		MainThread.BeginInvokeOnMainThread(() =>
