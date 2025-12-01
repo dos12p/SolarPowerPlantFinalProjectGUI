@@ -10,18 +10,22 @@ public partial class MainPage : ContentPage
 	private const int MaxLogLines = 100;
 	private List<string> _logLines = new List<string>();
 
-	// ADC Rolling Average (last 3 values)
+	// ADC Rolling Average (last 2 values)
 	private Queue<int>[] _adcHistory = new Queue<int>[6];
-	private const int AverageWindow = 3;
+	private const int AverageWindow = 2;
 
 	// Circuit Protection
 	private bool _isTripped = false;
 	private const double TripThreshold = 0.9; // mA (discharge current)
+	private const double LowVoltageThreshold = 2.0; // V
 
-	// Battery Charged State Detection
+	// Battery State Detection
 	private Queue<double> _batteryCurrentHistory = new Queue<double>();
-	private const int ChargedDetectionWindow = 5;
-	private const double ChargedThreshold = 0.05; // Consider 0.0mA if within ±0.05mA
+	private Queue<double> _batteryVoltageHistory = new Queue<double>();
+	private const int IdleDetectionWindow = 5;
+	private const int ChargedDetectionWindow = 3;
+	private const double IdleCurrentThreshold = 0.05; // Consider 0.0mA if within ±0.05mA
+	private const double ChargedVoltageThreshold = 0.05; // Consider steady if within ±0.05V
 
 	// Traffic Light Mode
 	private bool _isTrafficMode = false;
@@ -280,21 +284,41 @@ public partial class MainPage : ContentPage
 				// Battery Status (ADC5 - ADC4) / 100
 				double batteryCurrent = (avgValues[5] - avgValues[4]) / 100.0;
 				
-				// Track battery current history for charged state detection
+				// Track battery current and voltage history
 				_batteryCurrentHistory.Enqueue(batteryCurrent);
-				if (_batteryCurrentHistory.Count > ChargedDetectionWindow)
+				if (_batteryCurrentHistory.Count > IdleDetectionWindow)
 				{
 					_batteryCurrentHistory.Dequeue();
 				}
 
-				// Check if battery is in charged state (5 consecutive ~0.0mA readings)
-				bool isCharged = _batteryCurrentHistory.Count == ChargedDetectionWindow &&
-				                 _batteryCurrentHistory.All(c => Math.Abs(c) < ChargedThreshold);
+				_batteryVoltageHistory.Enqueue(batteryVoltage);
+				if (_batteryVoltageHistory.Count > ChargedDetectionWindow)
+				{
+					_batteryVoltageHistory.Dequeue();
+				}
+
+				// Check if battery is in idle state (5 consecutive ~0.0mA readings)
+				bool isIdle = _batteryCurrentHistory.Count == IdleDetectionWindow &&
+				              _batteryCurrentHistory.All(c => Math.Abs(c) < IdleCurrentThreshold);
+
+				// Check if battery is charged (3 consecutive steady voltage readings)
+				bool isCharged = false;
+				if (_batteryVoltageHistory.Count == ChargedDetectionWindow)
+				{
+					double minVoltage = _batteryVoltageHistory.Min();
+					double maxVoltage = _batteryVoltageHistory.Max();
+					isCharged = (maxVoltage - minVoltage) <= ChargedVoltageThreshold;
+				}
 
 				if (isCharged)
 				{
 					BatteryStatusLabel.Text = "CHARGED";
 					BatteryStatusLabel.TextColor = Colors.Blue;
+				}
+				else if (isIdle)
+				{
+					BatteryStatusLabel.Text = "IDLE";
+					BatteryStatusLabel.TextColor = Colors.Gray;
 				}
 				else if (batteryCurrent >= 0)
 				{
@@ -320,13 +344,23 @@ public partial class MainPage : ContentPage
 				double totalLoad = yellowCurrent + redCurrent + greenCurrent;
 				TotalLoadCurrentLabel.Text = $"{totalLoad:F1} mA";
 
-				// Check for overcurrent trip condition (latching) - battery discharge > 9mA
-				double dischargeCurrent = Math.Abs(batteryCurrent);
-				if (!_isTripped && batteryCurrent < 0 && dischargeCurrent > TripThreshold)
+				// Check for trip conditions (latching)
+				if (!_isTripped)
 				{
-					_isTripped = true;
-					TripCircuit();
-					AddToLog($"TRIP: Battery discharge overcurrent ({dischargeCurrent:F1} mA > {TripThreshold} mA)");
+					// Low voltage trip
+					if (batteryVoltage < LowVoltageThreshold)
+					{
+						_isTripped = true;
+						TripCircuit();
+						AddToLog($"TRIP: Low battery voltage ({batteryVoltage:F3} V < {LowVoltageThreshold} V)");
+					}
+					// Discharge overcurrent trip
+					else if (batteryCurrent < 0 && Math.Abs(batteryCurrent) > TripThreshold)
+					{
+						_isTripped = true;
+						TripCircuit();
+						AddToLog($"TRIP: Battery discharge overcurrent ({Math.Abs(batteryCurrent):F1} mA > {TripThreshold} mA)");
+					}
 				}
 			}
 		}
