@@ -22,7 +22,8 @@ public partial class MainPage : ContentPage
 
 	// Circuit Protection
 	private bool _isTripped = false;
-	private const double TripThreshold = 1.5; // mA (overcurrent limit)
+	private double _tripThreshold = 1.5; // mA (overcurrent limit) - now configurable
+	private bool _isBreakerEnabled = true; // Breaker bypass toggle
 	private const double LowVoltageThreshold = 1.9; // V
 	private const double RecoveryVoltageThreshold = 2.2; // V
 	private bool _isBatteryDead = false;
@@ -46,6 +47,7 @@ public partial class MainPage : ContentPage
 	// Graph Data Collections
 	private ObservableCollection<ObservablePoint> _solarData = new();
 	private ObservableCollection<ObservablePoint> _batteryData = new();
+	private ObservableCollection<ObservablePoint> _batteryCurrentData = new(); // New: Battery current (+ charge, - discharge)
 	private ObservableCollection<ObservablePoint> _totalLoadData = new();
 	private ObservableCollection<ObservablePoint> _yellowData = new();
 	private ObservableCollection<ObservablePoint> _redData = new();
@@ -68,7 +70,11 @@ public partial class MainPage : ContentPage
 	private Axis? _yellowYAxis;
 	private Axis? _redYAxis;
 	private Axis? _greenYAxis;
+	private Axis? _batteryCurrentYAxis; // New: Battery current Y-axis
 	private Axis? _combinedCurrentYAxis;
+
+	// Battery current scale (will be ± this value)
+	private int _batteryCurrentScaleMax = 4;
 
 	public MainPage()
 	{
@@ -89,6 +95,7 @@ public partial class MainPage : ContentPage
 		YellowScalePicker.SelectedIndex = 3;
 		RedScalePicker.SelectedIndex = 3;
 		GreenScalePicker.SelectedIndex = 3;
+		BatteryCurrentScalePicker.SelectedIndex = 3; // Default to 4mA
 	}
 
 	private void LoadAvailablePorts()
@@ -395,27 +402,27 @@ public partial class MainPage : ContentPage
 				double totalLoad = yellowCurrent + redCurrent + greenCurrent;
 				TotalLoadCurrentLabel.Text = $"{totalLoad:F1} mA";
 
-				// Add data to graphs (raw values, no averaging)
-				AddGraphData(solarVoltage, batteryVoltage, totalLoad, yellowCurrent, redCurrent, greenCurrent);
+			// Add data to graphs (raw values, no averaging)
+			AddGraphData(solarVoltage, batteryVoltage, batteryCurrent, totalLoad, yellowCurrent, redCurrent, greenCurrent);
 
-				// Check for trip conditions (latching)
-				if (!_isTripped)
+			// Check for trip conditions (latching) - only if breaker is enabled
+			if (!_isTripped && _isBreakerEnabled)
+			{
+				// Low voltage trip
+				if (batteryVoltage < LowVoltageThreshold)
 				{
-					// Low voltage trip
-					if (batteryVoltage < LowVoltageThreshold)
-					{
-						_isTripped = true;
-						TripCircuit();
-						AddToLog($"TRIP: Low battery voltage ({batteryVoltage:F3} V < {LowVoltageThreshold} V)");
-					}
-					// Discharge overcurrent trip
-					else if (batteryCurrent < 0 && Math.Abs(batteryCurrent) > TripThreshold)
-					{
-						_isTripped = true;
-						TripCircuit();
-						AddToLog($"TRIP: Battery discharge overcurrent ({Math.Abs(batteryCurrent):F1} mA > {TripThreshold} mA)");
-					}
+					_isTripped = true;
+					TripCircuit();
+					AddToLog($"TRIP: Low battery voltage ({batteryVoltage:F3} V < {LowVoltageThreshold} V)");
 				}
+				// Discharge overcurrent trip
+				else if (batteryCurrent < 0 && Math.Abs(batteryCurrent) > _tripThreshold)
+				{
+					_isTripped = true;
+					TripCircuit();
+					AddToLog($"TRIP: Battery discharge overcurrent ({Math.Abs(batteryCurrent):F1} mA > {_tripThreshold} mA)");
+				}
+			}
 			}
 		}
 		catch (Exception ex)
@@ -501,6 +508,10 @@ public partial class MainPage : ContentPage
 
 	private void TripCircuit()
 	{
+		// Don't trip if breaker is bypassed
+		if (!_isBreakerEnabled)
+			return;
+
 		MainThread.BeginInvokeOnMainThread(() =>
 		{
 			// Switch to manual mode
@@ -1007,6 +1018,25 @@ public partial class MainPage : ContentPage
 		GreenChart.XAxes = new[] { greenXAxis };
 		GreenChart.YAxes = new[] { _greenYAxis };
 		GreenChart.DrawMargin = drawMargin;
+
+		// Battery Current Chart (Charge/Discharge)
+		BatteryCurrentChart.Series = new ISeries[]
+		{
+			new LineSeries<ObservablePoint>
+			{
+				Values = _batteryCurrentData,
+				Fill = null,
+				Stroke = new SolidColorPaint(SKColors.Cyan) { StrokeThickness = 3 },
+				GeometrySize = 0,
+				LineSmoothness = 0
+			}
+		};
+		var batteryCurrentXAxis = CreateTimeAxis();
+		_allXAxes.Add(batteryCurrentXAxis);
+		_batteryCurrentYAxis = CreateBatteryCurrentAxis(_batteryCurrentScaleMax);
+		BatteryCurrentChart.XAxes = new[] { batteryCurrentXAxis };
+		BatteryCurrentChart.YAxes = new[] { _batteryCurrentYAxis };
+		BatteryCurrentChart.DrawMargin = drawMargin;
 	}
 
 	private Axis CreateTimeAxis()
@@ -1061,7 +1091,21 @@ public partial class MainPage : ContentPage
 		};
 	}
 
-	private void AddGraphData(double solar, double battery, double totalLoad, double yellow, double red, double green)
+	private Axis CreateBatteryCurrentAxis(int maxScale)
+	{
+		// Battery current axis shows negative (discharge) and positive (charge)
+		return new Axis
+		{
+			MinLimit = -maxScale,
+			MaxLimit = maxScale,
+			LabelsPaint = new SolidColorPaint(SKColors.LightGray),
+			SeparatorsPaint = new SolidColorPaint(SKColors.Gray) { StrokeThickness = 1 },
+			AnimationsSpeed = TimeSpan.FromMilliseconds(0),
+			ShowSeparatorLines = true
+		};
+	}
+
+	private void AddGraphData(double solar, double battery, double batteryCurrent, double totalLoad, double yellow, double red, double green)
 	{
 		MainThread.BeginInvokeOnMainThread(() =>
 		{
@@ -1073,6 +1117,7 @@ public partial class MainPage : ContentPage
 				// Add data points with actual elapsed time as X value
 				_solarData.Add(new ObservablePoint(secondsElapsed, solar));
 				_batteryData.Add(new ObservablePoint(secondsElapsed, battery));
+				_batteryCurrentData.Add(new ObservablePoint(secondsElapsed, batteryCurrent)); // Add battery current (negative = discharge, positive = charge)
 				_totalLoadData.Add(new ObservablePoint(secondsElapsed, totalLoad));
 				_yellowData.Add(new ObservablePoint(secondsElapsed, yellow));
 				_redData.Add(new ObservablePoint(secondsElapsed, red));
@@ -1130,6 +1175,7 @@ public partial class MainPage : ContentPage
 				{
 					RemoveOldData(_solarData, dataRemovalCutoff);
 					RemoveOldData(_batteryData, dataRemovalCutoff);
+					RemoveOldData(_batteryCurrentData, dataRemovalCutoff); // Add battery current cleanup
 					RemoveOldData(_totalLoadData, dataRemovalCutoff);
 					RemoveOldData(_yellowData, dataRemovalCutoff);
 					RemoveOldData(_redData, dataRemovalCutoff);
@@ -1162,6 +1208,54 @@ public partial class MainPage : ContentPage
 		{
 			MonitorView.IsVisible = false;
 			GraphView.IsVisible = true;
+		}
+	}
+
+	private void OnBreakerToggled(object? sender, ToggledEventArgs e)
+	{
+		_isBreakerEnabled = e.Value;
+		
+		if (_isBreakerEnabled)
+		{
+			AddToLog("Breaker ENABLED");
+			// Update circuit status if not tripped
+			if (!_isTripped)
+			{
+				CircuitStatusLabel.Text = "ON";
+				CircuitStatusLabel.TextColor = Colors.Green;
+			}
+		}
+		else
+		{
+			AddToLog("Breaker BYPASSED");
+			CircuitStatusLabel.Text = "BREAKER BYPASSED";
+			CircuitStatusLabel.TextColor = Colors.Orange;
+			
+			// If currently tripped, reset the trip state
+			if (_isTripped)
+			{
+				_isTripped = false;
+				Led2Switch.IsEnabled = true;
+				Led3Switch.IsEnabled = true;
+				Led4Switch.IsEnabled = true;
+			}
+		}
+	}
+
+	private void OnMaxDischargeChanged(object? sender, TextChangedEventArgs e)
+	{
+		if (string.IsNullOrWhiteSpace(e.NewTextValue))
+			return;
+
+		if (double.TryParse(e.NewTextValue, out double value) && value > 0 && value <= 100)
+		{
+			_tripThreshold = value;
+			AddToLog($"Max discharge threshold set to {value:F1} mA");
+		}
+		else
+		{
+			// Invalid input, revert to previous value
+			MaxDischargeEntry.Text = _tripThreshold.ToString("F1");
 		}
 	}
 
@@ -1282,6 +1376,24 @@ public partial class MainPage : ContentPage
 			_greenYAxis.MaxLimit = _greenScaleMax;
 		if (_combinedCurrentYAxis != null)
 			_combinedCurrentYAxis.MaxLimit = _combinedCurrentScaleMax;
+	}
+
+	private void OnBatteryCurrentScaleChanged(object? sender, EventArgs e)
+	{
+		if (BatteryCurrentScalePicker.SelectedIndex == -1)
+			return;
+
+		_batteryCurrentScaleMax = BatteryCurrentScalePicker.SelectedIndex + 1;
+		if (_batteryCurrentYAxis != null)
+		{
+			_batteryCurrentYAxis.MaxLimit = _batteryCurrentScaleMax;
+			_batteryCurrentYAxis.MinLimit = -_batteryCurrentScaleMax;
+		}
+	}
+
+	private void OnClearBatteryCurrentChart(object? sender, EventArgs e)
+	{
+		_batteryCurrentData.Clear();
 	}
 }
 

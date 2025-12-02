@@ -13,10 +13,14 @@
 
         <!-- Combined Control Panel -->
         <Frame Grid.Row="0" BorderColor="Gray" CornerRadius="5" Padding="10">
-            <Grid ColumnSpacing="15" RowSpacing="10">
+            <Grid ColumnSpacing="10" RowSpacing="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
@@ -26,13 +30,22 @@
 
                 <Label Grid.Column="0" Text="COM Port:" VerticalOptions="Center"/>
                 <Picker Grid.Column="1" x:Name="ComPortPicker" VerticalOptions="Center" MinimumWidthRequest="100"/>
-                <Button Grid.Column="2" x:Name="ConnectButton" Text="Connect" Clicked="OnConnectClicked" WidthRequest="100"/>
-                <Button Grid.Column="3" x:Name="DisconnectButton" Text="Disconnect" Clicked="OnDisconnectClicked" WidthRequest="100" IsEnabled="False"/>
+                <Button Grid.Column="2" x:Name="ConnectButton" Text="Connect" Clicked="OnConnectClicked" WidthRequest="100" Margin="5,0,0,0"/>
+                <Button Grid.Column="3" x:Name="DisconnectButton" Text="Disconnect" Clicked="OnDisconnectClicked" WidthRequest="100" IsEnabled="False" Margin="5,0,0,0"/>
                 
-                <BoxView Grid.Column="4" WidthRequest="2" BackgroundColor="Gray" Margin="10,0"/>
+                <BoxView Grid.Column="4" WidthRequest="2" BackgroundColor="Gray" Margin="15,0"/>
                 
-                <Label Grid.Column="5" Text="View Mode:" VerticalOptions="Center" FontAttributes="Bold"/>
-                <HorizontalStackLayout Grid.Column="6" Spacing="10">
+                <Label Grid.Column="5" Text="Breaker:" VerticalOptions="Center" FontAttributes="Bold"/>
+                <Switch Grid.Column="6" x:Name="BreakerToggle" IsToggled="True" Toggled="OnBreakerToggled" VerticalOptions="Center" Margin="5,0"/>
+                
+                <Label Grid.Column="7" Text="Max Discharge:" VerticalOptions="Center" FontAttributes="Bold" Margin="15,0,5,0"/>
+                <Entry Grid.Column="8" x:Name="MaxDischargeEntry" Text="1.5" WidthRequest="70" VerticalOptions="Center" Keyboard="Numeric" TextChanged="OnMaxDischargeChanged" HorizontalTextAlignment="Center"/>
+                <Label Grid.Column="9" Text="mA" VerticalOptions="Center" Margin="2,0,0,0"/>
+                
+                <BoxView Grid.Column="10" WidthRequest="2" BackgroundColor="Gray" Margin="10,0"/>
+                
+                <Label Grid.Column="11" Text="View Mode:" VerticalOptions="Center" FontAttributes="Bold"/>
+                <HorizontalStackLayout Grid.Column="12" Spacing="10">
                     <RadioButton x:Name="MonitorModeRadio" Content="Monitor" IsChecked="True" CheckedChanged="OnViewModeChanged" GroupName="ViewMode"/>
                     <RadioButton x:Name="GraphModeRadio" Content="Graph" CheckedChanged="OnViewModeChanged" GroupName="ViewMode"/>
                 </HorizontalStackLayout>
@@ -508,6 +521,40 @@
                                     <Button Grid.Column="3" Text="Clear" Clicked="OnClearGreenChart" WidthRequest="80" Margin="10,0,0,0"/>
                                 </Grid>
                                 <lvc:CartesianChart Grid.Row="1" x:Name="GreenChart" BackgroundColor="#1A1A1A"/>
+                            </Grid>
+                        </Frame>
+                    </Grid>
+
+                    <!-- Battery Current Chart (Charge/Discharge) -->
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                        <Frame Grid.Column="0" BorderColor="Gray" CornerRadius="5" Padding="10">
+                            <Grid RowSpacing="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="300"/>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0" ColumnDefinitions="*,Auto,Auto,Auto">
+                                    <Label Grid.Column="0" Text="Battery Current (+ Charging, - Discharging)" FontAttributes="Bold" FontSize="16"/>
+                                    <Label Grid.Column="1" Text="Scale:" VerticalOptions="Center" Margin="0,0,5,0"/>
+                                    <Picker Grid.Column="2" x:Name="BatteryCurrentScalePicker" SelectedIndexChanged="OnBatteryCurrentScaleChanged" WidthRequest="60">
+                                        <Picker.ItemsSource>
+                                            <x:Array Type="{x:Type x:String}">
+                                                <x:String>1</x:String>
+                                                <x:String>2</x:String>
+                                                <x:String>3</x:String>
+                                                <x:String>4</x:String>
+                                                <x:String>5</x:String>
+                                                <x:String>6</x:String>
+                                                <x:String>7</x:String>
+                                                <x:String>8</x:String>
+                                                <x:String>9</x:String>
+                                                <x:String>10</x:String>
+                                            </x:Array>
+                                        </Picker.ItemsSource>
+                                    </Picker>
+                                    <Button Grid.Column="3" Text="Clear" Clicked="OnClearBatteryCurrentChart" WidthRequest="80" Margin="10,0,0,0"/>
+                                </Grid>
+                                <lvc:CartesianChart Grid.Row="1" x:Name="BatteryCurrentChart" BackgroundColor="#1A1A1A"/>
                             </Grid>
                         </Frame>
                     </Grid>

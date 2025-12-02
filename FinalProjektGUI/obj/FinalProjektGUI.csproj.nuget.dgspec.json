@@ -178,7 +178,7 @@
               "version": "[26.0.9769, 26.0.9769]"
             },
             {
-              "name": "Microsoft.iOS.Runtime.ios-arm64.net9.0_26.0",
+              "name": "Microsoft.iOS.Runtime.iossimulator-x64.net9.0_26.0",
               "version": "[26.0.9769, 26.0.9769]"
             }
           ],
@@ -244,10 +244,6 @@
               "version": "[26.0.9769, 26.0.9769]"
             },
             {
-              "name": "Microsoft.MacCatalyst.Runtime.maccatalyst-arm64.net9.0_26.0",
-              "version": "[26.0.9769, 26.0.9769]"
-            },
-            {
               "name": "Microsoft.MacCatalyst.Runtime.maccatalyst-x64.net9.0_26.0",
               "version": "[26.0.9769, 26.0.9769]"
             }
@@ -303,24 +299,8 @@
           "warn": true,
           "downloadDependencies": [
             {
-              "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
-              "version": "[9.0.11, 9.0.11]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Crossgen2.win-x64",
-              "version": "[9.0.11, 9.0.11]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Runtime.win-x64",
-              "version": "[9.0.11, 9.0.11]"
-            },
-            {
               "name": "Microsoft.Windows.SDK.NET.Ref",
               "version": "[10.0.19041.57, 10.0.19041.57]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Runtime.win-x64",
-              "version": "[9.0.11, 9.0.11]"
             }
           ],
           "frameworkReferences": {
@@ -341,10 +321,7 @@
         "android-x64": {
           "#import": []
         },
-        "ios-arm64": {
-          "#import": []
-        },
-        "maccatalyst-arm64": {
+        "iossimulator-x64": {
           "#import": []
         },
         "maccatalyst-x64": {
