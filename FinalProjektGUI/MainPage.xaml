@@ -26,6 +26,9 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="5"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
@@ -45,12 +48,16 @@
                 
                 <Label Grid.Column="8" Text="Max Discharge:" VerticalOptions="Center" FontAttributes="Bold" FontSize="13" Margin="5,0,3,0"/>
                 <Entry Grid.Column="9" x:Name="MaxDischargeEntry" Text="1.5" WidthRequest="55" VerticalOptions="Center" FontSize="13" Keyboard="Numeric" Unfocused="OnMaxDischargeUnfocused" HorizontalTextAlignment="Center"/>
-                <Label Grid.Column="10" Text="mA" VerticalOptions="Center" FontSize="13" Margin="2,0,0,0"/>
+                <Label Grid.Column="10" Text="mA" VerticalOptions="Center" FontSize="13" Margin="2,0,10,0"/>
                 
-                <BoxView Grid.Column="11" WidthRequest="1" BackgroundColor="Gray"/>
+                <Label Grid.Column="11" Text="Dead Voltage:" VerticalOptions="Center" FontAttributes="Bold" FontSize="13" Margin="0,0,3,0"/>
+                <Entry Grid.Column="12" x:Name="DeadVoltageEntry" Text="1.9" WidthRequest="55" VerticalOptions="Center" FontSize="13" Keyboard="Numeric" Unfocused="OnDeadVoltageUnfocused" HorizontalTextAlignment="Center"/>
+                <Label Grid.Column="13" Text="V" VerticalOptions="Center" FontSize="13" Margin="2,0,0,0"/>
                 
-                <Label Grid.Column="12" Text="View Mode:" VerticalOptions="Center" FontAttributes="Bold" FontSize="13" Margin="5,0,5,0"/>
-                <HorizontalStackLayout Grid.Column="13" Spacing="8" VerticalOptions="Center">
+                <BoxView Grid.Column="14" WidthRequest="1" BackgroundColor="Gray"/>
+                
+                <Label Grid.Column="15" Text="View Mode:" VerticalOptions="Center" FontAttributes="Bold" FontSize="13" Margin="5,0,5,0"/>
+                <HorizontalStackLayout Grid.Column="16" Spacing="8" VerticalOptions="Center">
                     <RadioButton x:Name="MonitorModeRadio" Content="Monitor" IsChecked="True" CheckedChanged="OnViewModeChanged" GroupName="ViewMode" FontSize="13" Scale="0.9"/>
                     <RadioButton x:Name="GraphModeRadio" Content="Graph" CheckedChanged="OnViewModeChanged" GroupName="ViewMode" FontSize="13" Scale="0.9"/>
                 </HorizontalStackLayout>

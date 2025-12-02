@@ -24,7 +24,7 @@ public partial class MainPage : ContentPage
 	private bool _isTripped = false;
 	private double _tripThreshold = 1.5; // mA (overcurrent limit) - now configurable
 	private bool _isBreakerEnabled = true; // Breaker bypass toggle
-	private const double LowVoltageThreshold = 1.9; // V
+	private double _lowVoltageThreshold = 1.9; // V (dead voltage) - now configurable
 	private const double RecoveryVoltageThreshold = 2.2; // V
 	private bool _isBatteryDead = false;
 
@@ -355,25 +355,23 @@ public partial class MainPage : ContentPage
 				{
 					BatteryBar.ProgressColor = Colors.Red;
 				}
-				else
-				{
-					BatteryBar.ProgressColor = Colors.Green;
-				}
+			else
+			{
+				BatteryBar.ProgressColor = Colors.Green;
+			}
 
-				// Check battery dead state
-				if (batteryVoltage < LowVoltageThreshold)
-				{
-					_isBatteryDead = true;
-				}
-				else if (batteryVoltage >= RecoveryVoltageThreshold)
-				{
-					_isBatteryDead = false;
-				}
+			// Check battery dead state
+			if (batteryVoltage < _lowVoltageThreshold)
+			{
+				_isBatteryDead = true;
+			}
+			else if (batteryVoltage >= RecoveryVoltageThreshold)
+			{
+				_isBatteryDead = false;
+			}
 
-				// Battery Status (ADC5 - ADC4) / 100
-				double batteryCurrent = (avgValues[5] - avgValues[4]) / 100.0;
-				
-				if (_isBatteryDead)
+			// Battery Status (ADC5 - ADC4) / 100
+			double batteryCurrent = (avgValues[5] - avgValues[4]) / 100.0;				if (_isBatteryDead)
 				{
 					BatteryStatusLabel.Text = "DEAD";
 					BatteryStatusLabel.TextColor = Colors.Red;
@@ -409,11 +407,11 @@ public partial class MainPage : ContentPage
 			if (!_isTripped && _isBreakerEnabled)
 			{
 				// Low voltage trip
-				if (batteryVoltage < LowVoltageThreshold)
+				if (batteryVoltage < _lowVoltageThreshold)
 				{
 					_isTripped = true;
 					TripCircuit();
-					AddToLog($"TRIP: Low battery voltage ({batteryVoltage:F3} V < {LowVoltageThreshold} V)");
+					AddToLog($"TRIP: Low battery voltage ({batteryVoltage:F3} V < {_lowVoltageThreshold} V)");
 				}
 				// Discharge overcurrent trip
 				else if (batteryCurrent < 0 && Math.Abs(batteryCurrent) > _tripThreshold)
@@ -559,6 +557,13 @@ public partial class MainPage : ContentPage
 
 	private void OnResetBreakerClicked(object? sender, EventArgs e)
 	{
+		// Don't do anything if breaker is bypassed
+		if (!_isBreakerEnabled)
+		{
+			AddToLog("Reset breaker ignored - breaker is bypassed");
+			return;
+		}
+
 		// Check if battery is dead
 		if (_isBatteryDead)
 		{
@@ -572,6 +577,30 @@ public partial class MainPage : ContentPage
 
 		_isTripped = false;
 
+		// Switch to manual mode and turn off all LEDs
+		_isTrafficMode = false;
+		_isChristmasMode = false;
+		LedModePicker.SelectedIndex = 0; // Set to Manual
+
+		// Stop any running timers
+		if (_trafficTimer != null)
+		{
+			_trafficTimer.Stop();
+			_trafficTimer.Dispose();
+			_trafficTimer = null;
+		}
+		if (_christmasTimer != null)
+		{
+			_christmasTimer.Stop();
+			_christmasTimer.Dispose();
+			_christmasTimer = null;
+		}
+
+		// Turn off all LEDs except blue (LED1)
+		Led2Switch.IsToggled = false; // Yellow
+		Led3Switch.IsToggled = false; // Red
+		Led4Switch.IsToggled = false; // Green
+
 		// Re-enable LED switches
 		Led2Switch.IsEnabled = true;
 		Led3Switch.IsEnabled = true;
@@ -584,7 +613,7 @@ public partial class MainPage : ContentPage
 		// Send packet to update LED states
 		SendLedPacket();
 
-		AddToLog("Circuit breaker RESET");
+		AddToLog("Circuit breaker RESET - Mode set to Manual, all LEDs turned off");
 	}
 
 	private void OnLedModeChanged(object? sender, EventArgs e)
@@ -1264,6 +1293,31 @@ public partial class MainPage : ContentPage
 			// Invalid input, revert to previous value
 			entry.Text = _tripThreshold.ToString("F1");
 			AddToLog($"Invalid discharge value. Must be between 0.1 and 100 mA.");
+		}
+	}
+
+	private void OnDeadVoltageUnfocused(object? sender, FocusEventArgs e)
+	{
+		if (sender is not Entry entry)
+			return;
+			
+		if (string.IsNullOrWhiteSpace(entry.Text))
+		{
+			entry.Text = _lowVoltageThreshold.ToString("F1");
+			return;
+		}
+
+		if (double.TryParse(entry.Text, out double value) && value >= 0.1 && value <= 5.0)
+		{
+			_lowVoltageThreshold = value;
+			entry.Text = value.ToString("F1"); // Format to 1 decimal place
+			AddToLog($"Dead voltage threshold set to {value:F1} V");
+		}
+		else
+		{
+			// Invalid input, revert to previous value
+			entry.Text = _lowVoltageThreshold.ToString("F1");
+			AddToLog($"Invalid voltage value. Must be between 0.1 and 5.0 V.");
 		}
 	}
 
