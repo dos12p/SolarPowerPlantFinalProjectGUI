@@ -1242,20 +1242,28 @@ public partial class MainPage : ContentPage
 		}
 	}
 
-	private void OnMaxDischargeChanged(object? sender, TextChangedEventArgs e)
+	private void OnMaxDischargeUnfocused(object? sender, FocusEventArgs e)
 	{
-		if (string.IsNullOrWhiteSpace(e.NewTextValue))
+		if (sender is not Entry entry)
 			return;
+			
+		if (string.IsNullOrWhiteSpace(entry.Text))
+		{
+			entry.Text = _tripThreshold.ToString("F1");
+			return;
+		}
 
-		if (double.TryParse(e.NewTextValue, out double value) && value > 0 && value <= 100)
+		if (double.TryParse(entry.Text, out double value) && value >= 0.1 && value <= 100)
 		{
 			_tripThreshold = value;
+			entry.Text = value.ToString("F1"); // Format to 1 decimal place
 			AddToLog($"Max discharge threshold set to {value:F1} mA");
 		}
 		else
 		{
 			// Invalid input, revert to previous value
-			MaxDischargeEntry.Text = _tripThreshold.ToString("F1");
+			entry.Text = _tripThreshold.ToString("F1");
+			AddToLog($"Invalid discharge value. Must be between 0.1 and 100 mA.");
 		}
 	}
 
