@@ -32,6 +32,12 @@ public partial class MainPage : ContentPage
 	private Queue<double> _batteryVoltageHistory = new Queue<double>();
 	private const int BatteryVoltageAverageWindow = 6;
 
+	// Packet Statistics
+	private int _totalPacketsReceived = 0;
+	private int _validPackets = 0;
+	private int _invalidPackets = 0;
+	private int _lastPacketNumber = -1;
+
 	// Traffic Light Mode
 	private bool _isTrafficMode = false;
 	private System.Timers.Timer? _trafficTimer;
@@ -268,18 +274,49 @@ public partial class MainPage : ContentPage
 				string adc5 = packet.Substring(index, 4);
 				index += 5; // 4 digits + 1 space
 
-				string digitalInputs = packet.Substring(index, 4);
-				index += 5; // 4 digits + 1 space
+			string digitalInputs = packet.Substring(index, 4);
+			index += 5; // 4 digits + 1 space
 
-				string receivedChecksum = packet.Substring(index, 3);
+			string receivedChecksum = packet.Substring(index, 3);
 
-				// Calculate checksum (sum of all ASCII characters from after ### up to but not including checksum)
-				int calculatedChecksum = 0;
-				for (int i = 3; i < index; i++) // Start after "###", stop before checksum
+			// Calculate checksum: sum of ASCII values from start to just before checksum
+			// Matches Meadow protocol: ComputeChecksum sums all bytes from "###" through digital inputs
+			string rawForChecksum = packet.Substring(0, index - 1); // Everything before the space before checksum
+			int calculatedChecksum = 0;
+			byte[] bytes = Encoding.ASCII.GetBytes(rawForChecksum);
+			foreach (byte b in bytes)
+				calculatedChecksum += b;
+			calculatedChecksum %= 1000;
+
+			// Update packet statistics
+			_totalPacketsReceived++;
+			
+			// Check for packet loss (gaps in packet numbers)
+			if (int.TryParse(packetNumber, out int currentPacketNum))
+			{
+				if (_lastPacketNumber != -1)
 				{
-					calculatedChecksum += (int)packet[i];
+					int expectedPacketNum = (_lastPacketNumber + 1) % 1000; // Packet numbers wrap at 1000
+					if (currentPacketNum != expectedPacketNum)
+					{
+						// Calculate packets lost
+						int packetsLost = (currentPacketNum - expectedPacketNum + 1000) % 1000;
+						_invalidPackets += packetsLost;
+					}
 				}
-				calculatedChecksum %= 1000;
+				_lastPacketNumber = currentPacketNum;
+			}
+
+			// Validate checksum
+			bool checksumValid = receivedChecksum == calculatedChecksum.ToString("D3");
+			if (checksumValid)
+			{
+				_validPackets++;
+			}
+			else
+			{
+				_invalidPackets++;
+			}
 
 			// Update UI
 			PacketNumberLabel.Text = packetNumber;
@@ -298,19 +335,23 @@ public partial class MainPage : ContentPage
 			ReceivedChecksumLabel.Text = receivedChecksum;
 			CalculatedChecksumLabel.Text = calculatedChecksum.ToString("D3");
 
-			// Validate checksum
-			if (receivedChecksum != calculatedChecksum.ToString("D3"))
-			{
-				CalculatedChecksumLabel.TextColor = Colors.Red;
-				ReceivedChecksumLabel.TextColor = Colors.Red;
-			}
-			else
+			// Update checksum display colors
+			if (checksumValid)
 			{
 				CalculatedChecksumLabel.TextColor = Colors.Green;
 				ReceivedChecksumLabel.TextColor = Colors.Green;
 			}
+			else
+			{
+				CalculatedChecksumLabel.TextColor = Colors.Red;
+				ReceivedChecksumLabel.TextColor = Colors.Red;
+			}
 
-			// Calculate derived values
+			// Update packet statistics
+			PacketLossLabel.Text = _invalidPackets.ToString();
+			double accuracy = _totalPacketsReceived > 0 ? (_validPackets * 100.0 / _totalPacketsReceived) : 100.0;
+			PacketAccuracyLabel.Text = $"{accuracy:F1}%";
+			PacketAccuracyLabel.TextColor = accuracy >= 95 ? Colors.Green : (accuracy >= 80 ? Colors.Orange : Colors.Red);			// Calculate derived values
 			if (int.TryParse(adc0, out int adc0Val) &&
 			    int.TryParse(adc1, out int adc1Val) &&
 			    int.TryParse(adc2, out int adc2Val) &&

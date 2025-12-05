@@ -265,17 +265,23 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Label Grid.Row="0" Grid.Column="0" Text="Checksum" FontAttributes="Bold" FontSize="14" Grid.ColumnSpan="2" HorizontalOptions="Center"/>
+                    <Label Grid.Row="0" Grid.Column="0" Text="Packet Stats" FontAttributes="Bold" FontSize="14" Grid.ColumnSpan="2" HorizontalOptions="Center"/>
                     <Label Grid.Row="1" Grid.Column="0" Text="Received:" FontSize="11"/>
                     <Label Grid.Row="1" Grid.Column="1" x:Name="ReceivedChecksumLabel" Text="---" FontSize="11"/>
                     <Label Grid.Row="2" Grid.Column="0" Text="Calculated:" FontSize="11"/>
                     <Label Grid.Row="2" Grid.Column="1" x:Name="CalculatedChecksumLabel" Text="---" FontSize="11"/>
+                    <Label Grid.Row="3" Grid.Column="0" Text="Packet Loss:" FontSize="11"/>
+                    <Label Grid.Row="3" Grid.Column="1" x:Name="PacketLossLabel" Text="0" FontSize="11"/>
+                    <Label Grid.Row="4" Grid.Column="0" Text="Accuracy:" FontSize="11"/>
+                    <Label Grid.Row="4" Grid.Column="1" x:Name="PacketAccuracyLabel" Text="100%" FontSize="11"/>
                 </Grid>
             </Frame>
         </Grid>
